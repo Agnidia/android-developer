@@ -1,6 +1,8 @@
 ---
 name: testing-principles
 description: Android test pyramid, framework matrix, coverage thresholds, and testing best practices for Kotlin/Compose
+metadata:
+  last-updated: '2026-06-15'
 ---
 
 # Testing Principles Reference
@@ -13,7 +15,7 @@ gates for Android work.
 ```
          /\
         /  \      Screenshot / E2E (5-10%)
-       /────\     Roborazzi/Paparazzi, critical user journeys (Espresso/Compose)
+       /────\     Roborazzi (prefer over Paparazzi), critical user journeys (Espresso/Compose)
       /      \
      /────────\   Instrumented / Integration (20-30%)
     /          \  Compose UI tests, Room DAO tests, repository + fakes
@@ -29,10 +31,10 @@ that already has one.
 | Layer | Frameworks | Focused run |
 |-------|-----------|-------------|
 | Unit | JUnit5 (`useJUnitPlatform()`) or JUnit4; MockK or mockito-kotlin | `./gradlew :m:testDebugUnitTest --tests <FQCN>` |
-| Flow assertions | Turbine (`app.cash.turbine`) | within unit tests |
+| Flow assertions | Turbine (`app.cash.turbine:turbine:1.2.1` as of 2026-06) | within unit tests |
 | Compose UI | `compose.ui:ui-test-junit4` (`createComposeRule`) | `./gradlew :m:connectedDebugAndroidTest` |
 | Room | in-memory `Room.inMemoryDatabaseBuilder` | unit or instrumented |
-| Screenshot | Roborazzi (JVM) or Paparazzi (JVM) | `./gradlew :m:verifyRoborazziDebug` |
+| Screenshot | Roborazzi (JVM, prefer; `generateComposePreviewRobolectricTests`) over Paparazzi (alpha) | `./gradlew :m:verifyRoborazziDebug` |
 
 A test that is not discovered/registered does not exist — confirm source set
 placement (`test/` vs `androidTest/`) and runner configuration.

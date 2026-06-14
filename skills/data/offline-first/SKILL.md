@@ -4,8 +4,8 @@ description: Offline-first repositories: the database as single source of truth,
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [offline-first, repository, single-source-of-truth, sync, cache, android]
+  last-updated: '2026-06-15'
+  keywords: [offline-first, repository, single-source-of-truth, sync, cache, kmp, android]
 ---
 
 # Offline-First
@@ -36,6 +36,14 @@ fun user(id: String): Flow<User> = flow { emit(api.user(id).toDomain()) }   // W
 For background sync use `WorkManager` with a unique periodic work request and a backoff
 policy. Resolve conflicts deterministically (last-write-wins with a server timestamp, or a
 merge function) — document the rule.
+
+## KMP
+
+The repository, its DTO↔domain mappers, and the SSOT contract are platform-agnostic — move
+them to a KMP `commonMain` module to share with iOS. Back it with **Room KMP**
+(`BundledSQLiteDriver`) for persistence and **Ktor** for networking; `WorkManager` stays in
+`androidMain`. See [room](../room/SKILL.md) and
+[retrofit-networking](../retrofit-networking/SKILL.md).
 
 ## See also
 - [references/repository-pattern.md](references/repository-pattern.md)

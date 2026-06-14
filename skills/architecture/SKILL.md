@@ -4,8 +4,8 @@ description: Android app architecture for Kotlin: Clean Architecture layering, m
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [android, architecture, clean-architecture, mvvm, mvi, hilt, modularization]
+  last-updated: '2026-06-15'
+  keywords: [android, architecture, clean-architecture, mvvm, mvi, hilt, modularization, kmp]
 ---
 
 # Architecture (domain index)
@@ -24,7 +24,9 @@ decision in front of you.
 
 Dependencies point **inward**: `ui → domain ← data`. The `domain` layer is pure Kotlin
 (no Android framework types), so business rules stay testable and the UI/data layers are
-swappable. Everything else in this domain is a refinement of that rule.
+swappable. Everything else in this domain is a refinement of that rule. That purity also
+makes `domain` (and a platform-agnostic slice of `data`) a natural **KMP `commonMain`**
+module when sharing logic with iOS/desktop.
 
 ## Attribution
 

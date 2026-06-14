@@ -4,8 +4,8 @@ description: Android data layer: Room persistence, Retrofit networking, and offl
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [data, room, retrofit, offline-first, repository, android]
+  last-updated: '2026-06-15'
+  keywords: [data, room, retrofit, offline-first, repository, kmp, android]
 ---
 
 # Data (domain index)
@@ -23,6 +23,16 @@ Thin router for the data skill domain.
 The repository owns the **single source of truth** (usually the local DB) and exposes it
 as a `Flow`. The network refreshes the cache; the UI observes the cache. DTOs never escape
 the data layer — map to domain models at the boundary.
+
+## Stack (as of 2026-06)
+
+- **Persistence:** Room (KSP processor; reactive `Flow` reads, `suspend` writes). See [room](room/SKILL.md).
+- **Networking:** Retrofit 3 with native `suspend` + the `converter-kotlinx-serialization`
+  converter, over OkHttp 5. See [retrofit-networking](retrofit-networking/SKILL.md).
+- **KMP:** the data module can move to a KMP module (`commonMain` + `androidMain`) sharing
+  the **coroutines + kotlinx.serialization** stack with iOS. **Room KMP**
+  (`BundledSQLiteDriver`) and **Ktor** are the shared persistence/networking options
+  (Retrofit is JVM/Android only). Keep version literals in the version catalog.
 
 ## Attribution
 

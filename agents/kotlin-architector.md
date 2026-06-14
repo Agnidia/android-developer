@@ -42,8 +42,8 @@ Apply `skill: architecture`. Core decisions:
 |----------|---------|-----------------|
 | UI pattern | MVVM + UDF (`StateFlow<UiState>`) | MVI (reducer + intents) when state transitions are complex or need replay/testing as a state machine |
 | Layering | `ui` → `domain` (use-cases, plain Kotlin) → `data` (repository) | Collapse `domain` into the repository only for trivial CRUD with no business rules |
-| Modularization | by-feature (`:feature:x`) over by-layer at scale | by-layer (`:core:ui`, `:core:data`) for shared infrastructure; convention plugins for build logic |
-| DI | Hilt with `@Singleton`/`@ViewModelScoped`/`@ActivityRetainedScoped` | Manual DI only for libraries that must not depend on Hilt |
+| Modularization | by-feature (`:feature:x`) over by-layer at scale | by-layer (`:core:ui`, `:core:data`) for shared infrastructure; convention plugins for build logic. For cross-platform reuse, extract a framework-free `:core:domain`/`:core:data` to a **KMP module** (`commonMain` + `androidMain`) — see `skill: architecture` (modularization) |
+| DI | Hilt (`hilt-android`) with `@Singleton`/`@ViewModelScoped`/`@ActivityRetainedScoped`; KSP processor | Manual DI only for libraries that must not depend on Hilt; KMP `commonMain` modules use manual/constructor DI (Hilt is Android-only) |
 | Domain purity | No Android framework types in `domain` | — (non-negotiable) |
 
 ## Hilt Graph Design
@@ -53,6 +53,10 @@ Apply `skill: architecture`. Core decisions:
   dependencies. Document why each binding's scope was chosen.
 - Bind interfaces with `@Binds` in `abstract` modules; reserve `@Provides` for types you
   do not own. Keep modules small and feature-scoped.
+- **Processor**: Hilt (`hilt-android`, version from the catalog) is wired with the **KSP**
+  processor `ksp("com.google.dagger:hilt-compiler:…")` — KAPT is a legacy fallback only.
+  `@HiltViewModel` lives in core `hilt-android` (no `hilt-lifecycle-viewmodel`); use
+  `@HiltViewModel(assistedFactory = …)` for runtime args. See `skill: architecture` (hilt-di).
 - Make Hilt testable: prefer constructor injection so tests can construct objects without
   the graph; use `@TestInstallIn` to swap modules in instrumented tests. Route test
   scaffolding to `android-developer:test-generator`.

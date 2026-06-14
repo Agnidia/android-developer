@@ -4,13 +4,15 @@ description: Room persistence: entities, DAOs with Flow queries, relations, and 
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [room, sqlite, dao, entity, migration, flow, android]
+  last-updated: '2026-06-15'
+  keywords: [room, sqlite, dao, entity, migration, flow, ksp, kmp, android]
 ---
 
 # Room
 
-Local persistence with compile-time-checked SQL.
+Local persistence with compile-time-checked SQL. Use the **KSP processor**
+(`ksp("androidx.room:room-compiler:…")` — Room `2.8.4` as of 2026-06; version from the
+catalog) — KAPT is a legacy fallback only.
 
 ✅ Correct — entity + DAO returning `Flow` for reactive reads:
 
@@ -44,7 +46,30 @@ Room.databaseBuilder(ctx, AppDb::class.java, "app.db").addMigrations(MIGRATION_1
 ```
 
 Export the schema (`room.schemaLocation`) and add a `MigrationTestHelper` test. Reserve
-`fallbackToDestructiveMigration()` for dev builds only — it wipes user data.
+`fallbackToDestructiveMigration()` for dev builds only — it wipes user data. For additive
+column changes prefer `autoMigrations` (`@Database(autoMigrations = [...])`) — see
+[references/migrations.md](references/migrations.md).
+
+## KMP (shared persistence)
+
+Room KMP is stable: put `room-runtime` in `commonMain`, drive it with the
+**`BundledSQLiteDriver`** (`androidx.sqlite:sqlite-bundled`, `2.6.2` as of 2026-06;
+ships SQLite from source for consistent behaviour across platforms), and declare the
+database constructor via `@ConstructedBy` + an `expect object : RoomDatabaseConstructor`.
+
+```kotlin
+@Database(entities = [UserEntity::class], version = 1)
+@ConstructedBy(AppDbConstructor::class)
+abstract class AppDb : RoomDatabase() { abstract fun userDao(): UserDao }
+
+@Suppress("KotlinNoActualForExpect")
+expect object AppDbConstructor : RoomDatabaseConstructor<AppDb> { override fun initialize(): AppDb }
+
+fun buildDb(builder: RoomDatabase.Builder<AppDb>): AppDb = builder
+    .setDriver(BundledSQLiteDriver())
+    .setQueryCoroutineContext(Dispatchers.IO)   // run queries off the main thread
+    .build()
+```
 
 ## See also
 - [references/entities-daos.md](references/entities-daos.md)

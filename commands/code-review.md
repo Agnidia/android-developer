@@ -45,12 +45,12 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 
 | Area | Looks for | Default severity |
 |------|-----------|------------------|
-| Compose stability | Unstable params, state read in wrong scope, missing keys, allocation in composition | P1 |
+| Compose stability | Unstable params (esp. types from non-Compose modules — strong-skipping is default-on), state read in wrong scope, missing keys, allocation in composition | P1 |
 | Coroutine discipline | `GlobalScope`, hardcoded dispatcher, non-lifecycle collection, main-thread blocking | P1 |
 | Architecture purity | Android types in `domain`, ViewModel → concrete data source, mutable state exposed | P1 |
 | Resource externalization | Hardcoded strings/colors/dimens | P2 |
 | Lint hygiene | ktlint/detekt findings, unjustified suppressions | P3 |
-| Security surface | Implicitly exported component, secret in code, clear-text traffic | P0 |
+| Security surface | Implicitly exported component, secret in code, clear-text traffic, EOL `security-crypto`/`EncryptedSharedPreferences` (→ DataStore + Tink), dead SafetyNet/Smart Lock (→ Play Integrity / Credential Manager) | P0 |
 
 ## Workflow
 

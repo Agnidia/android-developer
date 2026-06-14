@@ -4,7 +4,7 @@ description: Compose recomposition and stability: state hoisting, stable/immutab
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [recomposition, stability, state-hoisting, side-effects, compose, performance]
 ---
 
@@ -33,7 +33,11 @@ fun Counter() {
 
 ## Stability
 
-Unstable parameters force recomposition even when values are equal. Make types stable:
+Strong-skipping is **default-on since Kotlin 2.0.20** — there is no `enableStrongSkippingMode`
+opt-in to apply. It lets Compose skip composables with unstable parameters when their instances
+are equal, so the focus shifts to making *types from non-Compose modules* stable.
+
+Unstable parameters still force recomposition when values differ. Make types stable:
 
 ```kotlin
 @Immutable data class Filters(val tags: PersistentList<String>)   // stable

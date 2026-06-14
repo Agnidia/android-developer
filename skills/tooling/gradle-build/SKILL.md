@@ -4,7 +4,7 @@ description: Gradle build for Android: version catalogs (libs.versions.toml), co
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [gradle, version-catalog, convention-plugin, build-perf, r8, proguard, adb, apkanalyzer]
 ---
 
@@ -16,12 +16,18 @@ metadata:
 
 ```toml
 [versions]
-compose-bom = "2024.09.00"
+compose-bom = "2026.05.00"            # latest stable as of 2026-06
+agp = "9.x"                           # AGP 9.x, current stable as of 2026-06
+kotlin = "2.3.21"                     # as of 2026-06; Compose compiler plugin follows this
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ```
+
+The Compose Compiler is a Kotlin plugin (`version.ref = "kotlin"`) — it is **not** in the
+Compose BOM and follows the Kotlin cadence, not the BOM coordinate.
 
 ```kotlin
 // build.gradle.kts
@@ -38,8 +44,17 @@ implementation("androidx.compose.ui:ui:1.+")   // WRONG — inline + dynamic ver
 ## Build performance
 
 - `org.gradle.caching=true`, `org.gradle.parallel=true`, configuration cache
-  (`org.gradle.configuration-cache=true`) in `gradle.properties`.
-- Prefer `ksp` over `kapt` (faster annotation processing).
+  (`org.gradle.configuration-cache=true`) in `gradle.properties`. The configuration cache is
+  stable and expected as of 2026-06.
+- Prefer `ksp` over `kapt` (faster annotation processing; KAPT is the legacy fallback). Enable
+  **KSP2** with `ksp.useKSP2=true` in `gradle.properties` — required for Kotlin 2.2+.
+- Configure Kotlin via the `compilerOptions {}` DSL (the old `kotlinOptions {}` block is
+  error-level on Kotlin 2.2+):
+
+  ```kotlin
+  kotlin { compilerOptions { jvmTarget = JvmTarget.JVM_17 } }
+  ```
+
 - Modularize so changes rebuild fewer modules; avoid cross-module `api` leakage.
 - Profile with `./gradlew assembleDebug --scan` / `--profile`.
 

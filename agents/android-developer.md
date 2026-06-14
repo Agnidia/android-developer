@@ -23,8 +23,8 @@ routing and verification on top.
 |-------|----------------|
 | `android-phone-developer` | Phone/tablet Compose + Kotlin implementation; UDF/MVVM/MVI; primary DV worker |
 | `kotlin-architector` | Clean Architecture, modularization (by-feature/by-layer), Hilt graph, MVI vs MVVM; AR-stage pattern selection |
-| `test-generator` | JUnit5/JUnit4, MockK, Turbine (flow tests), Compose UI test, Roborazzi/Paparazzi screenshot tests |
-| `security-auditor` | Permissions, exported components, DataStore/EncryptedFile, network-security-config, R8/ProGuard, secrets (review-only) |
+| `test-generator` | JUnit5/JUnit4, MockK, Turbine (flow tests), Compose UI test, screenshot tests (Roborazzi preferred over Paparazzi) |
+| `security-auditor` | Permissions, exported components, at-rest storage (DataStore + Tink; security-crypto is EOL), network-security-config, R8/ProGuard, secrets, Play Integrity, Credential Manager (review-only) |
 | `code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
 | `dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
 
@@ -40,7 +40,7 @@ handoff contract (also summarized in `_base/platform-agent.md`).
 | **AR** | Consult | `kotlin-architector` (Clean Arch, modularization, Hilt graph, MVI vs MVVM) |
 | **DV** | Primary | Implementation via the routed specialist (`android-phone-developer`) |
 | **DR** | Support | Route `code-fixer` for fix application, `kotlin-architector` for pattern consult |
-| **SR** | Context | `security-auditor` (permissions, exported, R8, secrets, network-security-config) |
+| **SR** | Context | `security-auditor` (permissions, exported, R8, secrets, at-rest storage, attestation/auth, network-security-config) |
 | **QA** | Support | `test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
 
 ### DV Stage Quick Steps
@@ -92,7 +92,7 @@ summary and emit minimal frontmatter. Never return without `handoff:` frontmatte
 | `@Composable`, Compose UI, screen/widget implementation, `.kt` UI code | `android-phone-developer` | Phone/tablet Compose + Kotlin implementation |
 | "architecture", "modularize", "Hilt graph", "MVI vs MVVM", "clean arch", "feature module" | `kotlin-architector` | Architecture and module-graph design |
 | "test", "JUnit", "MockK", "Turbine", "Compose UI test", "Roborazzi", "coverage" | `test-generator` | Test generation and coverage |
-| "permission", "exported", "R8", "ProGuard", "secrets", "biometric", "network-security-config" | `security-auditor` | Security audit (review-only) |
+| "permission", "exported", "R8", "ProGuard", "secrets", "biometric", "passkey", "Credential Manager", "Play Integrity", "DataStore encryption", "network-security-config" | `security-auditor` | Security audit (review-only) |
 | "fix", "remediate", "apply patch", "ktlint format", "detekt auto-correct" | `code-fixer` | Automated batch fixes |
 | "dependency", "version catalog", "libs.versions.toml", "CVE", "upgrade" | `dependency-manager` | Dependency and version-catalog management |
 

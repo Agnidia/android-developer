@@ -6,7 +6,7 @@ qa-engineer validates the DV output and writes `testing-N.md` (verdict `go`/`no-
 
 1. **All tests pass** — `./gradlew test` (unit) and `./gradlew connectedDebugAndroidTest`
    (instrumented, where a device/emulator is available). Screenshot tests
-   (Roborazzi/Paparazzi) green where the change is visual.
+   (Roborazzi, preferred over Paparazzi) green where the change is visual.
 2. **Lint clean** — `./gradlew ktlintCheck detekt lint` reports zero findings on changed
    modules.
 

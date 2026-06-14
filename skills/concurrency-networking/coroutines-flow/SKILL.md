@@ -4,7 +4,7 @@ description: Coroutines and Flow: scope and dispatcher selection, structured con
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [coroutines, flow, scopes, dispatchers, cancellation, structured-concurrency]
 ---
 
@@ -33,6 +33,9 @@ fun save(x: X) = GlobalScope.launch(Dispatchers.IO) { repo.save(x) }   // WRONG 
 | `IO` | Network, disk, blocking JVM calls |
 | `Default` | CPU-bound work (sorting, parsing, JSON) |
 
+Bound a noisy IO source with `Dispatchers.IO.limitedParallelism(n)` (e.g. a connection pool
+or a rate-limited API) so it can't starve the shared IO pool.
+
 ## Flow operators
 
 ```kotlin
@@ -43,8 +46,9 @@ combine(userFlow, settingsFlow) { user, settings -> Header(user, settings) }
 ```
 
 Use `flatMapLatest` for "cancel previous on new input" (search/typeahead);
-`flatMapMerge`/`flatMapConcat` when you must keep all. `stateIn`/`shareIn` to share a cold
-flow as hot state.
+`flatMapMerge`/`flatMapConcat` when you must keep all. Share a cold flow as hot state with
+`stateIn(scope, SharingStarted.WhileSubscribed(5_000), initial)` — the 5s timeout keeps
+upstream alive across config changes but stops it when nothing collects.
 
 ## Cancellation
 
@@ -55,6 +59,12 @@ structured cancellation); rethrow it.
 ```kotlin
 try { work() } catch (e: CancellationException) { throw e } catch (e: Exception) { handle(e) }
 ```
+
+## KMP
+
+`kotlinx-coroutines-core` and `Flow` live in `commonMain` — write suspend/Flow logic once and
+share it across Android and iOS. Keep `Dispatchers.IO` out of `commonMain` (it is JVM-only);
+inject the dispatcher (as above) so each target supplies its own.
 
 ## See also
 - [references/scopes-dispatchers.md](references/scopes-dispatchers.md)

@@ -1,9 +1,12 @@
 # API Services
 
-- One `interface` per resource group; `suspend fun` methods returning DTOs.
+- One `interface` per resource group; native `suspend fun` methods returning DTOs
+  (Retrofit 3 — no RxJava `CallAdapter` or `Call.enqueue()` needed).
 - Use `@Query`/`@Path`/`@Body`; never build URLs by string concatenation.
-- Configure the converter (kotlinx.serialization recommended) once on the Retrofit
-  instance.
+- Configure the **`converter-kotlinx-serialization`** converter
+  (`Json.asConverterFactory(...)`) once on the Retrofit instance — the idiomatic Kotlin
+  converter; do not default to Gson.
+- Build the service with the reified extension: `val api: FeedApi = retrofit.create()`.
 - For paged endpoints, return a DTO with the page metadata and integrate with Paging 3 at
   the repository layer.
 

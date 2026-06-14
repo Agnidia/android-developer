@@ -4,8 +4,8 @@ description: Android Gradle tooling: version catalogs, convention plugins, build
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [gradle, version-catalog, convention-plugin, build-perf, r8, proguard, adb]
+  last-updated: '2026-06-15'
+  keywords: [gradle, version-catalog, convention-plugin, build-perf, r8, proguard, adb, ksp]
 ---
 
 # Tooling (domain index)
@@ -18,9 +18,10 @@ Thin router for the tooling skill domain.
 
 ## Core principle
 
-The build is configuration, not code: centralize versions in `gradle/libs.versions.toml`,
-share logic via convention plugins, and keep the release build shrunk and obfuscated with
-R8. Build commands run through the Gradle wrapper as single scoped invocations.
+The build is configuration, not code: centralize versions in `gradle/libs.versions.toml`
+(BOM-driven, dated pins), share logic via convention plugins, prefer KSP (KSP2) over KAPT,
+and keep the release build shrunk and obfuscated with R8 full mode. Build commands run
+through the Gradle wrapper as single scoped invocations.
 
 ## Attribution
 

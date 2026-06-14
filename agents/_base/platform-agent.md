@@ -29,10 +29,10 @@ All code must comply with these skills:
 
 | Skill | Rule |
 |-------|------|
-| `compose-ui` | No hardcoded colors/strings/dimens; theme tokens + string resources; stable params; state hoisting |
-| `architecture` | UDF/MVVM or MVI; ViewModel exposes immutable `StateFlow`; no Android framework types in the domain layer |
+| `compose-ui` | No hardcoded colors/strings/dimens; theme tokens + string resources; stable params; state hoisting. Strong-skipping is default-on (Kotlin 2.0.20+) — no opt-in; stability work targets types from non-Compose modules |
+| `architecture` | UDF/MVVM or MVI; ViewModel exposes immutable `StateFlow`; no Android framework types in the domain layer. KSP is the primary annotation processor (Hilt/Room); KAPT is a legacy fallback only |
 | `quality` | `ktlint` + `detekt` clean; tests for new logic; no flaky-by-design tests (no real clocks, no sleeps as sync) |
-| `tooling` (secure) | All external input validated; no secrets in code/logs/`BuildConfig`; exported components guarded |
+| `tooling` (secure) | All external input validated; no secrets in code/logs/`BuildConfig`; exported components guarded. At-rest encryption via DataStore + Tink — `androidx.security:security-crypto` (`EncryptedSharedPreferences`/`EncryptedFile`) is EOL |
 
 Violations must be flagged and corrected before code is complete.
 
@@ -162,8 +162,8 @@ Document Android-specific security concerns:
 |------|------------------------|
 | **Permissions** | Declared (`AndroidManifest.xml`) and runtime-requested permissions; each justified; no over-broad grants |
 | **Exported Components** | `android:exported` audited; intent filters validated; no implicitly exported activities/services/receivers |
-| **Secrets** | No API keys in code, `BuildConfig`, resources, or logs; credential sources documented (Keystore / EncryptedSharedPreferences / DataStore) |
-| **Data Protection** | EncryptedFile / encrypted DataStore for sensitive data; `network-security-config` pins/clear-text policy; no PII in logs |
+| **Secrets** | No API keys in code, `BuildConfig`, resources, or logs; credential sources documented (Keystore / DataStore + Tink — not the EOL `security-crypto`) |
+| **Data Protection** | DataStore + `datastore-tink` (Keystore-backed) for sensitive at-rest data — `EncryptedSharedPreferences`/`EncryptedFile` are EOL; `network-security-config` pins/clear-text policy; no PII in logs |
 | **R8 / ProGuard** | Release obfuscation/shrinking enabled; no `debuggable true` in release; keep-rules minimal and justified |
 
 ### RE Stage (Release Engineering) — Provide Context

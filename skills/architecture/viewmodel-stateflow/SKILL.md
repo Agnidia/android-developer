@@ -4,7 +4,7 @@ description: ViewModel state holders with StateFlow: unidirectional data flow, i
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [viewmodel, stateflow, udf, uistate, livedata, android, compose]
 ---
 
@@ -34,6 +34,16 @@ class ProfileViewModel(private val getUser: GetUserUseCase) : ViewModel() {
 ```kotlin
 // UI — collect with lifecycle awareness
 val state by viewModel.state.collectAsStateWithLifecycle()
+```
+
+When state **derives from a cold source** (a repository `Flow`), build it with `stateIn`
+and `WhileSubscribed(5_000)` so upstream work stops shortly after the UI leaves and
+restarts cheaply on return:
+
+```kotlin
+val state: StateFlow<UiState> = repo.observeUser()
+    .map { UiState(user = it) }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState(loading = true))
 ```
 
 ❌ Mistake — exposing the mutable flow or holding state in the composable:

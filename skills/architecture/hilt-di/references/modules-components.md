@@ -18,5 +18,17 @@ Component hierarchy mirrors the Android lifecycle: `Singleton` → `ActivityReta
 `Activity`/`ViewModel` → `Fragment`/`View`. A binding is visible to its component and all
 children.
 
+## Processor
+
+Generate the graph with **KSP** — `ksp("com.google.dagger:hilt-compiler:…")` (version from
+the catalog). KSP is the recommended path; `kapt` is a legacy fallback for modules that
+cannot yet run it.
+
+## ViewModels
+
+`@HiltViewModel` is in core `hilt-android` (no `hilt-lifecycle-viewmodel` artifact).
+Constructor-inject with `@Inject`; for non-Parcelable runtime args use
+`@HiltViewModel(assistedFactory = …)` + `@AssistedInject`/`@Assisted` (see the SKILL).
+
 ## Attribution
 Synthesized by IGRSoft (MIT) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

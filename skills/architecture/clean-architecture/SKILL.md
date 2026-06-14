@@ -4,8 +4,8 @@ description: Clean Architecture for Android: ui/domain/data layering, dependency
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [clean-architecture, layering, domain-layer, boundaries, use-case, android]
+  last-updated: '2026-06-15'
+  keywords: [clean-architecture, layering, domain-layer, boundaries, use-case, android, kmp]
 ---
 
 # Clean Architecture (Android)
@@ -31,6 +31,10 @@ class GetUserUseCase(private val repo: UserRepository) {
 // data
 class DefaultUserRepository(private val api: UserApi, private val dao: UserDao) : UserRepository { /* ... */ }
 ```
+
+A framework-free `domain` is also exactly what a **KMP `commonMain`** module needs — the
+same purity that keeps business rules testable lets them be shared with iOS/desktop
+unchanged when a second platform is in scope.
 
 ❌ Mistake — domain importing Android or a concrete data type:
 
