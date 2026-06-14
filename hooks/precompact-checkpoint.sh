@@ -25,9 +25,17 @@ CHECKPOINT="$CONTEXT_DIR/state.checkpoint-$TS.json"
 
 if [ "$SELF_TEST" -eq 1 ]; then
   TMP=$(mktemp -d)
-  echo '{"run_index":0,"stages":{}}' > "$TMP/state.json"
-  cp "$TMP/state.json" "$TMP/state.checkpoint-test.json"
-  [ -f "$TMP/state.checkpoint-test.json" ] || { echo "precompact-checkpoint: self-test FAIL"; rm -rf "$TMP"; exit 1; }
+  printf '%s\n' '{"run_index":3,"stages":{}}' > "$TMP/state.json"
+  touch "$TMP/planning-0.md"
+  CKPT="$TMP/state.checkpoint-test.json"
+  cp -p "$TMP/state.json" "$CKPT"
+  [ -f "$CKPT" ] || { echo "precompact-checkpoint: self-test FAIL (checkpoint missing)"; rm -rf "$TMP"; exit 1; }
+  if command -v jq >/dev/null 2>&1; then
+    ARTS=$(find "$TMP" -maxdepth 1 -type f -name 'planning-*.md' 2>/dev/null | sort | jq -R . | jq -s . || echo '[]')
+    IDX=$(jq -r '.run_index // "unknown"' "$CKPT" 2>/dev/null || echo "unknown")
+    [ "$IDX" = "3" ] && printf '%s' "$ARTS" | jq -e 'length > 0' >/dev/null 2>&1 \
+      || { echo "precompact-checkpoint: self-test FAIL (jq validation)"; rm -rf "$TMP"; exit 1; }
+  fi
   rm -rf "$TMP"
   echo "precompact-checkpoint: self-test OK"
   exit 0

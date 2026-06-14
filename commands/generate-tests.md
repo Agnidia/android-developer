@@ -52,7 +52,9 @@ green. It does not author tests itself.]
    (`test/` for unit, `androidTest/` for instrumented)."
 3. **Verify:** run the new tests —
    `./gradlew {module}:testDebugUnitTest --tests <NewClass> 2>&1 | tee -a "$LOG"` (unit),
-   `connectedDebugAndroidTest` (ui), or `verifyRoborazziDebug` (screenshot).
+   `connectedDebugAndroidTest` (ui), or for screenshot: first
+   `recordRoborazziDebug` / `recordPaparazziDebug` to generate baseline images, then
+   `verifyRoborazziDebug` / `verifyPaparazziDebug` to confirm they match.
 4. Report the files added and the pass/fail result.
 
 ## Output Format
