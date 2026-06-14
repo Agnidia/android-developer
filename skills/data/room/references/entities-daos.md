@@ -6,6 +6,11 @@
 - Use `@Upsert` (insert-or-update), `@Transaction` for multi-step reads/writes, and
   `@Relation` for one-to-many without manual joins.
 - Index columns used in `WHERE`/`ORDER BY` (`@Entity(indices = [Index("email")])`).
+- Generate DAO/entity code with the **KSP processor** (`ksp("androidx.room:room-compiler:…")`);
+  KAPT is a legacy fallback only.
+- `suspend`/`Flow` DAO methods already run off the main thread; set the query dispatcher
+  once on the builder (`.setQueryCoroutineContext(Dispatchers.IO)`) rather than wrapping
+  each call.
 
 ```kotlin
 @Transaction @Query("SELECT * FROM users WHERE id = :id")

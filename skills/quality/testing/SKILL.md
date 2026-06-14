@@ -1,14 +1,19 @@
 ---
 name: testing
-description: Android tests in practice: JUnit5/JUnit4 unit tests, MockK doubles, Turbine Flow assertions, Compose UI tests with createComposeRule, and Roborazzi/Paparazzi screenshot tests. Use when writing or reviewing Android tests.
+description: Android tests in practice: JUnit5/JUnit4 unit tests, MockK doubles, Turbine Flow assertions, Compose UI tests with createComposeRule, and Roborazzi-first screenshot tests. Use when writing or reviewing Android tests.
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [junit, mockk, turbine, compose-ui-test, roborazzi, paparazzi, android]
 ---
 
 # Testing (Android)
+
+Stack (as of 2026-06): JUnit5 (`junit-jupiter`) for JVM unit tests, **Turbine**
+(`app.cash.turbine:turbine:1.2.1`) for Flow assertions, Robolectric (`robolectric:4.16.1`)
+for the JVM Android runtime, and **Roborazzi** (`io.github.takahirom.roborazzi:*:1.60.0`,
+prefer over Paparazzi) for screenshots.
 
 ## Unit (ViewModel)
 
@@ -55,9 +60,14 @@ Select by `testTag`/semantics, not pixel position. Keep UI tests hermetic.
 
 ## Screenshot
 
-Roborazzi (JVM, fast) or Paparazzi render composables off-device; `recordRoborazziDebug`
-to capture golden images, `verifyRoborazziDebug` to diff. Use for critical screens and
-theme/state matrices.
+Prefer **Roborazzi** (`io.github.takahirom.roborazzi:*:1.60.0` as of 2026-06) for Compose
+screenshot tests — it runs on Robolectric (JVM, no emulator) and coexists with Hilt/Robolectric
+tests. `recordRoborazziDebug` captures golden images, `verifyRoborazziDebug` diffs. Use
+`generateComposePreviewRobolectricTests` to auto-generate screenshot tests from `@Preview`
+composables. Cover critical screens and theme/state matrices.
+
+Paparazzi (`app.cash.paparazzi:2.0.0-alpha02`, alpha as of 2026-06) remains an option but is
+not yet stable and does not interoperate with Robolectric/Hilt-driven tests — prefer Roborazzi.
 
 ## See also
 - [references/junit-mockk.md](references/junit-mockk.md)

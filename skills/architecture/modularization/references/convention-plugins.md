@@ -9,7 +9,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         pluginManager.apply("com.android.library")
         pluginManager.apply("org.jetbrains.kotlin.android")
-        // shared compileSdk, Compose, Kotlin options, common deps ...
+        // set the shared compileSdk from ONE project-defined source (a catalog value or a
+        // build-logic constant — current Android stable, e.g. 36 as of 2026-06), plus the
+        // shared Compose, compilerOptions {}, and common deps ...
     }
 }
 ```
@@ -19,8 +21,9 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 plugins { id("myapp.android.feature") }
 ```
 
-This removes per-module drift (different compileSdk, missing Compose setup) and makes a
-toolchain bump a one-file change.
+This removes per-module drift (a different `compileSdk` per module, missing Compose setup)
+and makes a toolchain bump a one-file change. Read `compileSdk` from a single shared source
+so no literal is duplicated across modules.
 
 ## Attribution
 Synthesized by IGRSoft (MIT) from `new-silvermoon`, Google `android/skills`-style build

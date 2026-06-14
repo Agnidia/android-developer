@@ -4,8 +4,8 @@ description: Android modularization: by-feature vs by-layer module splits, the :
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
-  keywords: [modularization, feature-module, convention-plugin, gradle, android, build-logic]
+  last-updated: '2026-06-15'
+  keywords: [modularization, feature-module, convention-plugin, gradle, android, build-logic, kmp]
 ---
 
 # Modularization (Android)
@@ -45,6 +45,15 @@ few lines:
 // feature/login/build.gradle.kts
 plugins { id("myapp.android.feature") }
 ```
+
+## Extracting a KMP module
+
+A pure-Kotlin `:core:domain` (and a platform-agnostic slice of `:core:data`) extracts
+cleanly into a **Kotlin Multiplatform** module: move the code to `commonMain` and keep
+Android-specific bits in `androidMain`. The shared `commonMain` reuses the coroutines +
+kotlinx.serialization stack (and Room/Ktor on their KMP paths) with iOS/desktop. KMP for
+shared business/data logic is stable — modularize with that extraction in mind when a
+second platform is on the horizon.
 
 ## Anti-patterns
 

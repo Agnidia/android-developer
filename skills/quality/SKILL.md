@@ -4,7 +4,7 @@ description: Android testing quality: JUnit/MockK unit tests, Turbine Flow tests
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [testing, junit, mockk, turbine, compose-ui-test, screenshot, android]
 ---
 
@@ -14,7 +14,7 @@ Thin router for the quality skill domain.
 
 | Skill | Use when |
 |-------|----------|
-| [testing](testing/SKILL.md) | JUnit/MockK unit tests, Turbine flow tests, Compose UI tests, Roborazzi/Paparazzi screenshots |
+| [testing](testing/SKILL.md) | JUnit/MockK unit tests, Turbine flow tests, Compose UI tests, Roborazzi-first screenshots |
 
 ## Core principle
 

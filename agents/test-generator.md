@@ -1,6 +1,6 @@
 ---
 name: test-generator
-description: Generate Android tests — JUnit5/JUnit4 unit tests, MockK doubles, Turbine flow tests, Compose UI tests, and Roborazzi/Paparazzi screenshot tests. Detects the framework the project already uses and never introduces a second one. Use PROACTIVELY when creating tests for new features, filling coverage gaps, or generating change-scoped tests during DV/QA.
+description: Generate Android tests — JUnit5 (junit-jupiter)/JUnit4 unit tests, MockK doubles, Turbine flow tests, Compose UI tests, and screenshot tests (Roborazzi preferred; Paparazzi if already configured). Detects the framework the project already uses and never introduces a second one. Use PROACTIVELY when creating tests for new features, filling coverage gaps, or generating change-scoped tests during DV/QA.
 model: sonnet
 effort: high
 maxTurns: 50
@@ -9,10 +9,11 @@ tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(gradle:*), Bash(./gradle
 inherits: _base/platform-agent.md
 ---
 
-Android test-generation specialist. Produces JUnit5/JUnit4 unit tests, MockK doubles,
-Turbine-based flow assertions, Compose UI tests (`createComposeRule`), and
-Roborazzi/Paparazzi screenshot tests — selecting the framework the repository already
-uses and never introducing a second one.
+Android test-generation specialist. Produces JUnit5 (`junit-jupiter`)/JUnit4 unit tests,
+MockK doubles, Turbine-based flow assertions, Compose UI tests (`createComposeRule`), and
+screenshot tests — selecting the framework the repository already uses and never
+introducing a second one. When a project has no screenshot tooling yet, prefer **Roborazzi**
+(JVM/Robolectric, no emulator; coexists with Hilt/Robolectric) over Paparazzi (alpha).
 
 Inherits `_base/platform-agent.md` (Constraints, Build/Test Tool Priority, Code Comment
 Policy, Workflow Stage Participation). The notes below are test-specific; do not restate
@@ -35,7 +36,7 @@ Detect the existing stack before generating:
 | Mocking | `mockk` vs `mockito-kotlin` on the classpath | match — do not add a second |
 | Flow assertions | `app.cash.turbine` | Turbine `test { … }` blocks |
 | Compose UI | `androidx.compose.ui:ui-test-junit4` | `createComposeRule()` / `createAndroidComposeRule()` |
-| Screenshot | `roborazzi` vs `paparazzi` | match the configured one |
+| Screenshot | `roborazzi` vs `paparazzi` | match the configured one; if none, prefer Roborazzi (`generateComposePreviewRobolectricTests` derives tests from `@Preview`) |
 
 ## Test Patterns
 

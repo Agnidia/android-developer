@@ -47,7 +47,11 @@ the command.]
 1. Read `gradle/libs.versions.toml` (`[versions]`, `[libraries]`, `[plugins]`, `[bundles]`).
 2. **Outdated:** `./gradlew dependencyUpdates 2>&1 | tee -a "$LOG"` (versions plugin) if
    present; otherwise compare against Context7/Ref for current releases.
-3. **CVEs:** `osv-scanner --lockfile=... 2>&1 | tee -a "$LOG"` over the catalog/lockfile.
+3. **CVEs:** `osv-scanner --lockfile=... 2>&1 | tee -a "$LOG"` over the catalog/lockfile
+   (OSV aggregates GitHub Advisory / NVD). Also flag **EOL/deprecated coordinates** with no
+   bump target — notably `androidx.security:security-crypto` (EOL at 1.1.0 → migrate to
+   DataStore + `androidx.datastore:datastore-tink`) and SafetyNet/Smart Lock (→ Play
+   Integrity / Credential Manager); route these to `security-auditor` rather than a version bump.
 4. **`--fix`:**
    **Use Task tool with subagent_type="android-developer:dependency-manager"**
    Prompt: "Upgrade these catalog entries one at a time, build+test gate after each, revert
@@ -61,11 +65,12 @@ the command.]
 ## Dependency Audit
 **Catalog:** gradle/libs.versions.toml  **Log:** .context/logs/deps-{ts}.log
 
-| Coordinate | Current | Latest | CVE |
-|------------|---------|--------|-----|
-| okhttp | 4.11.0 | 4.12.0 | CVE-2023-… |
+| Coordinate | Current | Latest | CVE / Status |
+|------------|---------|--------|--------------|
+| okhttp | 5.2.0 | 5.3.0 | — |
+| androidx.security:security-crypto | 1.1.0 | — | EOL → DataStore + Tink |
 
-**Totals:** {n} outdated, {n} with CVEs
+**Totals:** {n} outdated, {n} with CVEs, {n} EOL/deprecated
 <!-- with --fix: -->
 **Upgraded:** {n} (delegated to dependency-manager); majors flagged: {list}
 ```

@@ -1,6 +1,7 @@
 # Turbine Flow Tests
 
-Turbine collects a `Flow` inside a `test { }` block and asserts emissions in order:
+Turbine (`app.cash.turbine:turbine:1.2.1` as of 2026-06) collects a `Flow` inside a `test { }`
+block and asserts emissions in order:
 
 ```kotlin
 flow.test {

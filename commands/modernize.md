@@ -1,6 +1,6 @@
 ---
-description: Migrate Android code toward modern idioms — XML layouts to Compose, Views to Compose, or Groovy build scripts to the Kotlin DSL
-argument-hint: [path] [--target xml-to-compose|view-to-compose|kotlin-dsl] [--dry-run]
+description: Migrate Android code toward modern idioms — XML layouts to Compose, Views to Compose, Groovy build scripts to the Kotlin DSL, or library/API modernization (KSP2, Retrofit 3, OkHttp 5, M3 Expressive, security-crypto to DataStore+Tink)
+argument-hint: [path] [--target xml-to-compose|view-to-compose|kotlin-dsl|api-modernize] [--dry-run]
 allowed-tools: Read, Glob, Grep, Bash, Edit
 ---
 
@@ -36,7 +36,7 @@ sibling of code-refactor.]
 | Option | Default | Effect |
 |--------|---------|--------|
 | `path` | required | Module/package/file to migrate. |
-| `--target xml-to-compose\|view-to-compose\|kotlin-dsl` | required | Migration target. |
+| `--target xml-to-compose\|view-to-compose\|kotlin-dsl\|api-modernize` | required | Migration target. |
 | `--dry-run` | off | Print the step plan; make no edits. |
 
 ## Migration Playbooks
@@ -46,6 +46,7 @@ sibling of code-refactor.]
 | `xml-to-compose` | Convert layout XML + `findViewById`/binding to composables; hoist state to a ViewModel; one screen per step. |
 | `view-to-compose` | Replace a `Fragment`/`View` with a composable + `ComposeView` bridge during transition; migrate navigation last. |
 | `kotlin-dsl` | Convert `build.gradle` (Groovy) to `build.gradle.kts`; move versions to `libs.versions.toml`; one module per step. |
+| `api-modernize` | Bump deprecated libraries/idioms to current (versions from the catalog, `skill: tooling`): KAPT→**KSP2** (`ksp.useKSP2=true`), Retrofit 2→**Retrofit 3** (`suspend` + `converter-kotlinx-serialization`), OkHttp 4→**OkHttp 5** (BOM), Material 3→**M3 Expressive** (`MaterialExpressiveTheme`), and **`androidx.security:security-crypto` (EOL) → DataStore + `datastore-tink`**. One library/idiom per step. |
 
 ## Workflow
 

@@ -31,13 +31,21 @@ Apply `skill: tooling` (gradle-build). Core rules:
   (`[versions]`, `[libraries]`, `[plugins]`, `[bundles]`). No inline version strings in
   build files. Module build files reference `libs.<alias>`.
 - **BOMs over loose pins**: use the Compose BOM and Firebase/OkHttp BOMs so transitive
-  versions stay aligned; do not pin individual artifacts that a BOM governs.
+  versions stay aligned; do not pin individual artifacts that a BOM governs. The Compose
+  Compiler is a Kotlin plugin (`version.ref = "kotlin"`), **not** in the BOM. See
+  `skill: tooling` (gradle-build) for the canonical catalog example.
 - **No dynamic versions**: never `+` or `latest.release`; every coordinate is exact.
+- **KSP, not KAPT**: prefer the KSP processor for Hilt/Room; on Kotlin 2.2+ enable **KSP2**
+  (`ksp.useKSP2=true` in `gradle.properties`) — KSP1 does not fully support Kotlin 2.2+.
 
 ## Safe Upgrade Process
 
 1. **Audit**: `./gradlew dependencyUpdates` (or the versions plugin) for available updates;
-   `osv-scanner` over the lockfile/catalog for known CVEs.
+   `osv-scanner` over the lockfile/catalog for known CVEs. Also flag **EOL/deprecated
+   coordinates** that have no newer version to bump to — notably
+   `androidx.security:security-crypto` (EOL at 1.1.0; migrate `EncryptedSharedPreferences`/
+   `EncryptedFile` to DataStore + `androidx.datastore:datastore-tink`) and any remaining
+   SafetyNet/Smart Lock artifacts (superseded by Play Integrity / Credential Manager).
 2. **One at a time**: bump a single `[versions]` entry, sync, build, run the changed-scope
    tests. Never batch unrelated upgrades into one change.
 3. **Build-gate each bump**: `./gradlew :app:assembleDebug` then `./gradlew test`. Revert

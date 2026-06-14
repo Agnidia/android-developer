@@ -41,9 +41,10 @@ green. It does not author tests itself.]
 
 ## Workflow
 
-1. **Detect** the stack: `useJUnitPlatform()` → JUnit5 else JUnit4; `mockk` vs
-   `mockito-kotlin`; `roborazzi` vs `paparazzi`; presence of `compose.ui:ui-test-junit4`.
-   Read the build files and an existing test for the convention.
+1. **Detect** the stack: `useJUnitPlatform()` → JUnit5 (`junit-jupiter`) else JUnit4; `mockk`
+   vs `mockito-kotlin`; `app.cash.turbine` for Flow tests; `roborazzi` vs `paparazzi` (if
+   neither, prefer Roborazzi); presence of `compose.ui:ui-test-junit4`. Read the build files
+   and an existing test for the convention.
 2. **Delegate:**
    **Use Task tool with subagent_type="android-developer:test-generator"**
    Prompt: "Generate `{type}` tests for `{target}`. Existing stack: runner={runner},

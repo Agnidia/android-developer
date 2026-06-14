@@ -1,8 +1,10 @@
 # Keeping the Domain Layer Pure
 
-The `domain` module is plain Kotlin (a `java-library`/`kotlin("jvm")` module, not an
-Android library). This is enforced structurally: if `domain` cannot depend on
-`androidx.*`, framework types cannot leak in.
+The `domain` module is plain Kotlin (a `kotlin("jvm")` module, or a `commonMain` source set
+in a Kotlin Multiplatform module — not an Android library). This is enforced structurally:
+if `domain` cannot depend on `androidx.*`, framework types cannot leak in. The same
+constraint makes the layer KMP-ready: a pure `commonMain` domain is shareable with
+iOS/desktop as-is.
 
 ✅ Pure domain model:
 ```kotlin

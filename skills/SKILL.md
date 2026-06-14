@@ -10,7 +10,7 @@ description: >-
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-15'
   keywords: [android, kotlin, jetpack-compose, gradle, architecture, testing]
 ---
 
@@ -32,7 +32,7 @@ memory.
 | Domain | Entry | Focus |
 |--------|-------|-------|
 | [Architecture](architecture/SKILL.md) | `architecture/SKILL.md` | Clean Architecture, modularization, Hilt DI, ViewModel + StateFlow |
-| [Compose UI](compose-ui/SKILL.md) | `compose-ui/SKILL.md` | Recomposition/stability, Material 3, navigation, accessibility |
+| [Compose UI](compose-ui/SKILL.md) | `compose-ui/SKILL.md` | Recomposition/stability, Material 3 (incl. M3 Expressive), navigation, accessibility |
 | [Data](data/SKILL.md) | `data/SKILL.md` | Room, Retrofit networking, offline-first repositories |
 | [Concurrency & Networking](concurrency-networking/SKILL.md) | `concurrency-networking/SKILL.md` | Coroutines, Flow, scopes/dispatchers, cancellation |
 | [Quality](quality/SKILL.md) | `quality/SKILL.md` | JUnit/MockK/Turbine, Compose UI tests, screenshot tests |

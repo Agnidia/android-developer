@@ -1,6 +1,7 @@
 # R8 / ProGuard
 
-R8 is the default shrinker/obfuscator/optimizer for release builds.
+R8 is the default shrinker/obfuscator/optimizer for release builds, running in **full mode**
+(the default) via `proguard-android-optimize.txt`.
 
 - Enable `isMinifyEnabled` + `isShrinkResources` in the `release` build type.
 - Keep-rules only for entry points reached via reflection/serialization (Gson/Moshi
