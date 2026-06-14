@@ -1,0 +1,63 @@
+{
+  "name": "android-developer",
+  "owner": {
+    "name": "IGRSoft",
+    "email": "support@igrsoft.com"
+  },
+  "metadata": {
+    "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "android-developer",
+      "description": "Android development toolkit: Kotlin/Compose/Gradle agents, architecture/compose-ui/data/concurrency/quality/tooling skills synthesized from community + Google android/skills, Gradle/adb commands, and igrsoft 11-stage workflow integration.",
+      "source": "./",
+      "strict": true,
+      "category": "development",
+      "keywords": ["android","kotlin","jetpack-compose","gradle","hilt","coroutines","room","retrofit","clean-architecture","mvvm","mvi","ktlint","detekt","workflow-integration"],
+      "skills": [
+        "./skills",
+        "./skills/_shared/workflow-integration",
+        "./skills/architecture",
+        "./skills/architecture/clean-architecture",
+        "./skills/architecture/modularization",
+        "./skills/architecture/hilt-di",
+        "./skills/architecture/viewmodel-stateflow",
+        "./skills/compose-ui",
+        "./skills/compose-ui/compose-best-practices",
+        "./skills/compose-ui/material3",
+        "./skills/compose-ui/navigation",
+        "./skills/compose-ui/accessibility",
+        "./skills/data",
+        "./skills/data/room",
+        "./skills/data/retrofit-networking",
+        "./skills/data/offline-first",
+        "./skills/concurrency-networking",
+        "./skills/concurrency-networking/coroutines-flow",
+        "./skills/quality",
+        "./skills/quality/testing",
+        "./skills/tooling",
+        "./skills/tooling/gradle-build"
+      ],
+      "agents": [
+        "./agents/android-developer.md",
+        "./agents/android-phone-developer.md",
+        "./agents/kotlin-architector.md",
+        "./agents/test-generator.md",
+        "./agents/security-auditor.md",
+        "./agents/code-fixer.md",
+        "./agents/dependency-manager.md"
+      ],
+      "commands": [
+        "./commands/build-test.md",
+        "./commands/lint-fix.md",
+        "./commands/code-review.md",
+        "./commands/code-refactor.md",
+        "./commands/generate-tests.md",
+        "./commands/deps-audit.md",
+        "./commands/modernize.md"
+      ]
+    }
+  ]
+}

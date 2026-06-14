@@ -1,0 +1,5 @@
+# Conductor worktask context (pipeline artifacts, logs, state)
+.context/
+
+# Claude local config
+.claude/
