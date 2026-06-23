@@ -32,7 +32,7 @@ memory.
 | Domain | Entry | Focus |
 |--------|-------|-------|
 | [Architecture](architecture/SKILL.md) | `architecture/SKILL.md` | Clean Architecture, modularization, Hilt DI, ViewModel + StateFlow |
-| [Compose UI](compose-ui/SKILL.md) | `compose-ui/SKILL.md` | Recomposition/stability, Material 3 (incl. M3 Expressive), navigation, accessibility |
+| [Compose UI](compose-ui/SKILL.md) | `compose-ui/SKILL.md` | Recomposition/stability, Material 3 theming + M3 Expressive design-craft, navigation, accessibility |
 | [Data](data/SKILL.md) | `data/SKILL.md` | Room, Retrofit networking, offline-first repositories |
 | [Concurrency & Networking](concurrency-networking/SKILL.md) | `concurrency-networking/SKILL.md` | Coroutines, Flow, scopes/dispatchers, cancellation |
 | [Quality](quality/SKILL.md) | `quality/SKILL.md` | JUnit/MockK/Turbine, Compose UI tests, screenshot tests |
@@ -49,6 +49,7 @@ memory.
 | Exposing UI state from a ViewModel | [architecture/viewmodel-stateflow/SKILL.md](architecture/viewmodel-stateflow/SKILL.md) |
 | Fixing recomposition / stability problems | [compose-ui/compose-best-practices/SKILL.md](compose-ui/compose-best-practices/SKILL.md) |
 | Theming with Material 3 color roles | [compose-ui/material3/SKILL.md](compose-ui/material3/SKILL.md) |
+| M3 Expressive design-craft: spring motion, shape variety/morphing, emphasis, hero moments, anti-patterns | [compose-ui/material3-expressive/SKILL.md](compose-ui/material3-expressive/SKILL.md) |
 | Type-safe navigation and deep links | [compose-ui/navigation/SKILL.md](compose-ui/navigation/SKILL.md) |
 | Making a screen accessible (TalkBack, touch targets) | [compose-ui/accessibility/SKILL.md](compose-ui/accessibility/SKILL.md) |
 | Persisting with Room (entities, DAOs, migrations) | [data/room/SKILL.md](data/room/SKILL.md) |

@@ -6,7 +6,7 @@ igrsoft 11-stage worktask workflow.
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.0.0 |
+| Plugin version | 1.1.0 |
 | igrsoft compatibility | v3.17.0 |
 | License | MIT |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
@@ -48,7 +48,7 @@ thin routers.
 | Domain | Skills |
 |--------|--------|
 | `architecture` | clean-architecture, modularization, hilt-di, viewmodel-stateflow |
-| `compose-ui` | compose-best-practices, material3, navigation, accessibility |
+| `compose-ui` | compose-best-practices, material3, material3-expressive, navigation, accessibility |
 | `data` | room, retrofit-networking, offline-first |
 | `concurrency-networking` | coroutines-flow |
 | `quality` | testing (Apache-2.0 — Google-blended) |

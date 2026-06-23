@@ -46,7 +46,7 @@ sibling of code-refactor.]
 | `xml-to-compose` | Convert layout XML + `findViewById`/binding to composables; hoist state to a ViewModel; one screen per step. |
 | `view-to-compose` | Replace a `Fragment`/`View` with a composable + `ComposeView` bridge during transition; migrate navigation last. |
 | `kotlin-dsl` | Convert `build.gradle` (Groovy) to `build.gradle.kts`; move versions to `libs.versions.toml`; one module per step. |
-| `api-modernize` | Bump deprecated libraries/idioms to current (versions from the catalog, `skill: tooling`): KAPT→**KSP2** (`ksp.useKSP2=true`), Retrofit 2→**Retrofit 3** (`suspend` + `converter-kotlinx-serialization`), OkHttp 4→**OkHttp 5** (BOM), Material 3→**M3 Expressive** (`MaterialExpressiveTheme`), and **`androidx.security:security-crypto` (EOL) → DataStore + `datastore-tink`**. One library/idiom per step. |
+| `api-modernize` | Bump deprecated libraries/idioms to current (versions from the catalog, `skill: tooling`): KAPT→**KSP2** (`ksp.useKSP2=true`), Retrofit 2→**Retrofit 3** (`suspend` + `converter-kotlinx-serialization`), OkHttp 4→**OkHttp 5** (BOM), Material 3→**M3 Expressive** (`MaterialExpressiveTheme`), and **`androidx.security:security-crypto` (EOL) → DataStore + `datastore-tink`**. **Expressive design-craft migrations** (`skill: material3-expressive`): hardcoded `tween`→`MaterialTheme.motionScheme` **spring** tokens, `SegmentedButton`→`ButtonGroup`, `BottomAppBar`→docked/floating toolbar, stacked FABs→`FloatingActionButtonMenu`, circular spinner→`LoadingIndicator`, circular FAB→rounded-square — verify each component's stability against the pinned BOM before adopting. One library/idiom per step. |
 
 ## Workflow
 

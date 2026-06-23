@@ -4,10 +4,10 @@
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.0.0 |
+| Plugin version | 1.1.0 |
 | igrsoft compatibility | v3.17.0 |
 | Claude Code min required | 2.1.169 |
-| Last updated | 2026-06-14 |
+| Last updated | 2026-06-23 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
 header, this table) per the igrsoft `/cc-update` convention.
@@ -18,7 +18,7 @@ header, this table) per the igrsoft `/cc-update` convention.
 |----------|-------|---------------|
 | **Agents** | 7 | android-developer (router), android-phone-developer, kotlin-architector, test-generator, security-auditor, code-fixer, dependency-manager |
 | **Commands** | 7 | build-test, lint-fix, code-review, code-refactor, generate-tests, deps-audit, modernize |
-| **Skills** | 22 SKILL.md | 1 top + 1 workflow-integration + 6 domain routers + 14 leaves (architecture/4, compose-ui/4, data/3, concurrency-networking/1, quality/1, tooling/1) |
+| **Skills** | 23 SKILL.md | 1 top + 1 workflow-integration + 6 domain routers + 15 leaves (architecture/4, compose-ui/5, data/3, concurrency-networking/1, quality/1, tooling/1) |
 | **Skill domains** | 6 | architecture, compose-ui, data, concurrency-networking, quality, tooling |
 | **Hooks** | 3 | audit-tooluse.sh (PostToolUse), audit-subagent.sh (SubagentStop), precompact-checkpoint.sh (PreCompact) |
 
@@ -69,6 +69,15 @@ following stay orchestrator-owned and are deliberately **not** implemented here:
 
 ## Decisions Log
 
+- **2026-06-23: Added M3 Expressive design-craft skill** — New leaf skill
+  `compose-ui/material3-expressive` (+1 SKILL.md + 3 references) captures design-craft
+  tactics (shape variety, rich color, typographic emphasis, strategic containment, fluid
+  motion, component flexibility), hero-moment composition, spring-motion mechanics, shape
+  morphing, the 48-role color system, component replacements, accessibility contracts,
+  and the "AI slop" anti-pattern checklist. Complementary to the existing `material3` skill
+  (theming/API-setup focus). Includes 8 additive cross-link/agent/command edits (skills
+  routers, accessibility, testing, agent, code-review, modernize commands). Version bump
+  to 1.1.0 (minor version for new skill).
 - **Base + workflow-integration mirror system-developer, not apple-developer** —
   system-developer is the exact structural analog for a Bash-only, no-build-MCP,
   `requires_screenshots: false` + cli-fallback plugin. apple-developer was consulted

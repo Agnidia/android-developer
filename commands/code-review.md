@@ -41,13 +41,14 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 | `--fix` | off | Route findings to the matching agent for application. |
 | `--severity P0..P3` | P2 | Minimum severity to report. |
 
-## Review Criteria (see `skill: severity-matrix`, `skill: compose-ui`, `skill: architecture`)
+## Review Criteria (see `skill: severity-matrix`, `skill: compose-ui`, `skill: material3-expressive`, `skill: architecture`)
 
 | Area | Looks for | Default severity |
 |------|-----------|------------------|
 | Compose stability | Unstable params (esp. types from non-Compose modules — strong-skipping is default-on), state read in wrong scope, missing keys, allocation in composition | P1 |
 | Coroutine discipline | `GlobalScope`, hardcoded dispatcher, non-lifecycle collection, main-thread blocking | P1 |
 | Architecture purity | Android types in `domain`, ViewModel → concrete data source, mutable state exposed | P1 |
+| M3 Expressive design-craft (`skill: material3-expressive`) | Hardcoded `tween` for interruptible motion, spatial spring on color/opacity, inline spring constants, uniform shapes, `primary`-only color, flat `bodyMedium` type, deprecated `SegmentedButton`/`BottomAppBar`, circular FAB, missing reduce-motion fallback | P2 |
 | Resource externalization | Hardcoded strings/colors/dimens | P2 |
 | Lint hygiene | ktlint/detekt findings, unjustified suppressions | P3 |
 | Security surface | Implicitly exported component, secret in code, clear-text traffic, EOL `security-crypto`/`EncryptedSharedPreferences` (→ DataStore + Tink), dead SafetyNet/Smart Lock (→ Play Integrity / Credential Manager) | P0 |
