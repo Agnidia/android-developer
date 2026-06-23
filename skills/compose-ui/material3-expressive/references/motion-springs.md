@@ -66,14 +66,17 @@ Respect the system "remove animations" setting. When `ANIMATOR_DURATION_SCALE ==
 - switch the theme from the expressive motion scheme to the **standard** scheme.
 
 ```kotlin
-val reduceMotion = Settings.Global.getFloat(
-    context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f
-) == 0f
+val reduceMotion = remember {
+    Settings.Global.getFloat(
+        context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f
+    ) == 0f
+}
 
 val spec = if (reduceMotion) snap() else MaterialTheme.motionScheme.defaultSpatialSpec()
 ```
 
-Gate it once near the theme and thread the decision down, rather than re-querying per animation.
+Wrap in `remember { }` to avoid a ContentProvider query on every recomposition. Gate it once
+near the theme and thread the decision down, rather than re-querying per animation.
 
 ## Attribution
 Synthesized by IGRSoft (MIT) from Material 3 Expressive motion guidance and community Compose

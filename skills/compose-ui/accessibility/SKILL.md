@@ -45,7 +45,8 @@ Expressive raises the motion/shape stakes — the floor still holds. When buildi
 
 - **Reduce motion** — when `ANIMATOR_DURATION_SCALE == 0`, fall back to `snap()`/simple fades and
   switch from the expressive motion scheme to the standard one.
-- **High contrast** — respond to `UiModeManager.getContrast()` for high-contrast themes.
+- **High contrast** — respond to `UiModeManager.getContrast()` for high-contrast themes (API 34+;
+  guard with `Build.VERSION.SDK_INT >= 34`).
 - **Touch targets** — keep interactive areas ≥ 48dp **throughout** a shape morph (the visual
   silhouette may animate; the hit target must not shrink).
 - **Interruptible springs** — keep every animation interruptible; this is a core a11y benefit of the

@@ -15,8 +15,9 @@ not how to install or theme it. For setup (the `MaterialExpressiveTheme` opt-in,
 color/motion builders, the artifact note) start at
 [material3](../material3/SKILL.md), then come here for the design decisions.
 
-Targets **Android 16+**. Below that, fall back to standard Material 3 — the expressive tactics
-described here assume the expanded token set that ships with the newer `material3`.
+Design-era target: **Android 16+**. The tactics here require `material3:1.4.0+` (a library
+version, not an OS version — `MaterialExpressiveTheme` and spring tokens work on Android < 16
+with that library). Below `material3:1.4.0`, fall back to standard Material 3.
 
 > **API stability.** Expressive ships *inside* `androidx.compose.material3` (no separate
 > artifact), but several pieces named here (`MaterialExpressiveTheme`, `ButtonGroup`,
@@ -140,7 +141,8 @@ the [accessibility](../accessibility/SKILL.md) skill and the
 [anti-patterns](references/anti-patterns.md) checklist; the contract in one place:
 
 - **Contrast** — 4.5:1 for normal text, 3:1 for large; enforce via semantic role pairings, and
-  respond to high-contrast mode (`UiModeManager.getContrast()`).
+  respond to high-contrast mode (`UiModeManager.getContrast()`, API 34+; guard with
+  `Build.VERSION.SDK_INT >= 34`).
 - **Reduce motion** — when `ANIMATOR_DURATION_SCALE == 0`, fall back to `snap()`/simple fades and
   switch from the expressive scheme to the standard one.
 - **Touch targets** — ≥ 48×48dp regardless of how the visual shape morphs.
