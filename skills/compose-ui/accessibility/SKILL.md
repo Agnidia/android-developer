@@ -4,7 +4,7 @@ description: Compose accessibility: semantics, content descriptions, TalkBack, m
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-14'
+  last-updated: '2026-06-23'
   keywords: [accessibility, a11y, semantics, talkback, touch-targets, compose]
 ---
 

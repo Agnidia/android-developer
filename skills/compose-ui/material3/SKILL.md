@@ -4,7 +4,7 @@ description: Material 3 theming in Compose: color roles, dynamic color, typograp
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [material3, theming, color-roles, dynamic-color, typography, expressive, compose]
 ---
 

@@ -10,7 +10,7 @@ description: >-
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [android, kotlin, jetpack-compose, gradle, architecture, testing]
 ---
 

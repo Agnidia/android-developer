@@ -4,7 +4,7 @@ description: Android tests in practice: JUnit5/JUnit4 unit tests, MockK doubles,
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [junit, mockk, turbine, compose-ui-test, roborazzi, paparazzi, android]
 ---
 

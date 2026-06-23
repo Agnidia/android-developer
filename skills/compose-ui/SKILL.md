@@ -4,7 +4,7 @@ description: Jetpack Compose UI for Android: recomposition and stability, Materi
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [compose, jetpack-compose, material3, navigation, accessibility, recomposition]
 ---
 
