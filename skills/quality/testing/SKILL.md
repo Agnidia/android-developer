@@ -4,7 +4,7 @@ description: Android tests in practice: JUnit5/JUnit4 unit tests, MockK doubles,
 license: Apache-2.0
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [junit, mockk, turbine, compose-ui-test, roborazzi, paparazzi, android]
 ---
 
@@ -68,6 +68,16 @@ composables. Cover critical screens and theme/state matrices.
 
 Paparazzi (`app.cash.paparazzi:2.0.0-alpha02`, alpha as of 2026-06) remains an option but is
 not yet stable and does not interoperate with Robolectric/Hilt-driven tests — prefer Roborazzi.
+
+### Testing expressive / morphing UI
+
+For Material 3 Expressive surfaces ([compose-ui/material3-expressive/SKILL.md](../../compose-ui/material3-expressive/SKILL.md)),
+extend the screenshot matrix across **theme × state**, and add a **reduce-motion** column
+(`ANIMATOR_DURATION_SCALE == 0` → `snap()` + standard scheme) so the no-animation fallback is
+covered, not just the animated path. Springs and shape morphs are mid-flight at arbitrary times —
+select nodes by `testTag`/semantics, never by pixel position, and assert on the **settled** state
+rather than an intermediate frame. Goldens stay deterministic when you drive selection by tag and
+disable animation for the captured frame.
 
 ## See also
 - [references/junit-mockk.md](references/junit-mockk.md)

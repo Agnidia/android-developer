@@ -4,7 +4,7 @@ description: Material 3 theming in Compose: color roles, dynamic color, typograp
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [material3, theming, color-roles, dynamic-color, typography, expressive, compose]
 ---
 
@@ -48,7 +48,11 @@ Provide a static fallback scheme for pre-12 devices and a forced-brand mode.
 ## Material 3 Expressive
 
 Expressive lives **inside `material3`** (no extra artifact) and aligns with the Android 16 visual
-style. Opt in with the expressive theme + color/motion builders:
+style. **This section is setup/theming only** — for the design-craft (spring motion specs, shape
+variety/morphing, typographic emphasis, hero-moment composition, and the anti-pattern checklist) see
+[material3-expressive](../material3-expressive/SKILL.md).
+
+Opt in with the expressive theme + color/motion builders:
 
 ```kotlin
 MaterialExpressiveTheme(
@@ -61,16 +65,21 @@ Expressive components (in `material3`):
 
 | Component | Use for |
 |-----------|---------|
-| `ContainedLoadingIndicator` | Branded, contained progress indicator |
+| `LoadingIndicator` / `ContainedLoadingIndicator` | Indeterminate progress with morphing polygons (contained = branded variant) instead of a circular spinner |
 | `FloatingActionButtonMenu` + `ToggleFloatingActionButton` | Expandable FAB with a menu of actions |
-| `ButtonGroup` | Connected row of related buttons (⚠️ verify stable status in your BOM) |
+| `ButtonGroup` | Connected row of related buttons (replaces `SegmentedButton`) |
+| `SplitButtonLayout` | Primary action with an attached secondary affordance |
+| Docked / floating toolbar | Bottom action surface with an integrated FAB (replaces `BottomAppBar`) |
 
-`MaterialExpressiveTheme` is currently annotated experimental — opt in where required and verify
-each component's stability against the BOM you pin.
+`MaterialExpressiveTheme` and the components above are on the experimental / alpha track — opt in
+where required and verify each component's stability against the BOM you pin (Context7/Ref). The
+[material3-expressive](../material3-expressive/SKILL.md) skill carries the full replacement table
+and usage guidance.
 
 ## See also
 - [references/theming.md](references/theming.md)
 - [references/color-roles.md](references/color-roles.md)
+- [material3-expressive/SKILL.md](../material3-expressive/SKILL.md) — Expressive design-craft (motion, shapes, emphasis, hero moments, anti-patterns)
 
 ## Attribution
 Synthesized by IGRSoft (MIT) from `new-silvermoon`, `ayush016`. No verbatim copying.

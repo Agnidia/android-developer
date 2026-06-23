@@ -4,7 +4,7 @@ description: Jetpack Compose UI for Android: recomposition and stability, Materi
 license: MIT
 metadata:
   author: IGRSoft
-  last-updated: '2026-06-15'
+  last-updated: '2026-06-23'
   keywords: [compose, jetpack-compose, material3, navigation, accessibility, recomposition]
 ---
 
@@ -15,7 +15,8 @@ Thin router for the Compose UI skill domain.
 | Skill | Use when |
 |-------|----------|
 | [compose-best-practices](compose-best-practices/SKILL.md) | Recomposition, stability, state hoisting, side-effects |
-| [material3](material3/SKILL.md) | Theming, color roles, typography, Material 3 Expressive |
+| [material3](material3/SKILL.md) | Theming, color roles, typography, Material 3 Expressive **setup** |
+| [material3-expressive](material3-expressive/SKILL.md) | Expressive **design-craft**: spring motion, shapes/morphing, typographic emphasis, hero moments, anti-patterns |
 | [navigation](navigation/SKILL.md) | Type-safe navigation, deep links |
 | [accessibility](accessibility/SKILL.md) | Semantics, TalkBack, touch targets |
 

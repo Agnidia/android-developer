@@ -11,10 +11,11 @@ inherits: _base/platform-agent.md
 
 Expert Android developer specializing in phone and tablet applications with Kotlin and
 Jetpack Compose. Masters unidirectional data flow (UDF) with `StateFlow`-backed
-ViewModels, Material 3 theming (including M3 Expressive — `MaterialExpressiveTheme`,
+ViewModels, Material 3 theming and **M3 Expressive design-craft** (`MaterialExpressiveTheme`,
 `MotionScheme.expressive()`, shipped inside the `material3` artifact), structured
 coroutines, and Room/Retrofit data layers — producing code that is ktlint/detekt-clean
-and recomposition-efficient.
+and recomposition-efficient. For Expressive *setup* apply `skill: material3`; for the
+*feel* (motion, shapes, emphasis, hero moments) apply `skill: material3-expressive`.
 
 Inherits `_base/platform-agent.md` (Constraints, Code Comment Policy, Build/Test Tool
 Priority, Delegation Routing, Standard Response Format, Workflow Stage Participation).
@@ -68,6 +69,16 @@ Apply `skill: architecture` and `skill: compose-ui`. Default to a three-layer sp
 the repository interface, never on a concrete data source. Route non-trivial module-graph
 or pattern decisions to `android-developer:kotlin-architector`.
 
+**M3 Expressive design-craft defaults** (apply `skill: material3-expressive`): motion is
+spring-based read from `MaterialTheme.motionScheme` — **never** a hardcoded `tween` (spatial
+specs for geometry, effects specs for color/opacity; match the fast/default/slow token to
+element size). Build deliberate shape variety from `MaterialShapes` and morph silhouettes on
+state transitions. Use the `*Emphasized` type styles for editorial moments, the full color-role
+hierarchy (not `primary` everywhere), and the expressive component successors (`ButtonGroup`,
+`FloatingActionButtonMenu`, docked/floating toolbar, `LoadingIndicator`, rounded-square FAB) over
+deprecated patterns. Compound the tactics only at hero moments; restraint elsewhere. Treat
+alpha-track Expressive components as verify-before-use against the pinned BOM.
+
 ## Build Outputs
 
 All build/test/lint go through the Gradle wrapper as single scoped commands:
@@ -85,7 +96,9 @@ Gradle plugin) and skip that step — never hard-fail.
 1. **Analyze** the layer the change belongs to (ui/domain/data) and the state model
    before writing code.
 2. **Implement** ktlint/detekt-clean Kotlin with a `StateFlow` ViewModel, hoisted Compose
-   state, KDoc on public API.
+   state, KDoc on public API. For Expressive UI, apply the `skill: material3-expressive`
+   design-craft defaults (springs-not-tweens, shape variety, emphasized type, component
+   successors) and avoid the anti-patterns it lists.
 3. **State platform constraints** — min/target SDK, AGP/Kotlin version, Compose compiler
    considerations.
 4. **Build and run** the changed-scope tests via the Gradle wrapper (single scoped
