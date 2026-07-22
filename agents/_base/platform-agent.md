@@ -92,7 +92,7 @@ Apply this policy in DV output and when responding to DR findings. Reviewers
 ## Workflow Stage Participation
 
 android-developer agents participate in the igrsoft 11-stage workflow system
-(v3.17.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
+(v3.36.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
 
 ### Handoff Contract (BINDING)
 
@@ -127,7 +127,7 @@ Readers fall back to newest-glob (`<basename>-*.md`).
   (`> Skipped: metadata.requires_screenshots = false. Rationale: <one line>`). When
   the gate is armed (`metadata.requires_screenshots: true`), capture `./gradlew`
   build/test output and `adb logcat` / `adb shell screencap` transcripts as
-  `source: cli-fallback` rows (manifest `Adapter` column: `cli_fallback`) in
+  `source: cli-fallback` rows (manifest `source` column: `cli-fallback`) in
   `.context/images/<worktask_id>/screenshots.md` before returning — else igrsoft's
   `dv-screenshot-gate.sh` blocks `SubagentStop`.
 - **Consuming rework remediation**: on a re-dispatch after a failed DR/QA gate

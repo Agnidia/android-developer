@@ -28,7 +28,7 @@ routing and verification on top.
 | `code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
 | `dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
 
-## Workflow Collaboration (igrsoft v3.17.0)
+## Workflow Collaboration (igrsoft v3.36.0)
 
 See `skill: workflow-integration` for the complete 11-stage guide and the binding
 handoff contract (also summarized in `_base/platform-agent.md`).

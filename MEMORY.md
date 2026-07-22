@@ -5,7 +5,7 @@
 | Field | Value |
 |-------|-------|
 | Plugin version | 1.1.0 |
-| igrsoft compatibility | v3.17.0 |
+| igrsoft compatibility | v3.36.0 |
 | Claude Code min required | 2.1.169 |
 | Last updated | 2026-06-23 |
 
@@ -24,8 +24,8 @@ header, this table) per the igrsoft `/cc-update` convention.
 
 ## CC Features Adopted at 1.0.0
 
-Born on the igrsoft v3.17.0 / CC 2.1.169 baseline, the plugin adopts the current
-capability set from the start:
+Born on the igrsoft v3.17.0 / CC 2.1.169 baseline (current compatibility: igrsoft
+v3.36.0), the plugin adopts the current capability set from the start:
 
 - **Tiered `maxTurns`** — every agent declares a runaway-loop backstop sized to
   its role: haiku/low 30 (`dependency-manager`), haiku/medium 30 (`code-fixer`),
