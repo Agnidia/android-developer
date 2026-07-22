@@ -58,6 +58,21 @@ construction. `mockk<T>()`, `every { } returns`, `coEvery { }` for suspend, `ver
 
 Select by `testTag`/semantics, not pixel position. Keep UI tests hermetic.
 
+#### Displayed-Enabled Control Sweep (multi-substate screens)
+
+Screens that cycle one composable through substates (form → error → success; wizard steps) hide two
+defects unit and screenshot tests (Roborazzi/Paparazzi) miss: a control clipped/overlapped/disabled
+in one substate, and a transition control that fails to restore the prior state. Per substate: (1)
+every primary control — by `testTag`/semantics (§ Compose UI) — is BOTH `assertIsDisplayed()` AND
+`assertIsEnabled()`, not just present in the tree; (2) every transition control performs its
+transition AND its inverse restores the prior state (Retry from error → form). One test or one per
+substate — every primary control asserted displayed+enabled in each substate.
+
+Pairs with the 48dp touch-target discipline
+([compose-ui/accessibility](../../compose-ui/accessibility/SKILL.md)) — the same defect class at the
+semantics level. Test-side twin of the armed screenshot gate (`workflow-integration § Screenshot
+Gate for Android Work`).
+
 ## Screenshot
 
 Prefer **Roborazzi** (`io.github.takahirom.roborazzi:*:1.60.0` as of 2026-06) for Compose

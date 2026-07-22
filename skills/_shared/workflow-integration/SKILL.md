@@ -1,6 +1,6 @@
 ---
 name: workflow-integration
-description: Guide for integrating with the igrsoft 11-stage workflow system (v3.17.0). Use when participating in structured workflow stages as an android-developer agent.
+description: Guide for integrating with the igrsoft 11-stage workflow system (v3.36.0). Use when participating in structured workflow stages as an android-developer agent.
 license: MIT
 metadata:
   author: IGRSoft
@@ -35,7 +35,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
 | FN | Finalization | project-manager | — |
 | ST | Stakeholder | stakeholder | — |
 
-## Worktask Triggers (v3.17.0)
+## Worktask Triggers (v3.36.0)
 
 | Trigger | Stages | Use Case |
 |---------|--------|----------|
@@ -92,6 +92,19 @@ Gradle/CLI evidence. Handle it in this order:
    - Frontmatter `screenshot_count` MUST equal the number of table rows.
 3. **Never** fabricate image files or return without either the `false` flag or a
    cli-fallback manifest — the gate re-dispatches DV until one exists.
+4. **Evidence freshness**: every `cli-fallback` transcript or `adb shell screencap` row
+   must be produced *this run* from the actual invocation — never reuse one from a prior
+   run or another workdir. igrsoft QA direct-reads the evidence files and cross-checks them
+   against the `### build-evidence` log paths in the DV artifact; a stale or duplicated
+   transcript/capture is flagged and re-opens DV. Extends the never-fabricate bar in rule 3
+   to reused text and image evidence.
+5. **Armed-gate provenance (`ui_visual_check: true`)**: when a dispatcher explicitly arms it
+   for UI-critical work, statically produced renders (host-side Roborazzi/Paparazzi images,
+   un-interacted screens) do NOT satisfy the gate — reach each named substate on a
+   device/emulator through real interactions (taps/typing via `adb input`, or a driven
+   Compose/Espresso run), confirm the primary controls are displayed and enabled, THEN
+   `adb shell screencap` from the live-driven state, recording the interaction path in
+   `notes`. This is conditional — the `requires_screenshots: false` default remains the norm.
 
 Manifest row format mirrors igrsoft's `dv-screenshot-capture` output:
 `| name | path | source | design_ref | notes |` with `source` ∈ {`cli-fallback`} for CLI/
@@ -154,7 +167,7 @@ Compose/Roborazzi). Template: [templates/qa-testing.md](templates/qa-testing.md)
   implementer records versionCode/versionName, signing/ABI notes, and R8 mapping retention
   in `release-N.md`.
 
-## Artifact Filename Contract (v3.17.0)
+## Artifact Filename Contract (v3.36.0)
 
 **Numbered `<stage>-N.md` names are canonical** per igrsoft's `handoff-protocol.md#stage-artifact-map`.
 N is allocated by PL0, shared across all stages within a run, and propagated via
@@ -177,12 +190,14 @@ newest-glob (`<basename>-*.md`).
 | IR | `incident-N.md` | incident-responder |
 
 **Emit `handoff:` frontmatter unconditionally — it is the merge input regardless of
-filename.** state.json reconciliation is three-layered: Layer 1 (agent atomic self-patch),
-Layer 2 (orchestrator re-reads artifact frontmatter after `Task()` returns), Layer 3
-(`SubagentStop` hook auto-merge). Attempt Layer 1; if it fails, proceed — Layers 2 and 3
-repair from frontmatter.
+filename.** state.json reconciliation is three-layered: Layer 1 (agent runs
+`state-patch.sh --stage <CODE> --prev <PREV>` when its path is supplied, else skips —
+never a hand-rolled `jq`/manual merge), Layer 2 (orchestrator re-reads artifact
+frontmatter after `Task()` returns), Layer 3 (`SubagentStop` hook auto-merge). Attempt
+Layer 1; if the script or its path is absent, proceed — Layers 2 and 3 repair from
+frontmatter.
 
-## Handoff Frontmatter (v3.17.0 schema)
+## Handoff Frontmatter (v3.36.0 schema)
 
 Every stage artifact MUST start with a YAML block between `---` markers. Budgets:
 ≤200 tokens, ≤30 lines. Base required fields: `stage`, `verdict`, `summary` (≤200 chars),
@@ -198,7 +213,7 @@ Every stage artifact MUST start with a YAML block between `---` markers. Budgets
 the target file (anchor-lint enforces this at DR and via the PostToolUse hook). Copy-paste
 blocks: `templates/` in this directory.
 
-## Gate-Feedback Contract (v3.17.0)
+## Gate-Feedback Contract (v3.36.0)
 
 When DR returns `verdict: fail` or QA returns `verdict: no-go`, the orchestrator re-
 dispatches DV (`run_index` bumped, `retry_count`++) and carries the upstream remediation
@@ -264,7 +279,7 @@ Task metadata carries qualified names:
    run_index, error_file, gate_from_stage, gate_blockers, requires_screenshots,
    workspace_path}`.
 
-## Dynamic Worktask Sizing (v3.17.0)
+## Dynamic Worktask Sizing (v3.36.0)
 
 PL0 assesses complexity (0-50) and creates only the stages needed:
 
@@ -278,6 +293,17 @@ PL0 assesses complexity (0-50) and creates only the stages needed:
 
 Security-sensitive features (authentication, payments, PII, cryptography, secrets,
 exported components, deep links) auto-include SR0 regardless of score.
+
+PL0 stamps `metadata.skipped_stages = [{stage, reason}]` for every stage dropped from the
+full 9-stage pipeline (PL→AR→TL→DV→DR→QA→DC→FN→ST), so `state.json` self-documents the
+drops. It also stamps `metadata.test_mode` (`build-only` / `scoped` / `full` — defaulted by
+score and marker coverage) and `metadata.ui_visual_check`. The plugin norm keeps
+`requires_screenshots: false` for systems-style Android work, so `ui_visual_check` is
+normally `false`; but when a dispatcher arms `ui_visual_check: true` for UI-critical work,
+the provenance rule in § Screenshot Gate for Android Work applies. The stage table above,
+the `test_mode` defaults, and these stamps are all defined by igrsoft
+`estimation-methodology § PL0 Stage-Set` (the source of truth) — keep them in lockstep with
+it so the next sync is a mechanical copy.
 
 ## MCP Dynamic Inheritance
 
@@ -314,4 +340,4 @@ discipline, and report results directly — no artifacts or frontmatter required
 
 Original IGRSoft synthesis (MIT), adapted from the system-developer plugin's
 workflow-integration guide (MIT) with Android substitutions. Encodes the igrsoft
-v3.17.0 handoff protocol.
+v3.36.0 handoff protocol.

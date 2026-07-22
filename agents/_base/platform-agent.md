@@ -92,7 +92,7 @@ Apply this policy in DV output and when responding to DR findings. Reviewers
 ## Workflow Stage Participation
 
 android-developer agents participate in the igrsoft 11-stage workflow system
-(v3.17.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
+(v3.36.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
 
 ### Handoff Contract (BINDING)
 
@@ -102,12 +102,26 @@ glob), Required Inputs, pre-flight Verification, output frontmatter schema
 (≤30 lines, ≤200 tokens), state.json atomic write, and the per-stage required
 `metadata.*` matrix.
 
-**state.json patching is REQUIRED before returning.** Atomic-patch
-`.context/state.json` with `stages.<CODE>` and `handoffs[FROM→TO]` using
-read → merge → temp → fsync → rename. If the patch fails, log the error and
-proceed — the SubagentStop hook repairs from frontmatter. **Frontmatter emission
-is unconditional**: an artifact without `handoff:` YAML breaks the three-layer
-safety net.
+**state.json patching is REQUIRED before returning** — but do NOT hand-roll a
+`jq` or manual read→merge→rename. Use igrsoft's single, lock-serialized
+implementation, or skip and let the safety-net layers repair the ledger from
+your frontmatter:
+
+- **Primary (script)**: when the dispatching prompt or
+  `task.metadata.state_patch_script` supplies the path to igrsoft's
+  `state-patch.sh` (it ships in the igrsoft plugin under
+  `skills/worktask/scripts/`), run `bash <path>/state-patch.sh --stage <CODE>
+  --prev <PREV>`. It parses this artifact's `handoff:` frontmatter and atomically
+  merges `stages.<CODE>` plus the `<PREV>→<CODE>` handoff edge into
+  `.context/state.json` — single implementation, lock-serialized, idempotent.
+- **Degrade (silent skip)**: if no script path was supplied, or `jq`/`state.json`
+  is absent, skip — do NOT reconstruct the merge inline. The orchestrator's
+  post-stage re-read (Layer 2) and igrsoft's SubagentStop `state-merge.sh` hook
+  (Layer 3) repair the ledger from your frontmatter.
+
+**Frontmatter emission is therefore unconditional**: an artifact without
+`handoff:` YAML breaks the entire three-layer safety net (agent self-patch →
+orchestrator re-read → SubagentStop hook).
 
 **Artifact filenames use the numbered `<stage>-N.md` contract** (`N = run_index`,
 allocated by PL0 and propagated via `task.metadata.run_index`; e.g.
@@ -127,7 +141,7 @@ Readers fall back to newest-glob (`<basename>-*.md`).
   (`> Skipped: metadata.requires_screenshots = false. Rationale: <one line>`). When
   the gate is armed (`metadata.requires_screenshots: true`), capture `./gradlew`
   build/test output and `adb logcat` / `adb shell screencap` transcripts as
-  `source: cli-fallback` rows (manifest `Adapter` column: `cli_fallback`) in
+  `source: cli-fallback` rows (manifest `source` column: `cli-fallback`) in
   `.context/images/<worktask_id>/screenshots.md` before returning — else igrsoft's
   `dv-screenshot-gate.sh` blocks `SubagentStop`.
 - **Consuming rework remediation**: on a re-dispatch after a failed DR/QA gate
@@ -135,6 +149,20 @@ Readers fall back to newest-glob (`<basename>-*.md`).
   block plus `metadata.gate_from_stage` + `metadata.gate_blockers[]`, and fix those
   exact findings first (do not re-scope). Keep the diff minimal; record per-blocker
   resolution in `.context/errors/{agent-basename}.md`.
+
+### Output Budget (DV)
+
+`development-N.md` ≤250 lines; no full-file listings — cite `path:line-range` or
+pass anchors, not pasted bodies (generated code lives in the repo, not the
+artifact). Final return ≤250 tok (inside the ≤500 template). Target ≤80 tool
+calls/run: batch multi-file edits into one edit pass, never re-Read a file
+unchanged since your last Read (trust the buffer), re-run only scoped tests
+(`./gradlew test --tests <pattern>`, a single connected/instrumented class where a
+device is available — failed subset first), and keep narration lean — no per-file
+play-by-play, no restating what the artifact already holds. **Build Evidence is
+exempt from every cap here**: the Kotlin/AGP version line, the ktlint/detekt
+finding counts, and the `.context/logs/` test-transcript path stay mandatory
+(§ DV Stage) — never trim them to save lines or tokens.
 
 ### DR Stage (Developer Review) — Provide Context
 

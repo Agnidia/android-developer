@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle.",
-    "version": "1.0.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -27,6 +27,7 @@
         "./skills/compose-ui",
         "./skills/compose-ui/compose-best-practices",
         "./skills/compose-ui/material3",
+        "./skills/compose-ui/material3-expressive",
         "./skills/compose-ui/navigation",
         "./skills/compose-ui/accessibility",
         "./skills/data",
