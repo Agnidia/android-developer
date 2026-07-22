@@ -4,10 +4,10 @@
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.1.0 |
+| Plugin version | 1.2.0 |
 | igrsoft compatibility | v3.36.0 |
 | Claude Code min required | 2.1.169 |
-| Last updated | 2026-06-23 |
+| Last updated | 2026-07-22 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
 header, this table) per the igrsoft `/cc-update` convention.
@@ -117,3 +117,45 @@ specific sources:
 - `piyushverma0` — architecture, data, concurrency notes.
 - `ayush016` — design-system / compose notes.
 - Google `android/skills` (Apache License 2.0) — testing and gradle-build blends.
+
+## Version History
+
+### 1.2.0 — 2026-07-22 igrsoft v3.36.0 Port
+
+Compatibility ported v3.17.0 → v3.36.0 (~14 refs across README, this file, the agent
+stage-participation headers, and the `workflow-integration` skill). The Dynamic Worktask Sizing
+table was already current (DR0 at every tier); the PL0 stamp note now also names
+`metadata.test_mode` and `metadata.ui_visual_check` — with the Android nuance that the plugin
+keeps `requires_screenshots: false` for systems-style work, so `ui_visual_check` is normally
+`false` and its provenance rule applies only when a dispatcher arms it. The v3.17.0 / CC 2.1.169
+birth record is preserved, and the pre-existing `_base` manifest-column drift (`Adapter` /
+`cli_fallback` → `source` / `cli-fallback`) is fixed.
+
+Screenshot-gate hardening (the design decision is respected, not flipped): an
+**evidence-freshness rule** — every `cli-fallback` transcript or `adb shell screencap` row is
+produced this run from the actual invocation, never reused; igrsoft QA direct-reads the files and
+cross-checks the `### build-evidence` log paths, re-opening DV on a stale/duplicated one — plus a
+**conditional armed-gate provenance rule**: when a dispatcher arms `ui_visual_check: true` for
+UI-critical work, static renders (Roborazzi/Paparazzi, un-interacted screens) do not satisfy it;
+reach each substate on a device/emulator through real interactions, confirm controls displayed and
+enabled, then `screencap`. `requires_screenshots: false` remains the norm.
+
+Also ported: the **state-patch pointer form** (the manual `read → merge → temp → fsync → rename`
+prose replaced by the two-mode `state-patch.sh --stage <CODE> --prev <PREV>` contract — run when
+supplied, else silently skip; Layers 2/3 repair from the unconditional `handoff:` frontmatter);
+benchmark-driven **Output Budgets** on DV (`_base`, with the three Build-Evidence lines exempt),
+AR-consult, DV-support, and DR-support agents, plus a **Complexity Triage** gate on
+`kotlin-architector` adapted to its consultation shape (compact vs full consultation, no mode
+ladder); and the **Displayed-Enabled Control Sweep** test pattern (`assertIsDisplayed()` +
+`assertIsEnabled()` per substate, transition round-trips, 48dp touch-target cross-ref).
+Repo-structure linters added: `section-lint.sh` (≤1000-char section cap, warn-only — baseline 39
+sections over cap across 85 files, burn-down tracked separately) and `desc-lint.sh` (three-tier
+frontmatter `description` brake: agents 500 / commands 250 / skills 500, the last covering the root
+skills index). Two pre-existing manifest bugs fixed: the stale `marketplace.json metadata.version`
+(1.0.0 → 1.2.0) and the unregistered `compose-ui/material3-expressive` skill (added to
+`plugins[0].skills[]`).
+
+Follow-ups: the agent-description diet toward the ≤250 sibling-plugin ideal is eval-gated — all
+seven agents exceed 250 (worst 465, `security-auditor`; brake 500) — pending evidence that shorter
+descriptions still route reliably. There is no CI in this repo yet, so the linters run manually via
+`scripts/run-checks.sh` until a workflow lands.

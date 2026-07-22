@@ -6,7 +6,7 @@ igrsoft 11-stage worktask workflow.
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.1.0 |
+| Plugin version | 1.2.0 |
 | igrsoft compatibility | v3.36.0 |
 | License | MIT |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
