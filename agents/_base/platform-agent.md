@@ -102,12 +102,26 @@ glob), Required Inputs, pre-flight Verification, output frontmatter schema
 (≤30 lines, ≤200 tokens), state.json atomic write, and the per-stage required
 `metadata.*` matrix.
 
-**state.json patching is REQUIRED before returning.** Atomic-patch
-`.context/state.json` with `stages.<CODE>` and `handoffs[FROM→TO]` using
-read → merge → temp → fsync → rename. If the patch fails, log the error and
-proceed — the SubagentStop hook repairs from frontmatter. **Frontmatter emission
-is unconditional**: an artifact without `handoff:` YAML breaks the three-layer
-safety net.
+**state.json patching is REQUIRED before returning** — but do NOT hand-roll a
+`jq` or manual read→merge→rename. Use igrsoft's single, lock-serialized
+implementation, or skip and let the safety-net layers repair the ledger from
+your frontmatter:
+
+- **Primary (script)**: when the dispatching prompt or
+  `task.metadata.state_patch_script` supplies the path to igrsoft's
+  `state-patch.sh` (it ships in the igrsoft plugin under
+  `skills/worktask/scripts/`), run `bash <path>/state-patch.sh --stage <CODE>
+  --prev <PREV>`. It parses this artifact's `handoff:` frontmatter and atomically
+  merges `stages.<CODE>` plus the `<PREV>→<CODE>` handoff edge into
+  `.context/state.json` — single implementation, lock-serialized, idempotent.
+- **Degrade (silent skip)**: if no script path was supplied, or `jq`/`state.json`
+  is absent, skip — do NOT reconstruct the merge inline. The orchestrator's
+  post-stage re-read (Layer 2) and igrsoft's SubagentStop `state-merge.sh` hook
+  (Layer 3) repair the ledger from your frontmatter.
+
+**Frontmatter emission is therefore unconditional**: an artifact without
+`handoff:` YAML breaks the entire three-layer safety net (agent self-patch →
+orchestrator re-read → SubagentStop hook).
 
 **Artifact filenames use the numbered `<stage>-N.md` contract** (`N = run_index`,
 allocated by PL0 and propagated via `task.metadata.run_index`; e.g.
