@@ -48,6 +48,11 @@ Apply `skill: quality` (testing). Defaults:
   simple); assert the single-source-of-truth and error mapping.
 - **Compose UI**: `composeTestRule.setContent { }`; find by `testTag`/semantics; assert
   state and click handling; keep tests hermetic.
+- **Multi-substate screens**: for a composable that cycles through substates (form →
+  submitting → error → success; wizard steps; capture → review → result), generate a
+  displayed-enabled control sweep — each primary control `assertIsDisplayed()` +
+  `assertIsEnabled()` in every substate, and transition controls round-trip. See
+  `skill: quality (testing) § Displayed-Enabled Control Sweep`.
 - **Naming**: `methodUnderTest_condition_expectedResult` (backtick-quoted function names
   are fine in Kotlin tests).
 
