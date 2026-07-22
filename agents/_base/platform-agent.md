@@ -150,6 +150,20 @@ Readers fall back to newest-glob (`<basename>-*.md`).
   exact findings first (do not re-scope). Keep the diff minimal; record per-blocker
   resolution in `.context/errors/{agent-basename}.md`.
 
+### Output Budget (DV)
+
+`development-N.md` ≤250 lines; no full-file listings — cite `path:line-range` or
+pass anchors, not pasted bodies (generated code lives in the repo, not the
+artifact). Final return ≤250 tok (inside the ≤500 template). Target ≤80 tool
+calls/run: batch multi-file edits into one edit pass, never re-Read a file
+unchanged since your last Read (trust the buffer), re-run only scoped tests
+(`./gradlew test --tests <pattern>`, a single connected/instrumented class where a
+device is available — failed subset first), and keep narration lean — no per-file
+play-by-play, no restating what the artifact already holds. **Build Evidence is
+exempt from every cap here**: the Kotlin/AGP version line, the ktlint/detekt
+finding counts, and the `.context/logs/` test-transcript path stay mandatory
+(§ DV Stage) — never trim them to save lines or tokens.
+
 ### DR Stage (Developer Review) — Provide Context
 
 Technical-lead (`igrsoft:technical-lead`) reviews DV output against Android-specific

@@ -68,3 +68,12 @@ Apply `skill: quality` (testing). Defaults:
    report pass/fail and coverage where available.
 4. **Report** the test files added and what each covers for `development-N.md §
    tests-added`.
+
+### Output Budget (DV support)
+
+Never paste full generated test files into chat — Write them into the project's test
+tree and cite the path + case names in the return (the files are on disk). Final
+return ≤250 tok. Target ≤60 tool calls/run: re-run only the failed subset
+(`./gradlew test --tests <pattern>`; a single connected class where a device is
+available), never re-Read a file unchanged since your last Read, and keep narration
+lean. Full-suite regression is QA's, not DV's.

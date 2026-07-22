@@ -81,6 +81,31 @@ group.
 5. **Delegate** test scaffolding to `test-generator` and mechanical application to
    `code-fixer`.
 
+### Complexity Triage (0–50 scale)
+
+Read `metadata.complexity_score` when supplied. igrsoft's AR consults here only at
+**Medium+** (≥ 11) — its Low-Complexity Gate answers Low-band picks itself. Called
+directly without a score, infer the band (single screen or module, clear
+constraints, no migration = Low).
+
+- **Low (0–10)**: COMPACT consultation MANDATORY — pattern pick from § Pattern
+  Catalog + scoped guidance, ≤120 lines. NO migration plan, Hilt-graph redesign, or
+  multi-module blueprint.
+- **11–30 (Medium / Moderate)**: compact by default; full consultation (migration
+  planning, Hilt-graph design, modularization blueprint) only on its triggers
+  (migrations, mixed patterns, module-boundary or DI-graph restructuring).
+- **31+ (High / Critical)**: full consultation warranted.
+
+Bands (igrsoft): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50
+Critical. The triggers always outrank an inferred low score — a genuine migration
+ask gets full treatment regardless.
+
+### Output Budget (AR consult)
+
+Consultation summary merged into `analyzing-N.md` ≤150 lines (≤120 in compact mode
+— see § Complexity Triage); DV structural contributions to `development-N.md` follow
+the DV budget in `_base`. Pass anchors, not pasted bodies. Final return ≤250 tok.
+
 ## DR Focus
 
 Flag under a **DR Focus** section: dependency-direction violations (data → domain

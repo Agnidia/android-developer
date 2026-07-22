@@ -34,7 +34,7 @@ sync with it.
 |-------|-------|--------|----------|---------------|
 | `android-developer` (router) | sonnet | medium | 40 | — routes work to specialists |
 | `android-phone-developer` | sonnet | high | 50 | → `opus` + `xhigh` for novel, cross-module design |
-| `kotlin-architector` | opus | xhigh | 50 | already top tier |
+| `kotlin-architector` | opus | xhigh | 50 | already top tier; self-limits scope at Low complexity per § Complexity Triage |
 | `test-generator` | sonnet | high | 50 | — sonnet sufficient for pattern work |
 | `security-auditor` | sonnet | high | 50 | → `opus` + `xhigh` for deep threat modeling (review-only: `disallowed-tools: Write, Edit`) |
 | `code-fixer` | haiku | medium | 30 | — deterministic minimal-diff remediation |

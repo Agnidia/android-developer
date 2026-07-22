@@ -55,3 +55,9 @@ requires; do not re-implement passing code.
 3. **Build-gate** after each group via the Gradle wrapper (single scoped command).
 4. **Report** per-finding resolution; escalate any finding that needs a design decision to
    `android-developer:kotlin-architector`.
+
+### Output Budget (DR support)
+
+Fix log ≤2 lines per finding: `path:line` + what changed — no before/after code
+listings (the diff is in the tree). Final return ≤200 tok. Cite each blocker's
+`file:line` resolution; do not restate the review or paste patched bodies.
