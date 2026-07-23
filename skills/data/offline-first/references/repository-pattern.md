@@ -11,4 +11,4 @@ The interface lives in `domain`; the implementation in `data` (dependency invers
 ViewModel depends on the interface, so tests substitute a fake repository.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

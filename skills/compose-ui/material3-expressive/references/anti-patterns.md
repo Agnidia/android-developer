@@ -63,5 +63,5 @@ Use it in `/android-developer:code-review` and during design-craft review.
 | All six tactics applied uniformly to every element | Compound expressiveness only at the 1–2 hero moments; restraint everywhere else |
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from Material 3 Expressive design guidance and community Compose
+Synthesized by IGRSoft (Apache-2.0) from Material 3 Expressive design guidance and community Compose
 references. No verbatim copying; alpha-track API claims are hedged — verify against your pinned BOM.

@@ -15,4 +15,4 @@ mixing roles (e.g. `onPrimary` text on a `surface` background) — contrast is o
 guaranteed within a pair.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `ayush016`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.

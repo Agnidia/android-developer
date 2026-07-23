@@ -1,7 +1,7 @@
 ---
 name: workflow-integration
 description: Guide for integrating with the igrsoft 11-stage workflow system (v3.36.0). Use when participating in structured workflow stages as an android-developer agent.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-14'
@@ -338,6 +338,6 @@ discipline, and report results directly — no artifacts or frontmatter required
 
 ## Attribution
 
-Original IGRSoft synthesis (MIT), adapted from the system-developer plugin's
-workflow-integration guide (MIT) with Android substitutions. Encodes the igrsoft
+Original IGRSoft synthesis (Apache-2.0), adapted from the system-developer plugin's
+workflow-integration guide (Apache-2.0) with Android substitutions. Encodes the igrsoft
 v3.36.0 handoff protocol.

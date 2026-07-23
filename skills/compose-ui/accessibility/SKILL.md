@@ -1,7 +1,7 @@
 ---
 name: accessibility
 description: Compose accessibility: semantics, content descriptions, TalkBack, merged semantics, and minimum touch targets. Use when making screens usable with assistive technologies.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-23'
@@ -58,4 +58,4 @@ Expressive raises the motion/shape stakes — the floor still holds. When buildi
 - [material3-expressive/SKILL.md](../material3-expressive/SKILL.md) — Expressive design-craft (reduce-motion, morphing targets)
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `ayush016`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.

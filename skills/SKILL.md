@@ -7,7 +7,7 @@ description: >-
   implementing data layers (Room, Retrofit, offline-first), writing coroutine/Flow
   concurrency, testing (JUnit/MockK/Turbine/Compose/screenshot), or configuring
   Gradle builds (version catalogs, convention plugins, R8).
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-23'
@@ -73,7 +73,7 @@ memory.
 
 ## Attribution
 
-Index and navigation original to IGRSoft (MIT). Domain skills synthesize Android
+Index and navigation original to IGRSoft (Apache-2.0). Domain skills synthesize Android
 community references (`new-silvermoon`, `piyushverma0`, `ayush016`) and Google's
 official `android/skills` (Apache License 2.0); see each skill's `## Attribution`
 section for specifics.

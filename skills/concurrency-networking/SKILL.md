@@ -1,7 +1,7 @@
 ---
 name: concurrency-networking
 description: Kotlin coroutines and Flow on Android: scopes, dispatchers, structured concurrency, Flow operators, and cancellation. Use when writing async code, collecting flows, or reasoning about cancellation.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-14'
@@ -24,5 +24,5 @@ swappable in tests. Cancellation is cooperative — respect it.
 
 ## Attribution
 
-Synthesized by IGRSoft (MIT) from community coroutine references (`new-silvermoon`,
+Synthesized by IGRSoft (Apache-2.0) from community coroutine references (`new-silvermoon`,
 `piyushverma0`). No content copied verbatim.

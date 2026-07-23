@@ -15,4 +15,4 @@ Modifier.semantics {
 - Add `testTag` for stable test selectors (it does not affect TalkBack).
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `ayush016`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.

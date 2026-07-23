@@ -18,4 +18,4 @@ Route through `:app` (navigation) or a shared contract in `:core` — not a dire
 `:feature:a → :feature:b` edge.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
