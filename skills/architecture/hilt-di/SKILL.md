@@ -1,7 +1,7 @@
 ---
 name: hilt-di
 description: Hilt dependency injection for Android: modules and components, scope selection (Singleton/ActivityRetained/ViewModel), binding interfaces, and testable DI with @TestInstallIn. Use when wiring dependencies or making the graph testable.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -115,5 +115,5 @@ abstract class FakeRepositoryModule {
 
 ## Attribution
 
-Synthesized by IGRSoft (MIT) from community Android architecture references
+Synthesized by IGRSoft (Apache-2.0) from community Android architecture references
 (`new-silvermoon`, `piyushverma0`). No content copied verbatim.

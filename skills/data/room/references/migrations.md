@@ -10,4 +10,4 @@ Every schema version bump needs a `Migration` or the app crashes on upgrade.
   manual `Migration` for renames, type changes, and data transforms.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

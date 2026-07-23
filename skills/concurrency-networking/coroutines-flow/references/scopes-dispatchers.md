@@ -11,4 +11,4 @@ Inject the dispatcher as a constructor parameter (default to the real one) so te
 to unit-test — it makes timing non-deterministic.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

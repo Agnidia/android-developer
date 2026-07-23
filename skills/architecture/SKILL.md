@@ -1,7 +1,7 @@
 ---
 name: architecture
 description: Android app architecture for Kotlin: Clean Architecture layering, modularization, Hilt dependency injection, and ViewModel + StateFlow state holders. Use when structuring an app, choosing MVVM vs MVI, splitting modules, or wiring DI.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -30,5 +30,5 @@ module when sharing logic with iOS/desktop.
 
 ## Attribution
 
-Synthesized by IGRSoft (MIT) from community Android architecture references
+Synthesized by IGRSoft (Apache-2.0) from community Android architecture references
 (`new-silvermoon`, `piyushverma0`). No content copied verbatim.

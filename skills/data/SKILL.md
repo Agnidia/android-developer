@@ -1,7 +1,7 @@
 ---
 name: data
 description: Android data layer: Room persistence, Retrofit networking, and offline-first repositories with a single source of truth. Use when implementing persistence, API access, or sync.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -36,5 +36,5 @@ the data layer — map to domain models at the boundary.
 
 ## Attribution
 
-Synthesized by IGRSoft (MIT) from community data references (`piyushverma0`,
+Synthesized by IGRSoft (Apache-2.0) from community data references (`piyushverma0`,
 `new-silvermoon`). No content copied verbatim.

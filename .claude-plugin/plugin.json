@@ -6,7 +6,7 @@
     "name": "IGRSoft",
     "email": "support@igrsoft.com"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
     "android", "kotlin", "jetpack-compose", "compose", "material3", "gradle",
     "hilt", "coroutines", "flow", "room", "retrofit", "datastore",

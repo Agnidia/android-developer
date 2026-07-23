@@ -31,4 +31,4 @@ Constructor-inject with `@Inject`; for non-Parcelable runtime args use
 `@HiltViewModel(assistedFactory = …)` + `@AssistedInject`/`@Assisted` (see the SKILL).
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

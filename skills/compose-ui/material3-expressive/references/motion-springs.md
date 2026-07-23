@@ -79,5 +79,5 @@ Wrap in `remember { }` to avoid a ContentProvider query on every recomposition. 
 near the theme and thread the decision down, rather than re-querying per animation.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from Material 3 Expressive motion guidance and community Compose
+Synthesized by IGRSoft (Apache-2.0) from Material 3 Expressive motion guidance and community Compose
 references. No verbatim copying; token names are illustrative — verify against your pinned BOM.

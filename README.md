@@ -8,7 +8,7 @@ igrsoft 11-stage worktask workflow.
 |-------|-------|
 | Plugin version | 1.2.0 |
 | igrsoft compatibility | v3.36.0 |
-| License | MIT |
+| License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
 | Evidence norm | `requires_screenshots: false` + cli-fallback transcripts |
 
@@ -58,7 +58,7 @@ thin routers.
 All skill prose is **synthesized** in IGRSoft voice — never copied verbatim from
 source repositories. Each `SKILL.md` carries an `## Attribution` section naming
 its sources. Google-derived content (`quality/testing`, `tooling/gradle-build`)
-is stamped `license: Apache-2.0`; community-synthesized content is `MIT`.
+is stamped `license: Apache-2.0`, as is all community-synthesized content.
 
 ## Commands
 
@@ -117,3 +117,7 @@ Plugin-scoped advisory hooks (`hooks/`): `audit-tooluse.sh` (PostToolUse),
 `audit-subagent.sh` (SubagentStop), `precompact-checkpoint.sh` (PreCompact). All
 rows carry `metadata.advisory: true` and igrsoft-compatible dedupe keys; each
 script has a `--self-test`. See `hooks/README.md`.
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE) for details.

@@ -1,7 +1,7 @@
 ---
 name: offline-first
 description: Offline-first repositories: the database as single source of truth, network as a refresh, and conflict-aware sync. Use when an app must work offline or cache remote data.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -50,4 +50,4 @@ them to a KMP `commonMain` module to share with iOS. Back it with **Room KMP**
 - [references/single-source-of-truth.md](references/single-source-of-truth.md)
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

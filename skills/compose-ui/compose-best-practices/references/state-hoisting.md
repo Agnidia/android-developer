@@ -13,4 +13,4 @@ state with no business meaning (e.g. "is this dropdown expanded") may stay in `r
 inside the composable.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

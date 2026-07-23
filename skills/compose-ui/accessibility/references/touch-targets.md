@@ -9,4 +9,4 @@ Interactive elements must be at least **48dp × 48dp** (Material `minimumInterac
   the Accessibility Scanner.
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `new-silvermoon`, `ayush016`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.

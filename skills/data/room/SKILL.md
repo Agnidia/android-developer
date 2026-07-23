@@ -1,7 +1,7 @@
 ---
 name: room
 description: Room persistence: entities, DAOs with Flow queries, relations, and schema migrations. Use when adding local storage, writing queries, or evolving the schema safely.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -76,4 +76,4 @@ fun buildDb(builder: RoomDatabase.Builder<AppDb>): AppDb = builder
 - [references/migrations.md](references/migrations.md)
 
 ## Attribution
-Synthesized by IGRSoft (MIT) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

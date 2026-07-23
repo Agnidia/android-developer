@@ -1,7 +1,7 @@
 ---
 name: modularization
 description: Android modularization: by-feature vs by-layer module splits, the :core/:feature convention, and Gradle convention plugins for shared build logic. Use when an app grows past a single module or build times degrade.
-license: MIT
+license: Apache-2.0
 metadata:
   author: IGRSoft
   last-updated: '2026-06-15'
@@ -71,5 +71,5 @@ second platform is on the horizon.
 
 ## Attribution
 
-Synthesized by IGRSoft (MIT) from community Android architecture references
+Synthesized by IGRSoft (Apache-2.0) from community Android architecture references
 (`new-silvermoon`, `piyushverma0`). No content copied verbatim.
