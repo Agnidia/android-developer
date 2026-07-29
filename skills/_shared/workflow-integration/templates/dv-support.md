@@ -20,7 +20,7 @@ Task(android-developer:android-phone-developer) {
 Routing rules:
 - Compose/Kotlin feature implementation → `android-phone-developer`.
 - Architecture / module-graph / Hilt design → `kotlin-architector`.
-- Test scaffolding → `test-generator`.
+- Test scaffolding → `and-test-generator`.
 - Forward all gate/screenshot/rework metadata **unchanged** — the router relays, it
   does not consume or rewrite. After return, run the Return Verification (BINDING)
   contract before reporting to the orchestrator.

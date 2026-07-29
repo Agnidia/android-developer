@@ -15,7 +15,7 @@ estimated-cost:
 <!-- Updated: June 2026 -->
 
 Refactor existing Kotlin/Compose code toward a target architecture pattern. Consult
-`kotlin-architector` for the plan, apply via `code-fixer`, and build-gate after each
+`kotlin-architector` for the plan, apply via `and-code-fixer`, and build-gate after each
 incremental step — never a big-bang rewrite.
 
 [Extended thinking: Refactoring is risk; this command makes it incremental and gated. It
@@ -28,7 +28,7 @@ step that introduced it.]
 1. **Incremental, build-gated.** One small step at a time; `./gradlew assembleDebug test`
    after each. Never apply the whole plan blind.
 2. **Architect plans, fixer applies.** `kotlin-architector` produces the step plan;
-   `code-fixer` applies each step.
+   `and-code-fixer` applies each step.
 3. **Single-command Bash invocations.**
 4. **`--dry-run` prints the plan and stops** — no edits.
 5. **Never enter plan mode** (the architect produces the plan, not CC plan mode).
@@ -58,7 +58,7 @@ step that introduced it.]
    with the files each touches."
 3. If `--dry-run`: print the plan and stop.
 4. For each step, in order:
-   - **Use Task tool with subagent_type="android-developer:code-fixer"** with the step's
+   - **Use Task tool with subagent_type="android-developer:and-code-fixer"** with the step's
      edits.
    - `./gradlew {target}:assembleDebug 2>&1 | tee -a "$LOG"` then the changed-scope tests.
    - On failure, stop, report, and ask the architect for a correction — do not proceed.

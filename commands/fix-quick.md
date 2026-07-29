@@ -43,18 +43,22 @@ re-checks. It does not attempt semantic fixes — deep findings are surfaced for
 | Option | Default | Effect |
 |--------|---------|--------|
 | `path` | `.` | Project root holding `gradlew`. |
-| `--check` | default | Report only: `./gradlew ktlintCheck detekt lint`. |
-| `--fix` | off | Auto-fix: `./gradlew ktlintFormat` and detekt `--auto-correct`, then re-check. |
+| `--check` | default | Report only: the subset of `ktlintCheck` / `detekt` / `lint` the project actually defines (see Workflow step 2). |
+| `--fix` | off | Auto-fix: `./gradlew ktlintFormat` and detekt `--auto-correct` where those tasks exist, then re-check. |
 
 ## Workflow
 
 1. Confirm `path/gradlew`. Create `.context/logs/`; `LOG=".context/logs/lint-$(date +%Y%m%d-%H%M%S).log"`.
-2. **`--check`**: `./gradlew ktlintCheck detekt lint 2>&1 | tee -a "$LOG"`. Report the
-   finding counts.
-3. **`--fix`**: `./gradlew ktlintFormat 2>&1 | tee -a "$LOG"` then
-   `./gradlew detekt --auto-correct 2>&1 | tee -a "$LOG"`, then re-run `ktlintCheck detekt`
-   to confirm zero remaining. Report what was auto-fixed and what remains (manual).
-4. If a task is missing (no ktlint/detekt plugin), skip it, note it, run the rest.
+2. **Select the tasks that exist.** `./gradlew tasks --all`, then keep only those of
+   `ktlintCheck` / `detekt` / `lint` it lists. Gradle aborts the **whole** invocation on the
+   first unknown task, so a hardcoded `ktlintCheck detekt lint` on a project without detekt
+   runs *nothing* — this step is what makes rule 4 work.
+3. **`--check`**: run the step-2 tasks as one command, those names only
+   (`./gradlew ktlintCheck lint 2>&1 | tee -a "$LOG"`). Report the finding counts.
+4. **`--fix`**: `./gradlew ktlintFormat` then `./gradlew detekt --auto-correct` — each only
+   if that task exists — teeing to `$LOG`; re-run the step-2 check tasks to confirm zero
+   remaining. Report what was auto-fixed and what remains (manual).
+5. Name every linter skipped for absence: one that never ran is not one that found nothing.
 
 ## Tool Availability
 
@@ -73,7 +77,7 @@ re-checks. It does not attempt semantic fixes — deep findings are surfaced for
 | Linter | Findings | Auto-fixed | Remaining |
 |--------|----------|------------|-----------|
 | ktlint | N | M | N-M |
-| detekt | N | M | N-M |
+| detekt | not configured — skipped | — | — |
 | Android Lint | N | 0 | N |
 
 **Result:** CLEAN / {N} findings remain (run /android-developer:review-code for deep fixes)

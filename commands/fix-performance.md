@@ -23,7 +23,7 @@ regenerate baseline profiles.
 This plugin has **no `performance-engineer` agent**. Analysis therefore routes to
 `android-developer:kotlin-architector`, which owns the module graph, startup dependency
 order, and recomposition/state boundaries where Android performance problems actually
-originate; mechanical application routes to `android-developer:code-fixer` under a
+originate; mechanical application routes to `android-developer:and-code-fixer` under a
 minimal-diff gate. Do not invoke another plugin's performance agent — it does not
 understand Gradle variants, R8, or Compose recomposition.
 
@@ -47,8 +47,11 @@ behind a checkpoint, and every applied change is re-measured against the recorde
    reverted, not kept.
 6. **Single-command Bash invocations.** `./gradlew :macrobenchmark:connectedBenchmarkAndroidTest`,
    `adb shell dumpsys gfxinfo`. Never `cd`-chain or `&&`-chain.
-7. **Tee every measurement** to `.context/logs/perf-<timestamp>.log`.
-8. **Never enter plan mode.**
+7. **Honour `--device`.** When supplied, every adb command below takes `-s SERIAL`. The
+   Modes section writes bare `adb` for readability; that form is correct only for a single
+   attached device.
+8. **Tee every measurement** to `.context/logs/perf-<timestamp>.log`.
+9. **Never enter plan mode.**
 
 ## Usage
 
@@ -65,7 +68,7 @@ behind a checkpoint, and every applied change is re-measured against the recorde
 | `path` | `.` | Module or screen to profile. |
 | `--mode startup\|jank\|memory\|all` | `all` | Which measurement track to run. |
 | `--apply` | off | Enable the optimization phase — still gated by the checkpoint. |
-| `--device SERIAL` | first attached | Benchmarks require a physical device or a properly configured emulator. |
+| `--device SERIAL` | first attached | Benchmarks require a physical device or a properly configured emulator. When supplied, insert `-s SERIAL` into every adb command below (`adb -s SERIAL shell dumpsys …`) and export `ANDROID_SERIAL=SERIAL` for the Gradle benchmark run — bare `adb` fails with `more than one device/emulator` exactly when this flag matters. |
 
 ## Phase 1: Baseline Measurement
 
@@ -125,7 +128,7 @@ present the findings and get explicit approval before continuing to Phase 2.
 For each finding, highest measured cost first:
 
 1. **Apply:**
-   **Use Task tool with subagent_type="android-developer:code-fixer"**
+   **Use Task tool with subagent_type="android-developer:and-code-fixer"**
    Prompt: "Apply exactly this performance change: {finding, file:line, proposed change}.
    Minimal diff — do not refactor adjacent code, do not reformat. Report the change as
    `{file, line, before, after}`."

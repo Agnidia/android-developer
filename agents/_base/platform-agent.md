@@ -2,7 +2,7 @@
 
 Shared behavior for all android-developer agents — the `android-developer` router,
 `android-phone-developer`, `kotlin-architector`, and the utility specialists
-(`test-generator`, `security-auditor`, `code-fixer`, `dependency-manager`).
+(`and-test-generator`, `and-security-auditor`, `and-code-fixer`, `and-dependency-manager`).
 
 ## Constraints
 
@@ -20,8 +20,11 @@ Shared behavior for all android-developer agents — the `android-developer` rou
 - **Single-command Bash invocations**: scoped `Bash(cmd:*)` permissions cannot
   match compound commands. Use `./gradlew :module:task`, `adb <subcommand>` —
   never `cd X && ...` chains or `;`/`|`-joined command lines.
-- Min/target SDK and AGP/Kotlin versions are project-defined — read them from
-  `gradle/libs.versions.toml` and `build.gradle.kts`; never assume a version.
+- Min/target SDK and AGP/Kotlin versions are project-defined — read them from the build
+  scripts the project actually has; never assume a version. Kotlin DSL + version catalog
+  (`build.gradle.kts`, `gradle/libs.versions.toml`) is the default assumption; Groovy
+  (`build.gradle`) and inline `dependencies { }` coordinates are supported inputs
+  (`fix-modernize --target kotlin-dsl` migrates them). Glob both before calling a value absent.
 
 ## Mandatory Requirements (Always Enforce)
 
@@ -68,10 +71,10 @@ Apply this policy in DV output and when responding to DR findings. Reviewers
 |------|----------|
 | Architecture patterns, modularization, Hilt graph, MVI vs MVVM | `android-developer:kotlin-architector` |
 | Phone / tablet Compose + Kotlin implementation | `android-developer:android-phone-developer` |
-| Test generation, coverage | `android-developer:test-generator` |
-| Dependency / version-catalog / CVE | `android-developer:dependency-manager` |
-| Batch fixes from review findings | `android-developer:code-fixer` |
-| Security review (permissions, R8, exported, secrets) | `android-developer:security-auditor` |
+| Test generation, coverage | `android-developer:and-test-generator` |
+| Dependency / version-catalog / CVE | `android-developer:and-dependency-manager` |
+| Batch fixes from review findings | `android-developer:and-code-fixer` |
+| Security review (permissions, R8, exported, secrets) | `android-developer:and-security-auditor` |
 | Library documentation | Context7 or Ref MCP tools |
 | Model / effort choice | `skills/_shared/model-selection.md` |
 
@@ -172,7 +175,7 @@ purity, lint hygiene, resource externalization). android-developer agents suppor
 DR by:
 
 - Flagging known trade-offs in `development-N.md` under a "DR Focus" section.
-- Responding to DR findings by routing to `android-developer:code-fixer` (minimal-
+- Responding to DR findings by routing to `android-developer:and-code-fixer` (minimal-
   diff application) or `android-developer:kotlin-architector` (pattern consult).
 - Re-running `./gradlew test ktlintCheck detekt` (single scoped commands) after each
   fix group.

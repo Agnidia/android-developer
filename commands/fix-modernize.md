@@ -15,7 +15,7 @@ estimated-cost:
 <!-- Updated: June 2026 -->
 
 Run a migration playbook toward a modern Android idiom. Consult `kotlin-architector` for
-the migration plan, apply via `code-fixer`, and build-gate after each step.
+the migration plan, apply via `and-code-fixer`, and build-gate after each step.
 
 [Extended thinking: Migrations (XML→Compose, View→Compose, Groovy→Kotlin DSL) are
 mechanical but risky at scale. This command turns each into an ordered, build-gated step
@@ -64,7 +64,7 @@ sibling of fix-refactor.]
    Each step builds and passes tests on its own. Return the step list and the files each
    touches."
 3. If `--dry-run`: print and stop.
-4. For each step: **Use Task tool with subagent_type="android-developer:code-fixer"** to
+4. For each step: **Use Task tool with subagent_type="android-developer:and-code-fixer"** to
    apply, then `./gradlew {module}:assembleDebug test 2>&1 | tee -a "$LOG"`. Stop on
    failure and request a correction from the architect.
 

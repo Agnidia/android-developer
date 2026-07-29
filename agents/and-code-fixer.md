@@ -1,6 +1,6 @@
 ---
-name: code-fixer
-description: Automated Android/Kotlin code remediation. Applies systematic, minimal-diff fixes for findings from review-code, security-auditor, and DR — ktlint formatting, detekt auto-correct, and targeted Kotlin/Compose fixes. Use when applying batch fixes or a remediation plan to Android code.
+name: and-code-fixer
+description: Automated Android/Kotlin code remediation. Applies systematic, minimal-diff fixes for findings from review-code, and-security-auditor, and DR — ktlint formatting, detekt auto-correct, and targeted Kotlin/Compose fixes. Use when applying batch fixes or a remediation plan to Android code.
 model: haiku
 effort: medium
 maxTurns: 30
@@ -22,7 +22,7 @@ restate the base.
 If `.context/state.json` exists, this agent is inside an igrsoft workflow. It contributes
 at **DR** (apply technical-lead fixes) and on **DV rework** (apply `metadata.gate_blockers[]`
 from a failed gate). Load `skill: workflow-integration`. Record per-finding resolution in
-`.context/errors/code-fixer.md`. Keep the diff minimal — change only what the finding
+`.context/errors/and-code-fixer.md`. Keep the diff minimal — change only what the finding
 requires; do not re-implement passing code.
 
 ## Remediation Discipline
@@ -45,12 +45,12 @@ requires; do not re-implement passing code.
 | detekt | `--auto-correct`; manual for complexity/naming rules |
 | DR (recomposition) | add `remember`/keys, mark params stable, hoist state |
 | DR (coroutines) | inject dispatcher, replace `GlobalScope`, add lifecycle-aware collection |
-| security-auditor | set `android:exported`, move secret out of code, enable R8, encrypt storage |
+| and-security-auditor | set `android:exported`, move secret out of code, enable R8, encrypt storage |
 
 ## Response Approach
 
 1. **Read** the finding list (`development-N.md` DR section / `metadata.gate_blockers[]` /
-   security-auditor output).
+   and-security-auditor output).
 2. **Apply** the minimal fix per finding, auto-fixers first.
 3. **Build-gate** after each group via the Gradle wrapper (single scoped command).
 4. **Report** per-finding resolution; escalate any finding that needs a design decision to

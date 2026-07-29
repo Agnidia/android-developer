@@ -84,6 +84,7 @@ Evaluate against the matching playbook and these Android-specific gates:
 | State ownership | Mutable state exposed (`MutableStateFlow` public), UI state reconstructed in the composable, state hoisted to the wrong level (`skill: compose-best-practices`) | P1 |
 | Concurrency boundaries | `GlobalScope`, hardcoded dispatcher instead of an injected one, collection outside a lifecycle scope (`skill: coroutines-flow`) | P1 |
 | DI correctness | Field injection where constructor injection fits, `@Singleton` on request-scoped work, missing qualifier (`skill: hilt-di`) | P2 |
+| DI correctness (non-Hilt) | This plugin ships Hilt guidance only. On a Koin or manual-DI project review the framework-independent properties — constructor injection over field/service-locator lookup, scope lifetime matching the consumer, no container access from the domain layer — and mark the framework-specific gate `not assessed (no {Koin\|manual} playbook)` rather than applying Hilt rules to it | P2 |
 | Data boundaries | Room entity or DTO crossing into the UI layer instead of a domain model (`skill: offline-first`) | P2 |
 | Testability | An architectural seam with no fake/interface, so the layer cannot be tested in isolation (`skill: testing-principles`) | P2 |
 

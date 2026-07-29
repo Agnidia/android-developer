@@ -1,5 +1,5 @@
 ---
-description: Audit Android UI accessibility — TalkBack, Compose semantics, touch targets, contrast — and triage findings by severity
+description: Audit Jetpack Compose UI accessibility — TalkBack, Compose semantics, touch targets, contrast — and triage findings by severity
 argument-hint: [path or module (default .)] [--level A|AA|AAA] [--device SERIAL]
 allowed-tools: Read, Glob, Grep, Bash
 estimated-cost:
@@ -14,9 +14,15 @@ estimated-cost:
 # Accessibility Audit
 <!-- Updated: June 2026 -->
 
-Audit Android UI against WCAG 2.2 and the Android accessibility guidelines: TalkBack
-labelling, Compose semantics, touch-target size, contrast, focus order, and state
+Audit Jetpack Compose UI against WCAG 2.2 and the Android accessibility guidelines:
+TalkBack labelling, Compose semantics, touch-target size, contrast, focus order, and state
 announcement. Read-only — findings triage to P0-P3; fixes route out to a separate command.
+
+**Scope: the Compose surface only.** Every check below is written in Compose terms; there
+are no View/XML equivalents here (`importantForAccessibility`, `accessibilityLiveRegion`,
+`accessibilityTraversalBefore`, `AccessibilityNodeInfo` actions are not inspected). On a
+View or hybrid module this finds nothing in the View layer, which is **not** the same as
+finding it accessible — see **View/XML targets** under Error Handling.
 
 [Extended thinking: Automated Android a11y tooling (Accessibility Scanner, the
 `accessibility-test-framework` checks wired into Espresso/Compose tests) catches roughly the
@@ -39,7 +45,11 @@ scan alone. Compose changes the shape of the problem: `contentDescription`, `Mod
 4. **Triage every finding** to a WCAG 2.2 success criterion and a severity from
    `skill: severity-matrix`. `--level` bounds which criteria are in scope.
 5. **Single-command Bash invocations** (`./gradlew :app:connectedDebugAndroidTest`,
-   `adb shell settings get secure enabled_accessibility_services`).
+   `adb shell settings get secure enabled_accessibility_services`). When `--device` is
+   supplied, insert `-s SERIAL` into every adb command and pass
+   `-Pandroid.testInstrumentationRunnerArguments.device=SERIAL` (or set `ANDROID_SERIAL`)
+   for the Gradle connected run — bare `adb` fails with `more than one device/emulator`
+   exactly when this flag matters.
 6. **No device is not a failure** — fall back to static source analysis and mark the report
    reduced-coverage.
 7. **Never enter plan mode.**
@@ -62,7 +72,9 @@ scan alone. Compose changes the shape of the problem: `contentDescription`, `Mod
 
 ## Phase 1: Static Source Analysis
 
-Read the target's composables and layouts for:
+First establish the UI toolkit: glob the target for `@Composable` versus `res/layout/*.xml`
++ `Fragment`/`Activity` `setContentView`. Record it — it determines what the coverage claim
+at the end may say. Then read the target's composables for:
 
 | Check | Looks for | WCAG SC |
 |-------|-----------|---------|
@@ -124,6 +136,7 @@ a concrete Compose fix per item. Review-only — do NOT edit."
 ```markdown
 ## Accessibility Audit (WCAG 2.2 — {level})
 **Target:** {path}  **Device:** {serial|none — static only}
+**UI toolkit:** {Compose | Compose + View/XML — View layer unaudited | View/XML only — out of scope}
 **Automated:** {connectedAndroidTest ✅ | unavailable}  **Log:** .context/logs/a11y-{ts}.log
 
 ### Summary
@@ -154,6 +167,20 @@ Note: adb devices lists no device — automated a11y checks skipped.
 Proceeding with static source analysis (reduced coverage).
 Suggestion: start an emulator, then re-run for target-size and contrast evidence.
 ```
+
+### View/XML targets
+When Phase 1 finds `res/layout/*.xml` screens or a `Fragment`/`View` hierarchy, say so
+before reporting anything, and never let the report read as clean:
+```
+Note: {n} View/XML screen(s) in scope ({files}). This command audits the Compose
+surface only — the View layer was NOT audited and its findings are unknown, not zero.
+Coverage: Compose {n} composables audited / View {n} screens unaudited.
+Suggestion: audit those screens with Accessibility Scanner and Espresso
+AccessibilityChecks, or migrate them via /android-developer:fix-modernize
+--target xml-to-compose and re-run.
+```
+A target with **no** composables at all is a scope mismatch: report the mismatch and the
+suggestion above, and stop — do not emit an empty findings table as a pass.
 
 ### Accessibility checks not wired into the test suite
 Report that `AccessibilityChecks` is not enabled in the instrumented tests, name it as a

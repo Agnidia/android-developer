@@ -18,8 +18,8 @@ Take an Android feature from description to reviewed, tested code through four p
 architecture → implementation → tests → security review, with a build gate after each and
 an approval checkpoint between phases.
 
-Agent chain: `kotlin-architector` → `android-phone-developer` → `test-generator` →
-`security-auditor`.
+Agent chain: `kotlin-architector` → `android-phone-developer` → `and-test-generator` →
+`and-security-auditor`.
 
 [Extended thinking: The phases exist because each hands the next a different artifact —
 a structure, then code, then a suite, then a verdict — and because a wrong decision in
@@ -135,7 +135,7 @@ Stop here. Use AskUserQuestion to present the implementation summary and get app
 
 ## Phase 3: Tests
 
-**Use Task tool with subagent_type="android-developer:test-generator"**
+**Use Task tool with subagent_type="android-developer:and-test-generator"**
 Prompt: "Generate tests for the feature implemented in
 `.context/.feature-dev/implementation.md`. Detect and match the project's existing stack —
 never introduce a second framework. Cover: ViewModel state transitions (Turbine for Flow
@@ -149,7 +149,7 @@ Write `.context/.feature-dev/tests.md`.
 
 ## Phase 4: Security Review
 
-**Use Task tool with subagent_type="android-developer:security-auditor"**
+**Use Task tool with subagent_type="android-developer:and-security-auditor"**
 Prompt: "Security-review the feature in `.context/.feature-dev/implementation.md`. Check:
 credential and token storage (DataStore + Tink — flag any `EncryptedSharedPreferences` or
 EOL `androidx.security:security-crypto`); exported components and intent handling in the
@@ -171,8 +171,8 @@ Any P0 finding **blocks** completion: report it, halt, and ask how to proceed. W
 |-------|-------|--------|-------|
 | 1 Architecture | kotlin-architector | {pattern}, {n} steps | — |
 | 2 Implementation | android-phone-developer | {n} files | ✅ |
-| 3 Tests | test-generator | {n} tests, {m} passing | ✅ |
-| 4 Security | security-auditor | P0:{n} P1:{n} P2:{n} | — |
+| 3 Tests | and-test-generator | {n} tests, {m} passing | ✅ |
+| 4 Security | and-security-auditor | P0:{n} P1:{n} P2:{n} | — |
 
 ### Files
 | File | Layer | Phase |
@@ -200,7 +200,7 @@ ask for them before designing. Do not invent requirements.
 
 ### P0 security finding
 Halt before reporting COMPLETE. Present the finding and ask whether to fix now (route to
-`android-developer:code-fixer`) or accept and document the risk.
+`android-developer:and-code-fixer`) or accept and document the risk.
 
 ## See Also
 - `/android-developer:arch-select` — the standalone version of Phase 1.

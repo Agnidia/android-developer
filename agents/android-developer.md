@@ -5,7 +5,7 @@ model: sonnet
 effort: medium
 maxTurns: 40
 color: blue
-tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(ls:*), Bash(gradle:*), Bash(./gradlew:*), Bash(adb:*), Task(android-developer:android-phone-developer), Task(android-developer:kotlin-architector), Task(android-developer:test-generator), Task(android-developer:security-auditor), Task(android-developer:code-fixer), Task(android-developer:dependency-manager), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
+tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(ls:*), Bash(gradle:*), Bash(./gradlew:*), Bash(adb:*), Task(android-developer:android-phone-developer), Task(android-developer:kotlin-architector), Task(android-developer:and-test-generator), Task(android-developer:and-security-auditor), Task(android-developer:and-code-fixer), Task(android-developer:and-dependency-manager), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
 inherits: _base/platform-agent.md
 ---
 
@@ -23,10 +23,10 @@ routing and verification on top.
 |-------|----------------|
 | `android-phone-developer` | Phone/tablet Compose + Kotlin implementation; UDF/MVVM/MVI; primary DV worker |
 | `kotlin-architector` | Clean Architecture, modularization (by-feature/by-layer), Hilt graph, MVI vs MVVM; AR-stage pattern selection |
-| `test-generator` | JUnit5/JUnit4, MockK, Turbine (flow tests), Compose UI test, screenshot tests (Roborazzi preferred over Paparazzi) |
-| `security-auditor` | Permissions, exported components, at-rest storage (DataStore + Tink; security-crypto is EOL), network-security-config, R8/ProGuard, secrets, Play Integrity, Credential Manager (review-only) |
-| `code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
-| `dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
+| `and-test-generator` | JUnit5/JUnit4, MockK, Turbine (flow tests), Compose UI test, screenshot tests (Roborazzi preferred over Paparazzi) |
+| `and-security-auditor` | Permissions, exported components, at-rest storage (DataStore + Tink; security-crypto is EOL), network-security-config, R8/ProGuard, secrets, Play Integrity, Credential Manager (review-only) |
+| `and-code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
+| `and-dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
 
 ## Workflow Collaboration (igrsoft v3.36.0)
 
@@ -39,9 +39,9 @@ handoff contract (also summarized in `_base/platform-agent.md`).
 |-------|------|--------------------------------|
 | **AR** | Consult | `kotlin-architector` (Clean Arch, modularization, Hilt graph, MVI vs MVVM) |
 | **DV** | Primary | Implementation via the routed specialist (`android-phone-developer`) |
-| **DR** | Support | Route `code-fixer` for fix application, `kotlin-architector` for pattern consult |
-| **SR** | Context | `security-auditor` (permissions, exported, R8, secrets, at-rest storage, attestation/auth, network-security-config) |
-| **QA** | Support | `test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
+| **DR** | Support | Route `and-code-fixer` for fix application, `kotlin-architector` for pattern consult |
+| **SR** | Context | `and-security-auditor` (permissions, exported, R8, secrets, at-rest storage, attestation/auth, network-security-config) |
+| **QA** | Support | `and-test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
 
 ### DV Stage Quick Steps
 
@@ -91,10 +91,10 @@ summary and emit minimal frontmatter. Never return without `handoff:` frontmatte
 |------------------|-------------------|-----------|
 | `@Composable`, Compose UI, screen/widget implementation, `.kt` UI code | `android-phone-developer` | Phone/tablet Compose + Kotlin implementation |
 | "architecture", "modularize", "Hilt graph", "MVI vs MVVM", "clean arch", "feature module" | `kotlin-architector` | Architecture and module-graph design |
-| "test", "JUnit", "MockK", "Turbine", "Compose UI test", "Roborazzi", "coverage" | `test-generator` | Test generation and coverage |
-| "permission", "exported", "R8", "ProGuard", "secrets", "biometric", "passkey", "Credential Manager", "Play Integrity", "DataStore encryption", "network-security-config" | `security-auditor` | Security audit (review-only) |
-| "fix", "remediate", "apply patch", "ktlint format", "detekt auto-correct" | `code-fixer` | Automated batch fixes |
-| "dependency", "version catalog", "libs.versions.toml", "CVE", "upgrade" | `dependency-manager` | Dependency and version-catalog management |
+| "test", "JUnit", "MockK", "Turbine", "Compose UI test", "Roborazzi", "coverage" | `and-test-generator` | Test generation and coverage |
+| "permission", "exported", "R8", "ProGuard", "secrets", "biometric", "passkey", "Credential Manager", "Play Integrity", "DataStore encryption", "network-security-config" | `and-security-auditor` | Security audit (review-only) |
+| "fix", "remediate", "apply patch", "ktlint format", "detekt auto-correct" | `and-code-fixer` | Automated batch fixes |
+| "dependency", "version catalog", "libs.versions.toml", "CVE", "upgrade" | `and-dependency-manager` | Dependency and version-catalog management |
 
 **Handle directly** (no language-specific design judgment needed): form-factor and
 module-layout detection, and the build/test happy path — single scoped commands
@@ -113,5 +113,5 @@ module-layout detection, and the build/test happy path — single scoped command
    returning to the orchestrator.
 
 For Compose/Kotlin implementation → `android-phone-developer`. For architecture →
-`kotlin-architector`. For tests → `test-generator`. For a security review →
-`security-auditor`. For library documentation → Context7 or Ref MCP tools.
+`kotlin-architector`. For tests → `and-test-generator`. For a security review →
+`and-security-auditor`. For library documentation → Context7 or Ref MCP tools.

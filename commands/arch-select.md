@@ -57,7 +57,7 @@ viable pattern. Read-only: this command decides and describes, it does not scaff
 | **UI stack** | Compose vs XML/Views — scan for `androidx.compose` in the build files |
 | **State complexity** | Low (1-2 fields), Medium (5-10), High (explicit state machine) |
 | **Event/effect model** | `StateFlow` + one-shot `Channel`, MVI `Intent`/`reduce`, or callbacks |
-| **DI** | Hilt, Koin, manual — check for `@HiltAndroidApp` / `hilt` in the catalog |
+| **DI** | Hilt, Koin, manual — check for `@HiltAndroidApp` / `hilt` in the catalog. The plugin ships a Hilt playbook only (`skill: hilt-di`); on Koin or manual DI keep the recommendation framework-independent (constructor injection, scope lifetimes, no container access from `domain`) and say the detailed playbook does not cover that framework — never propose a migration to Hilt the constraints do not ask for |
 | **Module count** | Single `:app`, layered (`:core:*`), or by-feature (`:feature:*`) |
 | **Testing goals** | ViewModel unit tests, Turbine flow assertions, Compose UI/screenshot |
 | **Existing convention** | The dominant pattern already in the repo, as a proxy for team familiarity |

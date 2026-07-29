@@ -7,6 +7,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-07-29
+
+Four agents renamed to carry the plugin-unique `and-` prefix, resolving a silent
+name collision with `apple-developer`, plus an audit pass for one-stack rules
+stated as universal.
+
+### Changed — BREAKING
+
+- **Four agents renamed.** Claude Code keys installed agents by frontmatter
+  `name`, so `android-developer` and `apple-developer` shipping the same bare
+  names silently overwrote each other. Separately, `error_file` derives from the
+  agent basename, so a worktask touching both plugins had them writing to the
+  same `.context/errors/test-generator.md`.
+
+  | Old `plugin:agent` ID | New `plugin:agent` ID |
+  |---|---|
+  | `android-developer:code-fixer` | `android-developer:and-code-fixer` |
+  | `android-developer:security-auditor` | `android-developer:and-security-auditor` |
+  | `android-developer:test-generator` | `android-developer:and-test-generator` |
+  | `android-developer:dependency-manager` | `android-developer:and-dependency-manager` |
+
+  The old names no longer resolve. Anything dispatching them — `Task()` grants in
+  another plugin's agent frontmatter, `subagent_type=` strings, saved invocations,
+  the igrsoft registry — must be updated. `android-developer`,
+  `android-phone-developer`, and `kotlin-architector` are unchanged; the four
+  `error_file` paths move to `.context/errors/and-*.md` with them.
+
+  This adopts the `sys-` / `fe-` / `be-` / `ai-` convention the other dev plugins
+  already follow, and closes the migration tracked in igrsoft's
+  `compatible-plugins.md` § Naming.
+
+### Fixed — platform-leak audit
+
+Rules true for one stack but written as universal, which mis-instruct agents on a
+variant the plugin accepts as input:
+
+- **`analyze-accessibility` claimed a coverage it does not have.** It advertised
+  auditing "Android UI" and instructed reading "composables and layouts", but all
+  eleven Phase 1 checks are Compose-only. On a View/XML module every check found
+  nothing and the command emitted a clean report. Narrowed the claim to the
+  Compose surface, added a UI-toolkit detection step, and added a View/XML branch
+  that reports unaudited coverage instead of a pass. Note this narrows the claim
+  rather than adding View/XML checks — the plugin does not implement them.
+- **`--device SERIAL` was advertised but never wired.** `debug`,
+  `analyze-accessibility`, and `fix-performance` all documented it, yet `adb -s`
+  appeared nowhere in the repo; every adb call was bare, which fails with
+  `more than one device/emulator` in exactly the multi-device case the flag exists
+  for. All three now thread the serial through adb and the Gradle connected runs.
+- **`build.gradle.kts` was the only build script named.** `agents/_base/platform-agent.md`
+  — inherited by all seven agents — told them to read `build.gradle.kts` and
+  `libs.versions.toml` in a rule whose point is "never assume a version", while
+  `fix-modernize --target kotlin-dsl` exists precisely to migrate Groovy
+  `build.gradle` projects. Now names both.
+- **`fix-quick` could not honour its own skip-missing rule.** It ran
+  `./gradlew ktlintCheck detekt lint` as one command; Gradle aborts the entire
+  invocation on the first unknown task, so a project without detekt ran *no*
+  linters rather than "the rest". Now enumerates available tasks first and reports
+  each linter skipped for absence.
+- **`gen-tests --framework` was documented as an override and then ignored.** The
+  workflow only auto-detected and the output reported `{detected}`. The override
+  is now honoured and a contradiction with detection is surfaced.
+- **Koin was offered as a detected DI framework with no guidance behind it.**
+  `arch-select` and `arch-review` both report `{Hilt|Koin|manual}`, but every DI
+  rule routes to `skill: hilt-di`, so a Koin project was detected then reviewed
+  against Hilt rules. Both now scope the Hilt playbook explicitly and fall back to
+  framework-independent DI properties.
+
 ## [1.3.0] — 2026-07-29
 
 Command-surface unification with the sibling `apple-developer` and

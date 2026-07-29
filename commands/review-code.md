@@ -15,7 +15,7 @@ estimated-cost:
 <!-- Updated: June 2026 -->
 
 Statically review changed Kotlin/Compose code against Android best practices and report
-findings by severity. With `--fix`, route mechanical findings to `code-fixer` and deep
+findings by severity. With `--fix`, route mechanical findings to `and-code-fixer` and deep
 structural findings to `kotlin-architector`.
 
 [Extended thinking: A review pass that reads the diff, runs the linters for signal, and
@@ -26,7 +26,7 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 ## CRITICAL BEHAVIORAL RULES
 
 1. **Review first, fix second.** Default is report-only.
-2. **One agent per finding class.** Mechanical → `android-developer:code-fixer`; structural
+2. **One agent per finding class.** Mechanical → `android-developer:and-code-fixer`; structural
    → `android-developer:kotlin-architector`. Never fan out to several at once.
 3. **Single-command Bash invocations** (`./gradlew ktlintCheck detekt`, `git diff`).
 4. **Tee linter output** to `.context/logs/review-<timestamp>.log`.
@@ -68,7 +68,7 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
    `file:line`, severity, and a fix sketch.
 4. **`--fix`**: route by class —
    - mechanical (ktlint/detekt, hardcoded resources, simple recomposition fixes):
-     **Use Task tool with subagent_type="android-developer:code-fixer"** with the finding list.
+     **Use Task tool with subagent_type="android-developer:and-code-fixer"** with the finding list.
    - structural (layer violation, module-graph, pattern change):
      **Use Task tool with subagent_type="android-developer:kotlin-architector"** with the finding list.
    Re-run `./gradlew :module:assembleDebug test` after each fix group.
@@ -85,7 +85,7 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 
 **Totals:** P0:{n} P1:{n} P2:{n} P3:{n}
 <!-- with --fix: -->
-**Routed:** {n} mechanical → code-fixer, {n} structural → kotlin-architector
+**Routed:** {n} mechanical → and-code-fixer, {n} structural → kotlin-architector
 ```
 
 ## Error Handling

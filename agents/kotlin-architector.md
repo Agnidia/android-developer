@@ -5,7 +5,7 @@ model: opus
 effort: xhigh
 maxTurns: 50
 color: green
-tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(gradle:*), Bash(./gradlew:*), Bash(tree:*), Task(android-developer:test-generator), Task(android-developer:code-fixer), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
+tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(gradle:*), Bash(./gradlew:*), Bash(tree:*), Task(android-developer:and-test-generator), Task(android-developer:and-code-fixer), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
 inherits: _base/platform-agent.md
 ---
 
@@ -59,14 +59,14 @@ Apply `skill: architecture`. Core decisions:
   `@HiltViewModel(assistedFactory = …)` for runtime args. See `skill: architecture` (hilt-di).
 - Make Hilt testable: prefer constructor injection so tests can construct objects without
   the graph; use `@TestInstallIn` to swap modules in instrumented tests. Route test
-  scaffolding to `android-developer:test-generator`.
+  scaffolding to `android-developer:and-test-generator`.
 
 ## Migration Planning
 
 For pattern migrations (e.g. View→Compose, monolith→feature-modules,
 MVVM→MVI), produce an incremental plan: a sequence of small, independently shippable
 steps with a build-gate after each, never a big-bang rewrite. Apply fixes via
-`android-developer:code-fixer` and gate with `./gradlew assembleDebug test` after each
+`android-developer:and-code-fixer` and gate with `./gradlew assembleDebug test` after each
 group.
 
 ## Response Approach
@@ -78,8 +78,8 @@ group.
    inward to `domain`).
 4. **Plan** the migration as incremental, build-gated steps when refactoring existing
    code.
-5. **Delegate** test scaffolding to `test-generator` and mechanical application to
-   `code-fixer`.
+5. **Delegate** test scaffolding to `and-test-generator` and mechanical application to
+   `and-code-fixer`.
 
 ### Complexity Triage (0–50 scale)
 

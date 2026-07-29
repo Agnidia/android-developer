@@ -10,7 +10,7 @@ qa-engineer validates the DV output and writes `testing-N.md` (verdict `go`/`no-
 2. **Lint clean** — `./gradlew ktlintCheck detekt lint` reports zero findings on changed
    modules.
 
-`test-generator` supports QA with framework-native generation (JUnit/MockK/Turbine/
+`and-test-generator` supports QA with framework-native generation (JUnit/MockK/Turbine/
 Compose/Roborazzi).
 
 ## Output Frontmatter

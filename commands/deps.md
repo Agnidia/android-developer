@@ -19,15 +19,20 @@ Two subcommands over `gradle/libs.versions.toml`:
 - **`deps audit [path]`** — report outdated, CVE-affected, and EOL/deprecated coordinates.
   Read-only. See **Audit** below.
 - **`deps upgrade [path]`** — delegate safe, one-at-a-time version bumps to
-  `dependency-manager` behind a build+test gate. See **Upgrade** below.
+  `and-dependency-manager` behind a build+test gate. See **Upgrade** below.
 
 **Dispatch**: parse the first token of `$ARGUMENTS`. If it is `upgrade`, run the Upgrade
 workflow with the remaining args as scope. Otherwise (`audit`, or no subcommand) run the
 Audit workflow — audit is the default.
 
+There is no flag form of a subcommand. If `--upgrade` appears anywhere in the arguments, do
+NOT fall through to `audit`: stop and tell the caller that mutating modes are selected by the
+first token only (`deps upgrade <pkg>`). Silently running a read-only audit for someone who
+asked for an upgrade is the worst outcome — they read "no action taken" as "nothing to do".
+
 [Extended thinking: The catalog is the single place versions live, so both modes read it
 rather than chasing inline versions. Audit stays cheap and read-only; the risky part —
-actually bumping — lives in `dependency-manager`, which owns the one-at-a-time,
+actually bumping — lives in `and-dependency-manager`, which owns the one-at-a-time,
 gate-after-each discipline. Splitting the two by subcommand keeps a bare `/deps` safe.]
 
 ## CRITICAL BEHAVIORAL RULES
@@ -36,7 +41,7 @@ gate-after-each discipline. Splitting the two by subcommand keeps a bare `/deps`
    inline versions.
 2. **Audit mode is read-only.** `allowed-tools` includes `Edit` because `upgrade` needs it;
    the audit workflow MUST NOT modify files.
-3. **One agent for upgrades.** `upgrade` routes to `android-developer:dependency-manager`.
+3. **One agent for upgrades.** `upgrade` routes to `android-developer:and-dependency-manager`.
 4. **Single-command Bash invocations** (`./gradlew dependencyUpdates`, `osv-scanner`).
 5. **Tool-missing never hard-fails** — if `osv-scanner` is absent, report from the
    versions plugin alone and note the gap.
@@ -71,7 +76,7 @@ gate-after-each discipline. Splitting the two by subcommand keeps a bare `/deps`
 4. **EOL/deprecated:** flag coordinates with no bump target — notably
    `androidx.security:security-crypto` (EOL at 1.1.0 → migrate to DataStore +
    `androidx.datastore:datastore-tink`) and SafetyNet/Smart Lock (→ Play Integrity /
-   Credential Manager). Route these to `security-auditor` rather than a version bump.
+   Credential Manager). Route these to `and-security-auditor` rather than a version bump.
 5. Report outdated, CVE-affected, and EOL/deprecated counts. Make no edits.
 
 ## Upgrade (deps upgrade)
@@ -79,7 +84,7 @@ gate-after-each discipline. Splitting the two by subcommand keeps a bare `/deps`
 1. Run the Audit workflow to produce the candidate bump list.
 2. If `--dry-run`: print the list and stop.
 3. **Delegate:**
-   **Use Task tool with subagent_type="android-developer:dependency-manager"**
+   **Use Task tool with subagent_type="android-developer:and-dependency-manager"**
    Prompt: "Upgrade these catalog entries one at a time, build+test gate after each, revert
    any bump that breaks the build:\n{list}\nFlag any major-version migration for the
    implementer. Update `gradle/libs.versions.toml` only."
@@ -98,7 +103,7 @@ gate-after-each discipline. Splitting the two by subcommand keeps a bare `/deps`
 
 **Totals:** {n} outdated, {n} with CVEs, {n} EOL/deprecated
 <!-- upgrade mode: -->
-**Upgraded:** {n} (delegated to dependency-manager); reverted: {n}; majors flagged: {list}
+**Upgraded:** {n} (delegated to and-dependency-manager); reverted: {n}; majors flagged: {list}
 ```
 
 ## Error Handling

@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle.",
-    "version": "1.3.0"
+    "version": "1.4.0"
   },
   "plugins": [
     {
@@ -45,10 +45,10 @@
         "./agents/android-developer.md",
         "./agents/android-phone-developer.md",
         "./agents/kotlin-architector.md",
-        "./agents/test-generator.md",
-        "./agents/security-auditor.md",
-        "./agents/code-fixer.md",
-        "./agents/dependency-manager.md"
+        "./agents/and-test-generator.md",
+        "./agents/and-security-auditor.md",
+        "./agents/and-code-fixer.md",
+        "./agents/and-dependency-manager.md"
       ],
       "commands": [
         "./commands/analyze-accessibility.md",

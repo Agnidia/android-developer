@@ -44,10 +44,13 @@ an instrumentation project.]
    structural root cause to `android-developer:kotlin-architector`.
 4. **Single-command Bash invocations.** `adb logcat -d`, `adb shell dumpsys`,
    `./gradlew :app:installDebug`. Never `cd`-chain or `&&`-chain.
-5. **Tee capture to the log** at `.context/logs/debug-<timestamp>.log`.
-6. **No device is not a failure.** If `adb devices` is empty, do the static analysis and
+5. **Honour `--device`.** When supplied, insert `-s SERIAL` into every adb command
+   (`adb -s SERIAL logcat -d`). The tables below write bare `adb` for readability;
+   that form is correct only for a single attached device.
+6. **Tee capture to the log** at `.context/logs/debug-<timestamp>.log`.
+7. **No device is not a failure.** If `adb devices` is empty, do the static analysis and
    report what needs a device.
-7. **Never enter plan mode.**
+8. **Never enter plan mode.**
 
 ## Usage
 
@@ -63,7 +66,7 @@ an instrumentation project.]
 | Option | Default | Effect |
 |--------|---------|--------|
 | `error` \| `scope` | none → configure | A stack trace/ANR selects triage mode; a component scope selects configure mode. |
-| `--device SERIAL` | first attached | Target a specific `adb` device when several are connected. |
+| `--device SERIAL` | first attached | Target a specific `adb` device when several are connected. Passed as `adb -s SERIAL <subcommand>` on **every** adb invocation below — bare `adb` fails with `more than one device/emulator` exactly when this flag matters. Omit `-s` only when `--device` was not supplied. |
 
 ## Configure Mode
 
