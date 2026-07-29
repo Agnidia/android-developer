@@ -1,5 +1,5 @@
 ---
-description: Migrate Android code toward modern idioms — XML layouts to Compose, Views to Compose, Groovy build scripts to the Kotlin DSL, or library/API modernization (KSP2, Retrofit 3, OkHttp 5, M3 Expressive, security-crypto to DataStore+Tink)
+description: Migrate Android code to modern idioms — XML/Views to Compose, Groovy to the Kotlin DSL, or library/API modernization
 argument-hint: [path] [--target xml-to-compose|view-to-compose|kotlin-dsl|api-modernize] [--dry-run]
 allowed-tools: Read, Glob, Grep, Bash, Edit
 estimated-cost:

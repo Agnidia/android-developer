@@ -1,5 +1,5 @@
 ---
-description: Dependency lifecycle for the Gradle version catalog — audit outdated/CVE/EOL coordinates, or safely upgrade one at a time
+description: Audit the Gradle version catalog for outdated, CVE, and EOL coordinates, or safely upgrade one at a time
 argument-hint: <audit|upgrade> [path (default .)] [--cve-only] [--dry-run]
 allowed-tools: Read, Edit, Glob, Grep, Bash
 estimated-cost:

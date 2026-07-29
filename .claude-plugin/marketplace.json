@@ -51,11 +51,19 @@
         "./agents/dependency-manager.md"
       ],
       "commands": [
+        "./commands/analyze-accessibility.md",
+        "./commands/analyze-tech-debt.md",
+        "./commands/arch-review.md",
+        "./commands/arch-select.md",
         "./commands/build-test.md",
+        "./commands/debug.md",
         "./commands/deps.md",
+        "./commands/develop-feature.md",
         "./commands/fix-modernize.md",
+        "./commands/fix-performance.md",
         "./commands/fix-quick.md",
         "./commands/fix-refactor.md",
+        "./commands/gen-docs.md",
         "./commands/gen-tests.md",
         "./commands/review-code.md"
       ]

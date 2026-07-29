@@ -1,5 +1,5 @@
 ---
-description: Statically review Android/Kotlin code for Compose anti-patterns, coroutine misuse, and architecture violations, optionally routing fixes
+description: Review Android/Kotlin code for Compose anti-patterns, coroutine misuse, and architecture violations
 argument-hint: [path (default .)] [--fix] [--severity P0|P1|P2|P3]
 allowed-tools: Read, Glob, Grep, Bash, Edit
 estimated-cost:

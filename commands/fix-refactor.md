@@ -1,5 +1,5 @@
 ---
-description: Refactor Android/Kotlin code toward a target architecture pattern (clean-arch, MVI, or modularization) with a build gate after each step
+description: Refactor Android/Kotlin code toward a target architecture pattern, build-gated after each incremental step
 argument-hint: [target] [--pattern clean-arch|mvi|modularize] [--dry-run]
 allowed-tools: Read, Glob, Grep, Bash, Edit
 estimated-cost:
