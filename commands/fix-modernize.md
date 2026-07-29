@@ -1,19 +1,26 @@
 ---
-description: Migrate Android code toward modern idioms — XML layouts to Compose, Views to Compose, Groovy build scripts to the Kotlin DSL, or library/API modernization (KSP2, Retrofit 3, OkHttp 5, M3 Expressive, security-crypto to DataStore+Tink)
+description: Migrate Android code to modern idioms — XML/Views to Compose, Groovy to the Kotlin DSL, or library/API modernization
 argument-hint: [path] [--target xml-to-compose|view-to-compose|kotlin-dsl|api-modernize] [--dry-run]
 allowed-tools: Read, Glob, Grep, Bash, Edit
+estimated-cost:
+  min-tokens: 4000
+  max-tokens: 30000
+  model-distribution:
+    haiku: 30%
+    sonnet: 55%
+    opus: 15%
 ---
 
-# Modernize (Android)
+# Modernize
 <!-- Updated: June 2026 -->
 
 Run a migration playbook toward a modern Android idiom. Consult `kotlin-architector` for
-the migration plan, apply via `code-fixer`, and build-gate after each step.
+the migration plan, apply via `and-code-fixer`, and build-gate after each step.
 
 [Extended thinking: Migrations (XML→Compose, View→Compose, Groovy→Kotlin DSL) are
 mechanical but risky at scale. This command turns each into an ordered, build-gated step
 plan from the architect, applied by the fixer, verified between steps. It is the migration
-sibling of code-refactor.]
+sibling of fix-refactor.]
 
 ## CRITICAL BEHAVIORAL RULES
 
@@ -27,8 +34,8 @@ sibling of code-refactor.]
 ## Usage
 
 ```bash
-/android-developer:modernize :feature:profile --target view-to-compose
-/android-developer:modernize . --target kotlin-dsl --dry-run
+/android-developer:fix-modernize :feature:profile --target view-to-compose
+/android-developer:fix-modernize . --target kotlin-dsl --dry-run
 ```
 
 ## Options
@@ -57,7 +64,7 @@ sibling of code-refactor.]
    Each step builds and passes tests on its own. Return the step list and the files each
    touches."
 3. If `--dry-run`: print and stop.
-4. For each step: **Use Task tool with subagent_type="android-developer:code-fixer"** to
+4. For each step: **Use Task tool with subagent_type="android-developer:and-code-fixer"** to
    apply, then `./gradlew {module}:assembleDebug test 2>&1 | tee -a "$LOG"`. Stop on
    failure and request a correction from the architect.
 
@@ -80,5 +87,5 @@ sibling of code-refactor.]
 Stop, report the failing step, route a correction to `android-developer:kotlin-architector`.
 
 ## See Also
-- `/android-developer:code-refactor` — pattern refactors (clean-arch, MVI, modularize).
+- `/android-developer:fix-refactor` — pattern refactors (clean-arch, MVI, modularize).
 - `skill: compose-ui` / `skill: tooling` — Compose idioms and Kotlin-DSL build setup.

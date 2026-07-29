@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle.",
-    "version": "1.2.0"
+    "version": "1.4.0"
   },
   "plugins": [
     {
@@ -45,19 +45,27 @@
         "./agents/android-developer.md",
         "./agents/android-phone-developer.md",
         "./agents/kotlin-architector.md",
-        "./agents/test-generator.md",
-        "./agents/security-auditor.md",
-        "./agents/code-fixer.md",
-        "./agents/dependency-manager.md"
+        "./agents/and-test-generator.md",
+        "./agents/and-security-auditor.md",
+        "./agents/and-code-fixer.md",
+        "./agents/and-dependency-manager.md"
       ],
       "commands": [
+        "./commands/analyze-accessibility.md",
+        "./commands/analyze-tech-debt.md",
+        "./commands/arch-review.md",
+        "./commands/arch-select.md",
         "./commands/build-test.md",
-        "./commands/lint-fix.md",
-        "./commands/code-review.md",
-        "./commands/code-refactor.md",
-        "./commands/generate-tests.md",
-        "./commands/deps-audit.md",
-        "./commands/modernize.md"
+        "./commands/debug.md",
+        "./commands/deps.md",
+        "./commands/develop-feature.md",
+        "./commands/fix-modernize.md",
+        "./commands/fix-performance.md",
+        "./commands/fix-quick.md",
+        "./commands/fix-refactor.md",
+        "./commands/gen-docs.md",
+        "./commands/gen-tests.md",
+        "./commands/review-code.md"
       ]
     }
   ]

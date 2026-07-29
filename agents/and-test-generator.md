@@ -1,5 +1,5 @@
 ---
-name: test-generator
+name: and-test-generator
 description: Generate Android tests — JUnit5 (junit-jupiter)/JUnit4 unit tests, MockK doubles, Turbine flow tests, Compose UI tests, and screenshot tests (Roborazzi preferred; Paparazzi if already configured). Detects the framework the project already uses and never introduces a second one. Use PROACTIVELY when creating tests for new features, filling coverage gaps, or generating change-scoped tests during DV/QA.
 model: sonnet
 effort: high

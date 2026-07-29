@@ -5,7 +5,7 @@ model: sonnet
 effort: high
 maxTurns: 50
 color: green
-tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(gradle:*), Bash(./gradlew:*), Bash(adb:*), Bash(ktlint:*), Bash(detekt:*), Task(android-developer:kotlin-architector), Task(android-developer:test-generator), Task(android-developer:dependency-manager), Task(android-developer:code-fixer), Task(android-developer:security-auditor), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
+tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(gradle:*), Bash(./gradlew:*), Bash(adb:*), Bash(ktlint:*), Bash(detekt:*), Task(android-developer:kotlin-architector), Task(android-developer:and-test-generator), Task(android-developer:and-dependency-manager), Task(android-developer:and-code-fixer), Task(android-developer:and-security-auditor), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
 inherits: _base/platform-agent.md
 ---
 
@@ -103,10 +103,10 @@ Gradle plugin) and skip that step — never hard-fail.
    considerations.
 4. **Build and run** the changed-scope tests via the Gradle wrapper (single scoped
    command).
-5. **Delegate**: tests → `android-developer:test-generator`; deps →
-   `android-developer:dependency-manager`; batch fixes → `android-developer:code-fixer`;
+5. **Delegate**: tests → `android-developer:and-test-generator`; deps →
+   `android-developer:and-dependency-manager`; batch fixes → `android-developer:and-code-fixer`;
    pattern consult → `android-developer:kotlin-architector`; security review →
-   `android-developer:security-auditor`.
+   `android-developer:and-security-auditor`.
 
 ## DR Focus
 

@@ -2,23 +2,30 @@
 description: Detect the project's test framework and generate unit, UI, or screenshot tests for an Android target, then verify them
 argument-hint: [target] [--type unit|ui|screenshot] [--framework junit5|junit4]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+estimated-cost:
+  min-tokens: 3000
+  max-tokens: 22000
+  model-distribution:
+    haiku: 15%
+    sonnet: 75%
+    opus: 10%
 ---
 
-# Generate Tests (Android)
+# Generate Tests
 <!-- Updated: June 2026 -->
 
 Detect the test framework the project already uses (never introduce a second), delegate
-generation to `test-generator`, and verify the result with the Gradle wrapper.
+generation to `and-test-generator`, and verify the result with the Gradle wrapper.
 
 [Extended thinking: Test generation must match the repo's existing stack — JUnit5 vs
 JUnit4, MockK vs mockito, Roborazzi vs Paparazzi. This command detects that, hands
-`test-generator` the target and the detected stack, then runs the new tests to confirm
+`and-test-generator` the target and the detected stack, then runs the new tests to confirm
 green. It does not author tests itself.]
 
 ## CRITICAL BEHAVIORAL RULES
 
 1. **Detect the existing framework; never add a second one.**
-2. **Delegate generation to `android-developer:test-generator`** — one agent.
+2. **Delegate generation to `android-developer:and-test-generator`** — one agent.
 3. **Verify** the generated tests via `./gradlew` before reporting.
 4. **Single-command Bash invocations.**
 5. **Never enter plan mode.**
@@ -26,9 +33,9 @@ green. It does not author tests itself.]
 ## Usage
 
 ```bash
-/android-developer:generate-tests :feature:login --type unit
-/android-developer:generate-tests app/.../ProfileScreen.kt --type ui
-/android-developer:generate-tests :core:ui --type screenshot
+/android-developer:gen-tests :feature:login --type unit
+/android-developer:gen-tests app/.../ProfileScreen.kt --type ui
+/android-developer:gen-tests :core:ui --type screenshot
 ```
 
 ## Options
@@ -45,8 +52,12 @@ green. It does not author tests itself.]
    vs `mockito-kotlin`; `app.cash.turbine` for Flow tests; `roborazzi` vs `paparazzi` (if
    neither, prefer Roborazzi); presence of `compose.ui:ui-test-junit4`. Read the build files
    and an existing test for the convention.
+   **`--framework` overrides detection**: when supplied it becomes `{runner}` in step 2
+   regardless of what was detected. Report both (`{chosen} (overrode detected {detected})`)
+   and flag a contradiction — the runner's dependency may be missing, and the generated
+   tests will not compile until it is added.
 2. **Delegate:**
-   **Use Task tool with subagent_type="android-developer:test-generator"**
+   **Use Task tool with subagent_type="android-developer:and-test-generator"**
    Prompt: "Generate `{type}` tests for `{target}`. Existing stack: runner={runner},
    mocking={mock-lib}, screenshot={ss-lib}. Match it — do NOT introduce a second
    framework. Follow `skill: quality` patterns; place tests in the correct source set
@@ -62,7 +73,7 @@ green. It does not author tests itself.]
 
 ```markdown
 ## Generated Tests
-**Target:** {target}  **Type:** {type}  **Framework:** {detected}
+**Target:** {target}  **Type:** {type}  **Framework:** {chosen — note if `--framework` overrode detection}
 **Log:** .context/logs/gentests-{ts}.log
 
 | Test file | Covers | Result |

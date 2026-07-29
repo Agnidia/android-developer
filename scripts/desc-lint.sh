@@ -15,7 +15,7 @@
 # a shorter description still route/fire correctly?), never a blind edit here.
 #
 #   agents/**          → 500  — ALL SEVEN agents already exceed 250 (max ~465,
-#                               security-auditor), so the sibling plugins' 250
+#                               and-security-auditor), so the sibling plugins' 250
 #                               cap would fail this repo today; the 250-target
 #                               diet is deferred, do not tighten here.
 #   commands/**        → 250  — current max ~233, green; this tier holds the

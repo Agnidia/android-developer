@@ -2,7 +2,7 @@
 
 A reviewer-usable list of the markers that make an Expressive UI read as machine-generated rather
 than designed. Each row is a **check** (what to flag) plus the **one-line correct alternative**.
-Use it in `/android-developer:code-review` and during design-craft review.
+Use it in `/android-developer:review-code` and during design-craft review.
 
 ## Motion
 

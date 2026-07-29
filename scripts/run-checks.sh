@@ -35,7 +35,13 @@ fi
 echo "== desc-lint =="
 if scripts/desc-lint.sh --self-test && scripts/desc-lint.sh; then :; else note_fail desc-lint; fi
 
-# (c) section-length lint — WARN-ONLY: pre-existing prose-debt baseline. Never
+# (c) command-registration bijection — FATAL. A command file that is not in
+#     marketplace.json never loads, and a manifest entry with no file breaks
+#     plugin install; both fail silently at runtime, so they fail loudly here.
+echo "== command-registration =="
+if scripts/check-command-registration.sh; then :; else note_fail command-registration; fi
+
+# (d) section-length lint — WARN-ONLY: pre-existing prose-debt baseline. Never
 #     fails the aggregate; surface the count so the burn-down stays visible.
 echo "== section-lint (warn-only) =="
 scripts/section-lint.sh --self-test || echo "run-checks: WARN section-lint self-test failed (parser regression?)"

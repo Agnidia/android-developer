@@ -27,11 +27,11 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
 | AR | Architecture | software-architector | `kotlin-architector` (consult: Clean Arch, modularization, Hilt graph, MVI vs MVVM) |
 | TL | Team Lead | team-lead | — |
 | DV | Development | developer → **android-developer** | **Primary**: router → `android-phone-developer` |
-| **DR** | **Developer Review** | **technical-lead** | **Support**: `code-fixer` (fix application), `kotlin-architector` (pattern consult) |
-| SR | Security Review | security-reviewer | Context: `security-auditor` (permissions, exported components, R8, secrets, network-security-config) |
-| QA | QA Testing | qa-engineer | Support: `test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
+| **DR** | **Developer Review** | **technical-lead** | **Support**: `and-code-fixer` (fix application), `kotlin-architector` (pattern consult) |
+| SR | Security Review | security-reviewer | Context: `and-security-auditor` (permissions, exported components, R8, secrets, network-security-config) |
+| QA | QA Testing | qa-engineer | Support: `and-test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
 | DC | Documentation | technical-writer | — |
-| RE | Release Engineering | release-engineer | Packaging: `dependency-manager` (version catalogs, pins), versionCode/versionName, AAB/APK notes |
+| RE | Release Engineering | release-engineer | Packaging: `and-dependency-manager` (version catalogs, pins), versionCode/versionName, AAB/APK notes |
 | FN | Finalization | project-manager | — |
 | ST | Stakeholder | stakeholder | — |
 
@@ -120,8 +120,8 @@ last `:`-separated segment of the qualified name:
 |------|---------|
 | `.context/errors/android-phone-developer.md` | Phone/tablet DV retry narratives |
 | `.context/errors/kotlin-architector.md` | Architecture/structural retry narratives |
-| `.context/errors/test-generator.md` | Test-generation retries |
-| `.context/errors/code-fixer.md` | DR fix-application retries |
+| `.context/errors/and-test-generator.md` | Test-generation retries |
+| `.context/errors/and-code-fixer.md` | DR fix-application retries |
 | `.context/errors/<agent-basename>.md` | One file per agent — never overwrite a shared `error.md` |
 
 Derive your own path from `task.metadata.error_file` or your frontmatter `name:`.
@@ -153,17 +153,17 @@ QA (`testing-N.md`, verdict `go`/`no-go`) passes only when **both** hold:
    zero findings on the changed modules. Screenshot tests (Roborazzi/Paparazzi) verify
    green where the change is visual.
 
-`test-generator` supports QA with framework-native generation (JUnit/MockK/Turbine/
+`and-test-generator` supports QA with framework-native generation (JUnit/MockK/Turbine/
 Compose/Roborazzi). Template: [templates/qa-testing.md](templates/qa-testing.md).
 
 ## SR and RE Contributions
 
-- **SR** — `security-auditor` provides platform context to igrsoft's security-reviewer:
+- **SR** — `and-security-auditor` provides platform context to igrsoft's security-reviewer:
   permission hygiene, exported-component exposure, insecure storage, transport security
   (network-security-config, pinning), R8/ProGuard hardening, secrets scan, and WebView/
-  deep-link surfaces. Review-only: findings route to `code-fixer` for application.
+  deep-link surfaces. Review-only: findings route to `and-code-fixer` for application.
 - **RE** — release-engineer owns the stage; android-developer contributes packaging:
-  `dependency-manager` freezes version-catalog pins (`libs.versions.toml`, BOMs), and the
+  `and-dependency-manager` freezes version-catalog pins (`libs.versions.toml`, BOMs), and the
   implementer records versionCode/versionName, signing/ABI notes, and R8 mapping retention
   in `release-N.md`.
 
@@ -225,7 +225,7 @@ injection is orchestrator-owned.
 | Orchestrator → DV prompt | On re-dispatch (`metadata.retry_count > 0`) the prompt is prepended with `REMEDIATION (from <DR\|QA> gate — fix these specific findings before re-stop:)`; `metadata.gate_from_stage` ∈ {DR, QA}; `metadata.gate_blockers[]` = DR `blockers[]` / QA `blocking_defects[]` strings. | Read both fields; fix those exact findings *first*; do not re-scope. |
 | SubagentStop hook → next dispatch | A blocked gate emits `hookSpecificOutput.additionalContext` telling the next run what to fix. | Treat as additional remediation context. |
 
-On a rework dispatch the DV/code-fixer agent MUST:
+On a rework dispatch the DV/and-code-fixer agent MUST:
 
 1. Read `metadata.gate_from_stage` + `metadata.gate_blockers[]` (and any `REMEDIATION`
    block in the prompt).

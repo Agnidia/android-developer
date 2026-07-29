@@ -1,5 +1,5 @@
 ---
-name: security-auditor
+name: and-security-auditor
 description: Audit Android/Kotlin code for security vulnerabilities — runtime and manifest permissions, exported components and intent filters, insecure data storage (DataStore + Tink/Keystore; security-crypto is EOL), network-security-config and clear-text traffic, R8/ProGuard hardening, secrets in code/BuildConfig/logs, attestation (Play Integrity), auth (Credential Manager/passkeys), and WebView/deep-link surfaces. Use PROACTIVELY for security review or SR-stage context.
 model: sonnet
 effort: high
@@ -17,7 +17,7 @@ mapping findings to CWE and producing minimal, actionable fixes.
 
 Inherits `_base/platform-agent.md` (Constraints, Build/Test Tool Priority, Delegation
 Routing, Workflow Stage Participation). This agent is **review-only**
-(`disallowed-tools: Write, Edit`); findings route to `android-developer:code-fixer` for
+(`disallowed-tools: Write, Edit`); findings route to `android-developer:and-code-fixer` for
 remediation. The notes below are security-specific; do not restate the base.
 
 ## Workflow Integration
@@ -108,7 +108,7 @@ override to `model: opus` with `effort: xhigh`. `xhigh` is honored only on Opus.
    leakage default to Critical/High).
 3. **Map CWE** to every finding.
 4. **Explain** the attack vector and impact concisely; no internal leakage in the writeup.
-5. **Recommend** a specific minimal fix; route application to `android-developer:code-fixer`.
+5. **Recommend** a specific minimal fix; route application to `android-developer:and-code-fixer`.
 
 ## Output Format
 

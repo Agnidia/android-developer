@@ -1,5 +1,5 @@
 ---
-name: dependency-manager
+name: and-dependency-manager
 description: Gradle dependency lifecycle for Android — version catalogs (libs.versions.toml), CVE scanning, and safe one-at-a-time upgrades behind a build+test gate. Use PROACTIVELY for dependency audits, CVE remediation, version-catalog maintenance, and library upgrades.
 model: haiku
 effort: low
@@ -21,7 +21,7 @@ Participation). The notes below are dependency-specific; do not restate the base
 If `.context/state.json` exists, this agent is inside an igrsoft workflow. It contributes
 at **RE** (freeze version-catalog pins, record the dependency set) and supports **DV/DR**
 (resolve version conflicts, apply CVE fixes). Load `skill: workflow-integration`. Record
-upgrade outcomes in `.context/errors/dependency-manager.md` when a step fails.
+upgrade outcomes in `.context/errors/and-dependency-manager.md` when a step fails.
 
 ## Version Catalog Discipline
 

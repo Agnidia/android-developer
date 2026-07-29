@@ -35,15 +35,15 @@ sync with it.
 | `android-developer` (router) | sonnet | medium | 40 | — routes work to specialists |
 | `android-phone-developer` | sonnet | high | 50 | → `opus` + `xhigh` for novel, cross-module design |
 | `kotlin-architector` | opus | xhigh | 50 | already top tier; self-limits scope at Low complexity per § Complexity Triage |
-| `test-generator` | sonnet | high | 50 | — sonnet sufficient for pattern work |
-| `security-auditor` | sonnet | high | 50 | → `opus` + `xhigh` for deep threat modeling (review-only: `disallowed-tools: Write, Edit`) |
-| `code-fixer` | haiku | medium | 30 | — deterministic minimal-diff remediation |
-| `dependency-manager` | haiku | low | 30 | — mechanical version-catalog/CVE operations |
+| `and-test-generator` | sonnet | high | 50 | — sonnet sufficient for pattern work |
+| `and-security-auditor` | sonnet | high | 50 | → `opus` + `xhigh` for deep threat modeling (review-only: `disallowed-tools: Write, Edit`) |
+| `and-code-fixer` | haiku | medium | 30 | — deterministic minimal-diff remediation |
+| `and-dependency-manager` | haiku | low | 30 | — mechanical version-catalog/CVE operations |
 
 ## Applying an Override
 
 Pass `model`/`effort` on the `Task()` call (per-invocation; does not edit
 frontmatter). Only override when complexity warrants it — the sonnet/high default
-covers the overwhelming majority of Android work. `security-auditor` keeps its
+covers the overwhelming majority of Android work. `and-security-auditor` keeps its
 `disallowed-tools: Write, Edit` restriction regardless of model: fixes route to
-`android-developer:code-fixer`.
+`android-developer:and-code-fixer`.
