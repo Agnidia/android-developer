@@ -1,7 +1,7 @@
 {
   "name": "android-developer",
   "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle. Full igrsoft 11-stage workflow integration (PL→AR→TL→DV→DR→SR→QA→DC→RE→FN→ST): handoff-protocol (development-N.md, state.json, frontmatter schema), requires_screenshots:false / cli-fallback evidence norm, scoped Bash toolchain allowlists (gradle/adb/ktlint/detekt), qualified Task() delegation, and plugin-scoped audit/checkpoint hooks.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "IGRSoft",
     "email": "support@igrsoft.com"

@@ -4,20 +4,20 @@
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.2.0 |
+| Plugin version | 1.3.0 |
 | igrsoft compatibility | v3.36.0 |
 | Claude Code min required | 2.1.169 |
-| Last updated | 2026-07-22 |
+| Last updated | 2026-07-29 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
-header, this table) per the igrsoft `/cc-update` convention.
+header, this table, CHANGELOG.md) per the igrsoft `/cc-update` convention.
 
 ## Inventory Index
 
 | Category | Count | Quick Summary |
 |----------|-------|---------------|
 | **Agents** | 7 | android-developer (router), android-phone-developer, kotlin-architector, test-generator, security-auditor, code-fixer, dependency-manager |
-| **Commands** | 7 | build-test, lint-fix, code-review, code-refactor, generate-tests, deps-audit, modernize |
+| **Commands** | 15 | analyze-accessibility, analyze-tech-debt, arch-review, arch-select, build-test, debug, deps, develop-feature, fix-modernize, fix-performance, fix-quick, fix-refactor, gen-docs, gen-tests, review-code |
 | **Skills** | 23 SKILL.md | 1 top + 1 workflow-integration + 6 domain routers + 15 leaves (architecture/4, compose-ui/5, data/3, concurrency-networking/1, quality/1, tooling/1) |
 | **Skill domains** | 6 | architecture, compose-ui, data, concurrency-networking, quality, tooling |
 | **Hooks** | 3 | audit-tooluse.sh (PostToolUse), audit-subagent.sh (SubagentStop), precompact-checkpoint.sh (PreCompact) |
@@ -76,7 +76,8 @@ following stay orchestrator-owned and are deliberately **not** implemented here:
   morphing, the 48-role color system, component replacements, accessibility contracts,
   and the "AI slop" anti-pattern checklist. Complementary to the existing `material3` skill
   (theming/API-setup focus). Includes 8 additive cross-link/agent/command edits (skills
-  routers, accessibility, testing, agent, code-review, modernize commands). Version bump
+  routers, accessibility, testing, agent, and the commands then named `code-review` /
+  `modernize`, now `review-code` / `fix-modernize`). Version bump
   to 1.1.0 (minor version for new skill).
 - **Base + workflow-integration mirror system-developer, not apple-developer** —
   system-developer is the exact structural analog for a Bash-only, no-build-MCP,
@@ -94,9 +95,25 @@ following stay orchestrator-owned and are deliberately **not** implemented here:
 - **Review-only `security-auditor`** — carries `disallowed-tools: Write, Edit` and
   routes all remediation to `code-fixer`. Keeps the review/fix separation explicit
   and auditable.
-- **Plain command names** — commands use bare filenames (invoked as
-  `/android-developer:<name>`), mirroring system-developer/apple-developer, rather
-  than a verb-prefix scheme. `lint-fix` and `deps-audit` run on `model: haiku`.
+- **2026-07-29: Verb-first command names (supersedes the plain-names decision)** —
+  commands adopt the cross-plugin scheme shared with apple-developer and
+  system-developer: `review-*`, `fix-*`, `gen-*`, `arch-*`, `analyze-*`. The
+  earlier decision ("plain command names, no verb-prefix scheme") is reversed:
+  it predated the sibling plugins converging, and divergent names across plugins
+  cost more in recall than the flat names saved. `fix-quick` keeps `model: haiku`
+  (deterministic linter run); `deps` lost it (catalog parsing + CVE triage +
+  upgrade routing is a 20-30% haiku workload, matching its peers).
+- **2026-07-29: `analyze-accessibility` is adapted from frontend-developer, not
+  apple-developer** — WCAG semantics for a declarative UI tree with a screen
+  reader is the closer analog than Apple's VoiceOver/UIKit surface. Compose
+  semantics, `mergeDescendants`, and `traversalIndex` have no apple-developer
+  counterpart worth transliterating.
+- **2026-07-29: `fix-performance` routes to `kotlin-architector` + `code-fixer`** —
+  this plugin has no `performance-engineer` agent (deferred at the 7-agent MVP,
+  see below). Rather than borrow another plugin's agent, which understands
+  neither Gradle variants nor recomposition, analysis goes to the architect that
+  already owns the module graph and state boundaries. The routing rationale is
+  stated in the command file itself so the next reader does not re-litigate it.
 - **No build MCP, scoped Bash instead** — no Android build-MCP server exists;
   build/test/lint flow through scoped `Bash(gradle:*)`, `Bash(./gradlew:*)`,
   `Bash(adb:*)`, `Bash(ktlint:*)`, `Bash(detekt:*)`, `Bash(git:*)`. No agent carries
@@ -119,6 +136,31 @@ specific sources:
 - Google `android/skills` (Apache License 2.0) — testing and gradle-build blends.
 
 ## Version History
+
+Full release notes live in `CHANGELOG.md` (Keep a Changelog format) as of 1.3.0.
+This section keeps the long-form rationale for the older entries.
+
+### 1.3.0 — 2026-07-29 Command Unification
+
+Command surface unified with apple-developer / system-developer: six renames to the
+verb-first scheme, eight new commands (7 → 15), and one frontmatter standard across all of
+them. See the migration table in `README.md` and the full entry in `CHANGELOG.md`.
+
+`deps` became a subcommand dispatcher (`audit` default | `upgrade`), replacing `--fix`, so a
+bare `/deps` is read-only. Frontmatter gained `estimated-cost` on the six commands that
+lacked it, seeded from apple/system counterparts. Descriptions were cut to ≤120 chars —
+including three pre-existing overruns the ≤250 `desc-lint` brake had not caught
+(`fix-modernize` at 233, `fix-refactor` and `review-code` at 136).
+
+New: `scripts/check-command-registration.sh`, ported from apple-developer's
+`tools/` (it resolves paths via `dirname/..`, so it works unchanged from `scripts/`).
+It asserts a bijection between `commands/*.md` and `marketplace.json`'s `commands[]` —
+a drift that otherwise fails silently at runtime — and runs as a fatal check in
+`scripts/run-checks.sh`.
+
+The `performance-engineer` gap deferred at the 7-agent MVP is now visible in a command:
+`fix-performance` routes to `kotlin-architector` + `code-fixer` and says so in the file.
+If a `performance-engineer` agent ever lands, that command is where it plugs in.
 
 ### 1.2.0 — 2026-07-22 igrsoft v3.36.0 Port
 

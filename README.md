@@ -6,7 +6,7 @@ igrsoft 11-stage worktask workflow.
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.2.0 |
+| Plugin version | 1.3.0 |
 | igrsoft compatibility | v3.36.0 |
 | License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
@@ -66,15 +66,44 @@ Invoked as `/android-developer:<command>`. The happy path is shell-only
 (`./gradlew` / `adb`); on failure they classify the error and delegate to exactly
 one fully-qualified `android-developer` agent.
 
+Names follow the cross-plugin verb-first scheme shared with `apple-developer` and
+`system-developer` (`review-*`, `fix-*`, `gen-*`, `arch-*`, `analyze-*`).
+
 | Command | Model | Purpose |
 |---------|-------|---------|
+| `analyze-accessibility` | default | TalkBack, Compose semantics, touch targets, contrast — read-only |
+| `analyze-tech-debt` | default | Rank debt across code / architecture / dependency / test axes — read-only |
+| `arch-review` | default | Review a module against its detected pattern; boundary violations by severity |
+| `arch-select` | default | Choose a pattern for new work and produce the package structure — read-only |
 | `build-test` | default | Detect Gradle wrapper, assemble + unit-test a variant/module |
-| `lint-fix` | haiku | `ktlintCheck`/`detekt`/`lint` report or `ktlintFormat`/`--auto-correct` fix |
-| `code-review` | default | Static review (Compose anti-patterns, coroutine misuse, arch violations) |
-| `code-refactor` | default | Refactor toward clean-arch / MVI / modularization |
-| `generate-tests` | default | Detect framework, delegate test-generator, verify suite |
-| `deps-audit` | haiku | Parse `libs.versions.toml`, CVE scan, safe upgrades |
-| `modernize` | default | XML→Compose, View→Compose, Groovy→Kotlin-DSL migration |
+| `debug` | default | Configure logcat/StrictMode/layout inspection, or root-cause a crash or ANR |
+| `deps` | default | `audit` (default) the version catalog, or `upgrade` one entry at a time |
+| `develop-feature` | default | Feature end-to-end: architecture → implementation → tests → security |
+| `fix-modernize` | default | XML→Compose, View→Compose, Groovy→Kotlin-DSL, library/API migration |
+| `fix-performance` | default | Macrobenchmark/Perfetto measurement; optimizations behind `--apply` |
+| `fix-quick` | haiku | `ktlintCheck`/`detekt`/`lint` report or `ktlintFormat`/`--auto-correct` fix |
+| `fix-refactor` | default | Refactor toward clean-arch / MVI / modularization |
+| `gen-docs` | default | KDoc for Kotlin/Compose declarations; optional Dokka run |
+| `gen-tests` | default | Detect framework, delegate test-generator, verify suite |
+| `review-code` | default | Static review (Compose anti-patterns, coroutine misuse, arch violations) |
+
+`.claude-plugin/marketplace.json` must list exactly the files in `commands/`;
+`scripts/check-command-registration.sh` enforces that bijection and runs as part
+of `scripts/run-checks.sh`.
+
+### Migration: old → new names
+
+Renamed in 1.3.0. The old names no longer resolve — update any saved invocation.
+
+| Old (≤1.2.0) | New (1.3.0) | Note |
+|--------------|-------------|------|
+| `code-review` | `review-code` | |
+| `lint-fix` | `fix-quick` | keeps `model: haiku` |
+| `modernize` | `fix-modernize` | |
+| `code-refactor` | `fix-refactor` | |
+| `generate-tests` | `gen-tests` | |
+| `deps-audit` | `deps audit` | now a subcommand; bare `deps` defaults to `audit`, `deps upgrade` replaces `--fix` |
+| `build-test` | `build-test` | unchanged |
 
 ## Install
 
