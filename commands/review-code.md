@@ -2,9 +2,16 @@
 description: Statically review Android/Kotlin code for Compose anti-patterns, coroutine misuse, and architecture violations, optionally routing fixes
 argument-hint: [path (default .)] [--fix] [--severity P0|P1|P2|P3]
 allowed-tools: Read, Glob, Grep, Bash, Edit
+estimated-cost:
+  min-tokens: 4000
+  max-tokens: 28000
+  model-distribution:
+    haiku: 15%
+    sonnet: 75%
+    opus: 10%
 ---
 
-# Code Review (Android)
+# Code Review
 <!-- Updated: June 2026 -->
 
 Statically review changed Kotlin/Compose code against Android best practices and report
@@ -29,8 +36,8 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 ## Usage
 
 ```bash
-/android-developer:code-review .
-/android-developer:code-review app --fix --severity P1
+/android-developer:review-code .
+/android-developer:review-code app --fix --severity P1
 ```
 
 ## Options
@@ -87,6 +94,6 @@ resource externalization, lint hygiene) by P0-P3. The happy path is read + repor
 Report "no changed Kotlin files vs base" and stop (nothing to review).
 
 ## See Also
-- `/android-developer:lint-fix` — mechanical-only fast pass.
-- `/android-developer:code-refactor` — apply a target pattern across the codebase.
+- `/android-developer:fix-quick` — mechanical-only fast pass.
+- `/android-developer:fix-refactor` — apply a target pattern across the codebase.
 - `skill: severity-matrix` — P0-P3 definitions.

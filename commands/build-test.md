@@ -11,7 +11,7 @@ estimated-cost:
     opus: 5%
 ---
 
-# Build & Test (Android)
+# Build & Test
 <!-- Updated: June 2026 -->
 
 Detect an Android project's Gradle wrapper, assemble a variant, and run its unit tests
@@ -145,7 +145,7 @@ Suggestion: Run from the project root, or generate the wrapper with `gradle wrap
 Report the available modules (`./gradlew projects`) and stop.
 
 ## See Also
-- `/android-developer:lint-fix` — run ktlint/detekt before building to cut noise.
-- `/android-developer:generate-tests` — add tests when a module has none.
-- `/android-developer:deps-audit` — when a `configure`-stage failure is a dependency issue.
+- `/android-developer:fix-quick` — run ktlint/detekt before building to cut noise.
+- `/android-developer:gen-tests` — add tests when a module has none.
+- `/android-developer:deps audit` — when a `configure`-stage failure is a dependency issue.
 - `skill: tooling` — Gradle build configuration and the Android CLI.

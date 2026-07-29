@@ -3,9 +3,15 @@ description: Run ktlint, detekt, and Android Lint in report mode, or auto-format
 argument-hint: [path (default .)] [--check | --fix]
 allowed-tools: Read, Edit, Glob, Grep, Bash
 model: haiku
+estimated-cost:
+  min-tokens: 500
+  max-tokens: 6000
+  model-distribution:
+    haiku: 90%
+    sonnet: 10%
 ---
 
-# Lint & Fix (Android)
+# Lint & Fix
 <!-- Updated: June 2026 -->
 
 Run the project's linters (ktlint, detekt, Android Lint) report-only, or apply their
@@ -14,7 +20,7 @@ auto-fixers. This is a shallow, deterministic pass — it never delegates to an 
 [Extended thinking: A cheap haiku-model pass that runs the configured linters via the
 Gradle wrapper and tees output. `--check` reports; `--fix` runs the auto-formatters then
 re-checks. It does not attempt semantic fixes — deep findings are surfaced for
-`/android-developer:code-review` or an agent, not silently rewritten here.]
+`/android-developer:review-code` or an agent, not silently rewritten here.]
 
 ## CRITICAL BEHAVIORAL RULES
 
@@ -28,8 +34,8 @@ re-checks. It does not attempt semantic fixes — deep findings are surfaced for
 ## Usage
 
 ```bash
-/android-developer:lint-fix .            # defaults to --check
-/android-developer:lint-fix . --fix
+/android-developer:fix-quick .            # defaults to --check
+/android-developer:fix-quick . --fix
 ```
 
 ## Options
@@ -70,7 +76,7 @@ re-checks. It does not attempt semantic fixes — deep findings are surfaced for
 | detekt | N | M | N-M |
 | Android Lint | N | 0 | N |
 
-**Result:** CLEAN / {N} findings remain (run /android-developer:code-review for deep fixes)
+**Result:** CLEAN / {N} findings remain (run /android-developer:review-code for deep fixes)
 ```
 
 ## Error Handling
@@ -81,6 +87,6 @@ Error: No ./gradlew found under {path}. Run from the project root.
 ```
 
 ## See Also
-- `/android-developer:code-review` — semantic review and routed fixes for deep findings.
+- `/android-developer:review-code` — semantic review and routed fixes for deep findings.
 - `/android-developer:build-test` — build after fixing to confirm compilation.
 - `skill: quality` — lint hygiene and the QA gate.

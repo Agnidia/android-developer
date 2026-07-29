@@ -2,9 +2,16 @@
 description: Detect the project's test framework and generate unit, UI, or screenshot tests for an Android target, then verify them
 argument-hint: [target] [--type unit|ui|screenshot] [--framework junit5|junit4]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+estimated-cost:
+  min-tokens: 3000
+  max-tokens: 22000
+  model-distribution:
+    haiku: 15%
+    sonnet: 75%
+    opus: 10%
 ---
 
-# Generate Tests (Android)
+# Generate Tests
 <!-- Updated: June 2026 -->
 
 Detect the test framework the project already uses (never introduce a second), delegate
@@ -26,9 +33,9 @@ green. It does not author tests itself.]
 ## Usage
 
 ```bash
-/android-developer:generate-tests :feature:login --type unit
-/android-developer:generate-tests app/.../ProfileScreen.kt --type ui
-/android-developer:generate-tests :core:ui --type screenshot
+/android-developer:gen-tests :feature:login --type unit
+/android-developer:gen-tests app/.../ProfileScreen.kt --type ui
+/android-developer:gen-tests :core:ui --type screenshot
 ```
 
 ## Options

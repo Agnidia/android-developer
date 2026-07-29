@@ -52,12 +52,12 @@
       ],
       "commands": [
         "./commands/build-test.md",
-        "./commands/lint-fix.md",
-        "./commands/code-review.md",
-        "./commands/code-refactor.md",
-        "./commands/generate-tests.md",
-        "./commands/deps-audit.md",
-        "./commands/modernize.md"
+        "./commands/deps.md",
+        "./commands/fix-modernize.md",
+        "./commands/fix-quick.md",
+        "./commands/fix-refactor.md",
+        "./commands/gen-tests.md",
+        "./commands/review-code.md"
       ]
     }
   ]

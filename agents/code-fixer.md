@@ -1,6 +1,6 @@
 ---
 name: code-fixer
-description: Automated Android/Kotlin code remediation. Applies systematic, minimal-diff fixes for findings from code-review, security-auditor, and DR — ktlint formatting, detekt auto-correct, and targeted Kotlin/Compose fixes. Use when applying batch fixes or a remediation plan to Android code.
+description: Automated Android/Kotlin code remediation. Applies systematic, minimal-diff fixes for findings from review-code, security-auditor, and DR — ktlint formatting, detekt auto-correct, and targeted Kotlin/Compose fixes. Use when applying batch fixes or a remediation plan to Android code.
 model: haiku
 effort: medium
 maxTurns: 30
