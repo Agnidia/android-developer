@@ -94,8 +94,8 @@ Apply this policy in DV output and when responding to DR findings. Reviewers
 
 ## Workflow Stage Participation
 
-android-developer agents participate in the igrsoft 11-stage workflow system
-(v3.36.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
+android-developer agents participate in the company-workflow 11-stage workflow system
+(v4.0.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
 
 ### Handoff Contract (BINDING)
 
@@ -106,20 +106,20 @@ glob), Required Inputs, pre-flight Verification, output frontmatter schema
 `metadata.*` matrix.
 
 **state.json patching is REQUIRED before returning** — but do NOT hand-roll a
-`jq` or manual read→merge→rename. Use igrsoft's single, lock-serialized
+`jq` or manual read→merge→rename. Use company-workflow's single, lock-serialized
 implementation, or skip and let the safety-net layers repair the ledger from
 your frontmatter:
 
 - **Primary (script)**: when the dispatching prompt or
-  `task.metadata.state_patch_script` supplies the path to igrsoft's
-  `state-patch.sh` (it ships in the igrsoft plugin under
+  `task.metadata.state_patch_script` supplies the path to company-workflow's
+  `state-patch.sh` (it ships in the company-workflow plugin under
   `skills/worktask/scripts/`), run `bash <path>/state-patch.sh --stage <CODE>
   --prev <PREV>`. It parses this artifact's `handoff:` frontmatter and atomically
   merges `stages.<CODE>` plus the `<PREV>→<CODE>` handoff edge into
   `.context/state.json` — single implementation, lock-serialized, idempotent.
 - **Degrade (silent skip)**: if no script path was supplied, or `jq`/`state.json`
   is absent, skip — do NOT reconstruct the merge inline. The orchestrator's
-  post-stage re-read (Layer 2) and igrsoft's SubagentStop `state-merge.sh` hook
+  post-stage re-read (Layer 2) and company-workflow's SubagentStop `state-merge.sh` hook
   (Layer 3) repair the ledger from your frontmatter.
 
 **Frontmatter emission is therefore unconditional**: an artifact without
@@ -145,7 +145,7 @@ Readers fall back to newest-glob (`<basename>-*.md`).
   the gate is armed (`metadata.requires_screenshots: true`), capture `./gradlew`
   build/test output and `adb logcat` / `adb shell screencap` transcripts as
   `source: cli-fallback` rows (manifest `source` column: `cli-fallback`) in
-  `.context/images/<worktask_id>/screenshots.md` before returning — else igrsoft's
+  `.context/images/<worktask_id>/screenshots.md` before returning — else company-workflow's
   `dv-screenshot-gate.sh` blocks `SubagentStop`.
 - **Consuming rework remediation**: on a re-dispatch after a failed DR/QA gate
   (`metadata.retry_count > 0`), read the prepended `REMEDIATION (from <DR|QA> gate…)`
@@ -169,7 +169,7 @@ finding counts, and the `.context/logs/` test-transcript path stay mandatory
 
 ### DR Stage (Developer Review) — Provide Context
 
-Technical-lead (`igrsoft:technical-lead`) reviews DV output against Android-specific
+Technical-lead (`company-workflow:technical-lead`) reviews DV output against Android-specific
 criteria (Compose stability/recomposition, coroutine discipline, architecture-layer
 purity, lint hygiene, resource externalization). android-developer agents support
 DR by:

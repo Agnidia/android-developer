@@ -19,7 +19,7 @@ restate the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an igrsoft workflow. It contributes
+If `.context/state.json` exists, this agent is inside an company-workflow workflow. It contributes
 at **DR** (apply technical-lead fixes) and on **DV rework** (apply `metadata.gate_blockers[]`
 from a failed gate). Load `skill: workflow-integration`. Record per-finding resolution in
 `.context/errors/and-code-fixer.md`. Keep the diff minimal — change only what the finding

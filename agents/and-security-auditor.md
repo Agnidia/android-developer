@@ -22,14 +22,14 @@ remediation. The notes below are security-specific; do not restate the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an igrsoft workflow. BEFORE doing
+If `.context/state.json` exists, this agent is inside an company-workflow workflow. BEFORE doing
 any work:
 
 1. Load `skill: workflow-integration` for the 11-stage context and the BINDING handoff
    contract.
 2. Read `.context/state.json` for upstream context; read `development-N.md` (newest
    `development-*.md`) for the SR security-surface table and files changed.
-3. Default stage: **SR context provider** — `igrsoft:security-reviewer` owns
+3. Default stage: **SR context provider** — `company-workflow:security-reviewer` owns
    `.context/security-review-N.md`; this agent supplies Android-specific findings
    (permissions, exported, storage, transport, R8, secrets) for that agent to merge.
 4. Return a **compressed summary (≤500 tokens)** — findings grouped by severity, each

@@ -30,12 +30,12 @@ stated as universal.
 
   The old names no longer resolve. Anything dispatching them — `Task()` grants in
   another plugin's agent frontmatter, `subagent_type=` strings, saved invocations,
-  the igrsoft registry — must be updated. `android-developer`,
+  the company-workflow registry — must be updated. `android-developer`,
   `android-phone-developer`, and `kotlin-architector` are unchanged; the four
   `error_file` paths move to `.context/errors/and-*.md` with them.
 
   This adopts the `sys-` / `fe-` / `be-` / `ai-` convention the other dev plugins
-  already follow, and closes the migration tracked in igrsoft's
+  already follow, and closes the migration tracked in company-workflow's
   `compatible-plugins.md` § Naming.
 
 ### Fixed — platform-leak audit
@@ -151,7 +151,7 @@ Command count goes from 7 to 15.
 
 ## [1.2.0] — 2026-07-22
 
-igrsoft compatibility ported v3.17.0 → v3.36.0. Screenshot-gate hardening
+company-workflow compatibility ported v3.17.0 → v3.36.0. Screenshot-gate hardening
 (evidence-freshness rule, conditional armed-gate provenance rule), state-patch
 pointer form, output budgets on DV/AR/DR agents, complexity triage on
 `kotlin-architector`, and the displayed-enabled control sweep test pattern.
@@ -168,5 +168,5 @@ checklist.
 
 ## [1.0.0]
 
-Initial release on the igrsoft v3.17.0 / CC 2.1.169 baseline: 7 agents, 7
+Initial release on the company-workflow v3.17.0 / CC 2.1.169 baseline: 7 agents, 7
 commands, 23 skills across 6 domains, and 3 plugin-scoped advisory hooks.

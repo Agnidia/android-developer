@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "android-developer",
-      "description": "Android development toolkit: Kotlin/Compose/Gradle agents, architecture/compose-ui/data/concurrency/quality/tooling skills synthesized from community + Google android/skills, Gradle/adb commands, and igrsoft 11-stage workflow integration.",
+      "description": "Android development toolkit: Kotlin/Compose/Gradle agents, architecture/compose-ui/data/concurrency/quality/tooling skills synthesized from community + Google android/skills, Gradle/adb commands, and company-workflow 11-stage workflow integration.",
       "source": "./",
       "strict": true,
       "category": "development",
