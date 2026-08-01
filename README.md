@@ -138,7 +138,7 @@ directory's `.claude-plugin/marketplace.json`.
 
 ## company-workflow integration
 
-When `.context/state.json` is present, agents operate inside an company-workflow worktask.
+When `.context/state.json` is present, agents operate inside a company-workflow worktask.
 The plugin contributes at:
 
 - **DV** (primary) — `company-workflow:developer` routes `platform=android` to the

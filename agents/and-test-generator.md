@@ -21,7 +21,7 @@ the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an company-workflow workflow. It contributes
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. It contributes
 at **DV** (tests alongside implementation) and **QA** (coverage gaps, regression tests).
 Load `skill: workflow-integration`; resolve the plan file; for DV-stage test additions,
 record the test files under `## tests-added` in `development-N.md`.

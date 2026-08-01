@@ -21,7 +21,7 @@ architecture-specific; do not restate the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an company-workflow workflow. It contributes
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. It contributes
 at **AR** (pattern selection consultation feeding `analyzing-N.md`) and **DR** (pattern
 consult on review findings). For DV-stage structural work it writes/extends
 `development-N.md` with `handoff:` frontmatter and atomic-patches `state.json`. Load

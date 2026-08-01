@@ -58,7 +58,7 @@ memory.
 | Coroutine scopes, dispatchers, Flow operators | [concurrency-networking/coroutines-flow/SKILL.md](concurrency-networking/coroutines-flow/SKILL.md) |
 | Writing JUnit/MockK/Turbine/Compose tests | [quality/testing/SKILL.md](quality/testing/SKILL.md) |
 | Setting up version catalogs / convention plugins / R8 | [tooling/gradle-build/SKILL.md](tooling/gradle-build/SKILL.md) |
-| Participating in an company-workflow workflow stage | [_shared/workflow-integration/SKILL.md](_shared/workflow-integration/SKILL.md) |
+| Participating in a company-workflow workflow stage | [_shared/workflow-integration/SKILL.md](_shared/workflow-integration/SKILL.md) |
 
 ## Conventions
 

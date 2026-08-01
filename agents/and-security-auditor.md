@@ -22,7 +22,7 @@ remediation. The notes below are security-specific; do not restate the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an company-workflow workflow. BEFORE doing
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing
 any work:
 
 1. Load `skill: workflow-integration` for the 11-stage context and the BINDING handoff

@@ -45,7 +45,7 @@ handoff contract (also summarized in `_base/platform-agent.md`).
 
 ### DV Stage Quick Steps
 
-When `.context/state.json` exists, this agent is inside an company-workflow workflow. Follow
+When `.context/state.json` exists, this agent is inside a company-workflow workflow. Follow
 `_base/platform-agent.md § Workflow Stage Participation § DV Stage` for the contract;
 the router-specific steps:
 
