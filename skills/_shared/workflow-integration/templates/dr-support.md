@@ -1,6 +1,6 @@
 # DR Support / Fix-Routing Template
 
-When technical-lead (`igrsoft:technical-lead`) returns DR findings, android-developer
+When technical-lead (`company-workflow:technical-lead`) returns DR findings, android-developer
 agents apply them:
 
 ```

@@ -1,6 +1,6 @@
 ---
 name: workflow-integration
-description: Guide for integrating with the igrsoft 11-stage workflow system (v3.36.0). Use when participating in structured workflow stages as an android-developer agent.
+description: Guide for integrating with the company-workflow 11-stage workflow system (v4.0.0). Use when participating in structured workflow stages as an android-developer agent.
 license: Apache-2.0
 metadata:
   author: IGRSoft
@@ -10,7 +10,7 @@ metadata:
 
 # Workflow Integration Guide
 
-When invoked from the igrsoft workflow system, follow these guidelines for seamless
+When invoked from the company-workflow workflow system, follow these guidelines for seamless
 collaboration.
 
 ## 11-Stage Pipeline (Default)
@@ -21,7 +21,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
   android-developer agents contribute to AR, DV, DR, SR, QA, and RE
 ```
 
-| Code | Stage | igrsoft Agent | android-developer Contribution |
+| Code | Stage | company-workflow Agent | android-developer Contribution |
 |------|-------|---------------|--------------------------------|
 | PL | Planning | product-manager | — |
 | AR | Architecture | software-architector | `kotlin-architector` (consult: Clean Arch, modularization, Hilt graph, MVI vs MVVM) |
@@ -35,7 +35,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
 | FN | Finalization | project-manager | — |
 | ST | Stakeholder | stakeholder | — |
 
-## Worktask Triggers (v3.36.0)
+## Worktask Triggers (v4.0.0)
 
 | Trigger | Stages | Use Case |
 |---------|--------|----------|
@@ -49,7 +49,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
 ## DV Contract for Android Work
 
 The DV agent writes `.context/development-N.md`. Mandatory H2 anchors are fixed by
-igrsoft's anchor allow-list (`handoff-protocol.md#anchor-allow-list`): `## files-changed`,
+company-workflow's anchor allow-list (`handoff-protocol.md#anchor-allow-list`): `## files-changed`,
 `## tests-added`, `## deviations`, `## follow-ups`. Android-specific sections nest as H3
 under them:
 
@@ -71,9 +71,9 @@ Copy-paste template: [templates/dv.md](templates/dv.md).
 
 ## Screenshot Gate for Android Work (HIGHEST INTEGRATION RISK — read this)
 
-igrsoft's `dv-screenshot-gate.sh` blocks `SubagentStop` when
+company-workflow's `dv-screenshot-gate.sh` blocks `SubagentStop` when
 `metadata.requires_screenshots != false` and no manifest exists at
-`.context/images/<worktask_id>/screenshots.md`. The igrsoft default is **TRUE** — but
+`.context/images/<worktask_id>/screenshots.md`. The company-workflow default is **TRUE** — but
 most Android/Kotlin work has no emulator-screenshot dependency and is verified through
 Gradle/CLI evidence. Handle it in this order:
 
@@ -94,7 +94,7 @@ Gradle/CLI evidence. Handle it in this order:
    cli-fallback manifest — the gate re-dispatches DV until one exists.
 4. **Evidence freshness**: every `cli-fallback` transcript or `adb shell screencap` row
    must be produced *this run* from the actual invocation — never reuse one from a prior
-   run or another workdir. igrsoft QA direct-reads the evidence files and cross-checks them
+   run or another workdir. company-workflow QA direct-reads the evidence files and cross-checks them
    against the `### build-evidence` log paths in the DV artifact; a stale or duplicated
    transcript/capture is flagged and re-opens DV. Extends the never-fabricate bar in rule 3
    to reused text and image evidence.
@@ -106,7 +106,7 @@ Gradle/CLI evidence. Handle it in this order:
    `adb shell screencap` from the live-driven state, recording the interaction path in
    `notes`. This is conditional — the `requires_screenshots: false` default remains the norm.
 
-Manifest row format mirrors igrsoft's `dv-screenshot-capture` output:
+Manifest row format mirrors company-workflow's `dv-screenshot-capture` output:
 `| name | path | source | design_ref | notes |` with `source` ∈ {`cli-fallback`} for CLI/
 Gradle evidence; `design_ref` stays blank unless a Compose screen maps to a mockup. See
 [templates/dv-screenshots.md](templates/dv-screenshots.md).
@@ -158,7 +158,7 @@ Compose/Roborazzi). Template: [templates/qa-testing.md](templates/qa-testing.md)
 
 ## SR and RE Contributions
 
-- **SR** — `and-security-auditor` provides platform context to igrsoft's security-reviewer:
+- **SR** — `and-security-auditor` provides platform context to company-workflow's security-reviewer:
   permission hygiene, exported-component exposure, insecure storage, transport security
   (network-security-config, pinning), R8/ProGuard hardening, secrets scan, and WebView/
   deep-link surfaces. Review-only: findings route to `and-code-fixer` for application.
@@ -167,9 +167,9 @@ Compose/Roborazzi). Template: [templates/qa-testing.md](templates/qa-testing.md)
   implementer records versionCode/versionName, signing/ABI notes, and R8 mapping retention
   in `release-N.md`.
 
-## Artifact Filename Contract (v3.36.0)
+## Artifact Filename Contract (v4.0.0)
 
-**Numbered `<stage>-N.md` names are canonical** per igrsoft's `handoff-protocol.md#stage-artifact-map`.
+**Numbered `<stage>-N.md` names are canonical** per company-workflow's `handoff-protocol.md#stage-artifact-map`.
 N is allocated by PL0, shared across all stages within a run, and propagated via
 `task.metadata.run_index`; it bumps on gate loop-back re-dispatch. Readers fall back to
 newest-glob (`<basename>-*.md`).
@@ -197,7 +197,7 @@ frontmatter after `Task()` returns), Layer 3 (`SubagentStop` hook auto-merge). A
 Layer 1; if the script or its path is absent, proceed — Layers 2 and 3 repair from
 frontmatter.
 
-## Handoff Frontmatter (v3.36.0 schema)
+## Handoff Frontmatter (v4.0.0 schema)
 
 Every stage artifact MUST start with a YAML block between `---` markers. Budgets:
 ≤200 tokens, ≤30 lines. Base required fields: `stage`, `verdict`, `summary` (≤200 chars),
@@ -213,7 +213,7 @@ Every stage artifact MUST start with a YAML block between `---` markers. Budgets
 the target file (anchor-lint enforces this at DR and via the PostToolUse hook). Copy-paste
 blocks: `templates/` in this directory.
 
-## Gate-Feedback Contract (v3.36.0)
+## Gate-Feedback Contract (v4.0.0)
 
 When DR returns `verdict: fail` or QA returns `verdict: no-go`, the orchestrator re-
 dispatches DV (`run_index` bumped, `retry_count`++) and carries the upstream remediation
@@ -240,8 +240,8 @@ All Task delegations MUST use the fully-qualified `plugin:agent` form:
 | Form | Status |
 |------|--------|
 | `android-developer:android-phone-developer` | Required |
-| `igrsoft:technical-lead` | Required |
-| `android-phone-developer` (bare) | Deprecated — back-compat shim prepends `igrsoft:` and logs a warning (would resolve to the wrong plugin) |
+| `company-workflow:technical-lead` | Required |
+| `android-phone-developer` (bare) | Deprecated — back-compat shim prepends `company-workflow:` and logs a warning (would resolve to the wrong plugin) |
 
 Task metadata carries qualified names:
 
@@ -260,7 +260,7 @@ Task metadata carries qualified names:
 
 ## Token Budgets
 
-- **Incoming compressed context** (from igrsoft): 300-500 tokens (planning 300,
+- **Incoming compressed context** (from company-workflow): 300-500 tokens (planning 300,
   architecture 300, development handoff 500).
 - **Full stage output**: write to `.context/<stage>-N.md` (no token cap).
 - **Outgoing return summary**: 500 tokens max (for the orchestrator).
@@ -279,7 +279,7 @@ Task metadata carries qualified names:
    run_index, error_file, gate_from_stage, gate_blockers, requires_screenshots,
    workspace_path}`.
 
-## Dynamic Worktask Sizing (v3.36.0)
+## Dynamic Worktask Sizing (v4.0.0)
 
 PL0 assesses complexity (0-50) and creates only the stages needed:
 
@@ -301,7 +301,7 @@ score and marker coverage) and `metadata.ui_visual_check`. The plugin norm keeps
 `requires_screenshots: false` for systems-style Android work, so `ui_visual_check` is
 normally `false`; but when a dispatcher arms `ui_visual_check: true` for UI-critical work,
 the provenance rule in § Screenshot Gate for Android Work applies. The stage table above,
-the `test_mode` defaults, and these stamps are all defined by igrsoft
+the `test_mode` defaults, and these stamps are all defined by company-workflow
 `estimation-methodology § PL0 Stage-Set` (the source of truth) — keep them in lockstep with
 it so the next sync is a mechanical copy.
 
@@ -317,16 +317,16 @@ If no workflow context is detected (no `.context/`, no task metadata), proceed w
 standard implementation: follow the Android skills, run the same build/test/lint
 discipline, and report results directly — no artifacts or frontmatter required.
 
-## Related Skills (igrsoft plugin)
+## Related Skills (company-workflow plugin)
 
 | Skill | Purpose |
 |-------|---------|
-| `igrsoft:worktask` | Complete worktask system documentation |
-| `igrsoft:cross-plugin-handoff` | Handoff protocol between plugins |
-| `igrsoft:agent-coordination` | Multi-agent coordination patterns |
-| `igrsoft:context-compression` | Token budgets and compression techniques |
-| `igrsoft:security-review-process` | SR stage OWASP/MASVS checklists |
-| `igrsoft:release-engineering` | RE stage versioning patterns |
+| `company-workflow:worktask` | Complete worktask system documentation |
+| `company-workflow:cross-plugin-handoff` | Handoff protocol between plugins |
+| `company-workflow:agent-coordination` | Multi-agent coordination patterns |
+| `company-workflow:context-compression` | Token budgets and compression techniques |
+| `company-workflow:security-review-process` | SR stage OWASP/MASVS checklists |
+| `company-workflow:release-engineering` | RE stage versioning patterns |
 
 ## Related Skills (android-developer plugin)
 
@@ -339,5 +339,5 @@ discipline, and report results directly — no artifacts or frontmatter required
 ## Attribution
 
 Original IGRSoft synthesis (Apache-2.0), adapted from the system-developer plugin's
-workflow-integration guide (Apache-2.0) with Android substitutions. Encodes the igrsoft
-v3.36.0 handoff protocol.
+workflow-integration guide (Apache-2.0) with Android substitutions. Encodes the company-workflow
+v4.0.0 handoff protocol.
