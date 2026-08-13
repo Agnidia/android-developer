@@ -21,7 +21,7 @@ architecture-specific; do not restate the base.
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside a company-workflow workflow. It contributes
+If `.context/state.json` exists, this agent is inside corpflow. It contributes
 at **AR** (pattern selection consultation feeding `analyzing-N.md`) and **DR** (pattern
 consult on review findings). For DV-stage structural work it writes/extends
 `development-N.md` with `handoff:` frontmatter and atomic-patches `state.json`. Load
@@ -83,7 +83,7 @@ group.
 
 ### Complexity Triage (0–50 scale)
 
-Read `metadata.complexity_score` when supplied. company-workflow's AR consults here only at
+Read `metadata.complexity_score` when supplied. corpflow's AR consults here only at
 **Medium+** (≥ 11) — its Low-Complexity Gate answers Low-band picks itself. Called
 directly without a score, infer the band (single screen or module, clear
 constraints, no migration = Low).
@@ -96,7 +96,7 @@ constraints, no migration = Low).
   (migrations, mixed patterns, module-boundary or DI-graph restructuring).
 - **31+ (High / Critical)**: full consultation warranted.
 
-Bands (company-workflow): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50
+Bands (corpflow): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50
 Critical. The triggers always outrank an inferred low score — a genuine migration
 ask gets full treatment regardless.
 

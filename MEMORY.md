@@ -5,12 +5,12 @@
 | Field | Value |
 |-------|-------|
 | Plugin version | 1.4.0 |
-| company-workflow compatibility | v4.0.0 |
+| corpflow compatibility | v4.0.13 |
 | Claude Code min required | 2.1.169 |
 | Last updated | 2026-07-29 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
-header, this table, CHANGELOG.md) per the company-workflow `/cc-update` convention.
+header, this table, CHANGELOG.md) per the corpflow `/cc-update` convention.
 
 ## Inventory Index
 
@@ -24,7 +24,7 @@ header, this table, CHANGELOG.md) per the company-workflow `/cc-update` conventi
 
 ## CC Features Adopted at 1.0.0
 
-Born on the company-workflow v3.17.0 / CC 2.1.169 baseline (current compatibility: company-workflow
+Born on the corpflow v3.17.0 / CC 2.1.169 baseline (current compatibility: corpflow
 v4.0.0), the plugin adopts the current capability set from the start:
 
 - **Tiered `maxTurns`** — every agent declares a runaway-loop backstop sized to
@@ -38,7 +38,7 @@ v4.0.0), the plugin adopts the current capability set from the start:
 - **Fully-qualified `Task(plugin:agent)` references** — all delegations use the
   `Task(android-developer:<agent>)` / `subagent_type="android-developer:<agent>"`
   form; no bare agent names anywhere. Cross-plugin targets keep their own prefix
-  (`company-workflow:*`, etc.).
+  (`corpflow:*`, etc.).
 - **Scoped `Bash(cmd:*)` allowlists** — each agent's `tools:` enumerates only the
   toolchain binaries it needs (for example `android-phone-developer`: git, gradle,
   ./gradlew, adb, ktlint, detekt). Because scoped patterns do not match compound
@@ -47,22 +47,22 @@ v4.0.0), the plugin adopts the current capability set from the start:
 - **Plugin-scoped advisory hooks** — `hooks/{audit-tooluse,audit-subagent,
   precompact-checkpoint}.sh`, wired in `plugin.json` (PostToolUse / SubagentStop /
   PreCompact). All rows are advisory (`actor: "android-developer:hook:*"`,
-  `metadata.advisory: true`) and share company-workflow's `dedupe_key` / `dedupe_key_extended`
-  shape so company-workflow's `audit-dedup.sh` keeps the orchestrator row authoritative when
+  `metadata.advisory: true`) and share corpflow's `dedupe_key` / `dedupe_key_extended`
+  shape so corpflow's `audit-dedup.sh` keeps the orchestrator row authoritative when
   android-developer runs nested. Each script has `--self-test`.
 
-## Not Adopted (company-workflow-owned infrastructure)
+## Not Adopted (corpflow-owned infrastructure)
 
-android-developer agents are invoked specialists; company-workflow owns orchestration. The
+android-developer agents are invoked specialists; corpflow owns orchestration. The
 following stay orchestrator-owned and are deliberately **not** implemented here:
 
-- **`audit-dedup.sh`** — company-workflow-owned. android-developer emits advisory rows with
-  matching dedupe keys for company-workflow's helper to reconcile; it does not reconcile
+- **`audit-dedup.sh`** — corpflow-owned. android-developer emits advisory rows with
+  matching dedupe keys for corpflow's helper to reconcile; it does not reconcile
   them itself.
 - **`state-merge.sh` / SubagentStop `state.json` merge** — orchestrator-owned. The
   hooks here read and checkpoint state but never merge it. Frontmatter emission is
-  unconditional (it is the input company-workflow's merge layer consumes).
-- **Screenshot-gate ownership** — company-workflow owns the evidence gate. android-developer
+  unconditional (it is the input corpflow's merge layer consumes).
+- **Screenshot-gate ownership** — corpflow owns the evidence gate. android-developer
   work defaults to `requires_screenshots: false` and, when a gate demands proof,
   supplies `cli-fallback` terminal transcripts (`./gradlew` build/test output,
   ktlint/detekt reports, `adb logcat`). It does not own or override the gate itself.
@@ -148,7 +148,7 @@ overwritten at install and collides on `error_file`. Do not add an agent without
 
 The four utility agents took the `and-` prefix (`and-code-fixer`, `and-security-auditor`,
 `and-test-generator`, `and-dependency-manager`), adopting the `sys-`/`fe-`/`be-`/`ai-`
-convention every other dev plugin already follows. This closes the migration company-workflow's
+convention every other dev plugin already follows. This closes the migration corpflow's
 `compatible-plugins.md` § Naming had tracked as owned by this plugin. Two failure modes
 motivated it, and only the first is obvious: Claude Code keys agents by frontmatter `name`,
 so android's and apple's identically-named agents overwrote each other on install; and
@@ -187,7 +187,7 @@ The `performance-engineer` gap deferred at the 7-agent MVP is now visible in a c
 `fix-performance` routes to `kotlin-architector` + `and-code-fixer` and says so in the file.
 If a `performance-engineer` agent ever lands, that command is where it plugs in.
 
-### 1.2.0 — 2026-07-22 company-workflow v3.36.0 Port
+### 1.2.0 — 2026-07-22 corpflow v3.36.0 Port
 
 Compatibility ported v3.17.0 → v3.36.0 (~14 refs across README, this file, the agent
 stage-participation headers, and the `workflow-integration` skill). The Dynamic Worktask Sizing
@@ -200,7 +200,7 @@ birth record is preserved, and the pre-existing `_base` manifest-column drift (`
 
 Screenshot-gate hardening (the design decision is respected, not flipped): an
 **evidence-freshness rule** — every `cli-fallback` transcript or `adb shell screencap` row is
-produced this run from the actual invocation, never reused; company-workflow QA direct-reads the files and
+produced this run from the actual invocation, never reused; corpflow QA direct-reads the files and
 cross-checks the `### build-evidence` log paths, re-opening DV on a stale/duplicated one — plus a
 **conditional armed-gate provenance rule**: when a dispatcher arms `ui_visual_check: true` for
 UI-critical work, static renders (Roborazzi/Paparazzi, un-interacted screens) do not satisfy it;

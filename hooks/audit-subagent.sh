@@ -2,13 +2,13 @@
 # SubagentStop → audit.jsonl writer (android-developer plugin, v1.11.0+).
 # Emits a `subagent_stopped` row with actor "android-developer:hook:audit-subagent".
 #
-# ADVISORY ROW: android-developer specialists run as subagents under the company-workflow
+# ADVISORY ROW: android-developer specialists run as subagents under the corpflow
 # orchestrator, whose SubagentStop hook also fires. To avoid double-counting,
-# company-workflow's rows are authoritative; these carry metadata.advisory=true and a
-# matching metadata.dedupe_key ("<session_id>:<agent_id>:stop") so company-workflow's
+# corpflow's rows are authoritative; these carry metadata.advisory=true and a
+# matching metadata.dedupe_key ("<session_id>:<agent_id>:stop") so corpflow's
 # audit-dedup.sh keeps the orchestrator row and drops this one. Standalone
-# (no company-workflow) these rows stand alone. This hook NEVER touches state.json —
-# state.json merge is orchestrator-owned (company-workflow's state-merge.sh).
+# (no corpflow) these rows stand alone. This hook NEVER touches state.json —
+# state.json merge is orchestrator-owned (corpflow's state-merge.sh).
 set -eu
 
 SELF_TEST=0

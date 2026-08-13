@@ -3,7 +3,7 @@
 Plugin-scoped hook scripts (added v1.11.0). They give android-developer agents
 their own audit trail and pre-compaction checkpoint when the plugin runs
 **standalone** — and degrade cleanly to *advisory* rows when android-developer
-agents run as subagents under the **company-workflow** orchestrator.
+agents run as subagents under the **corpflow** orchestrator.
 
 | Script | Event | Purpose |
 |--------|-------|---------|
@@ -13,15 +13,15 @@ agents run as subagents under the **company-workflow** orchestrator.
 
 ## Advisory / dedup contract (CRITICAL)
 
-android-developer specialists are spawned **as subagents under company-workflow's
+android-developer specialists are spawned **as subagents under corpflow's
 orchestrator**, whose own hooks (`hooks/audit-tooluse.sh`,
 `hooks/audit-subagent.sh`) fire for the same events. To avoid double-counting:
 
 - Every row written here carries `metadata.advisory: true`.
-- Rows share the **same `metadata.dedupe_key`** shape as company-workflow
+- Rows share the **same `metadata.dedupe_key`** shape as corpflow
   (`<session_id>:<tool_use_id>` for tools, `<session_id>:<agent_id>:stop` for
   subagents) plus `dedupe_key_extended` (parent_agent_id-prefixed).
-- company-workflow's `hooks/audit-dedup.sh` keeps the **orchestrator** row authoritative
+- corpflow's `hooks/audit-dedup.sh` keeps the **orchestrator** row authoritative
   and drops the advisory duplicate. Readers prefer `actor: "hook:*"` over
   `actor: "android-developer:hook:*"` when `dedupe_key` collides.
 

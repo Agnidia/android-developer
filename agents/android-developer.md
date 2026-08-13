@@ -28,7 +28,7 @@ routing and verification on top.
 | `and-code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
 | `and-dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
 
-## Workflow Collaboration (company-workflow v4.0.0)
+## Workflow Collaboration (corpflow v4.0.13)
 
 See `skill: workflow-integration` for the complete 11-stage guide and the binding
 handoff contract (also summarized in `_base/platform-agent.md`).
@@ -45,7 +45,7 @@ handoff contract (also summarized in `_base/platform-agent.md`).
 
 ### DV Stage Quick Steps
 
-When `.context/state.json` exists, this agent is inside a company-workflow workflow. Follow
+When `.context/state.json` exists, this agent is inside corpflow. Follow
 `_base/platform-agent.md § Workflow Stage Participation § DV Stage` for the contract;
 the router-specific steps:
 
