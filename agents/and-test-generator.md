@@ -19,13 +19,6 @@ Inherits `_base/platform-agent.md` (Constraints, Build/Test Tool Priority, Code 
 Policy, Workflow Stage Participation). The notes below are test-specific; do not restate
 the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. It contributes
-at **DV** (tests alongside implementation) and **QA** (coverage gaps, regression tests).
-Load `skill: workflow-integration`; resolve the plan file; for DV-stage test additions,
-record the test files under `## tests-added` in `development-N.md`.
-
 ## Framework Detection (never introduce a second)
 
 Detect the existing stack before generating:

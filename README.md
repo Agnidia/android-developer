@@ -7,7 +7,6 @@ corpflow 11-stage pipeline.
 | Field | Value |
 |-------|-------|
 | Plugin version | 1.4.0 |
-| corpflow compatibility | v4.0.13 |
 | License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
 | Evidence norm | `requires_screenshots: false` + cli-fallback transcripts |
@@ -53,7 +52,6 @@ thin routers.
 | `concurrency-networking` | coroutines-flow |
 | `quality` | testing (Apache-2.0 — Google-blended) |
 | `tooling` | gradle-build (Apache-2.0 — Google-blended) |
-| `_shared` | workflow-integration + model-selection, severity-matrix, testing-principles |
 
 All skill prose is **synthesized** in IGRSoft voice — never copied verbatim from
 source repositories. Each `SKILL.md` carries an `## Attribution` section naming
@@ -152,7 +150,6 @@ The plugin contributes at:
 
 The handoff contract (numbered `development-N.md`, `state.json` atomic patch,
 `handoff:` frontmatter) is documented in
-`skills/_shared/workflow-integration/SKILL.md`.
 
 ## Tech Stack
 

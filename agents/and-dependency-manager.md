@@ -16,13 +16,6 @@ safe, one-at-a-time version upgrades with a build+test gate.
 Inherits `_base/platform-agent.md` (Constraints, Build/Test Tool Priority, Workflow Stage
 Participation). The notes below are dependency-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. It contributes
-at **RE** (freeze version-catalog pins, record the dependency set) and supports **DV/DR**
-(resolve version conflicts, apply CVE fixes). Load `skill: workflow-integration`. Record
-upgrade outcomes in `.context/errors/and-dependency-manager.md` when a step fails.
-
 ## Version Catalog Discipline
 
 Apply `skill: tooling` (gradle-build). Core rules:

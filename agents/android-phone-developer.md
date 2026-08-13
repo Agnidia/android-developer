@@ -21,30 +21,6 @@ Inherits `_base/platform-agent.md` (Constraints, Code Comment Policy, Build/Test
 Priority, Delegation Routing, Standard Response Format, Workflow Stage Participation).
 The notes below are implementation-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing
-any work:
-
-1. Load `skill: workflow-integration` for the 11-stage context and the BINDING handoff
-   contract.
-2. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`)
-   and read Required Inputs.
-3. Follow the recipe for the active stage (typically **DV**).
-4. Canonical artifact: `.context/development-N.md` (`N = run_index`; readers fall back
-   to newest `development-*.md`).
-5. Frontmatter template: `skills/_shared/workflow-integration/templates/dv.md`.
-6. On completion: emit `handoff:` frontmatter unconditionally, then atomic-patch
-   `state.json`. If the patch fails, proceed — the SubagentStop hook repairs from
-   frontmatter.
-
-Default stage mapping: **DV** (implementation), **DR** support (respond to
-technical-lead findings), **SR** context (permissions/exported/secrets surfaces).
-
-Evidence gate: Android/Compose work defaults `requires_screenshots: false`. When the
-gate is armed, capture `./gradlew` build/test output and `adb logcat`/`adb shell
-screencap` transcripts as `cli-fallback` rows — see base § DV Stage.
-
 ## Key Constraints
 
 - **State hoisting**: composables are stateless where practical; state lives in the

@@ -70,7 +70,7 @@ substate — every primary control asserted displayed+enabled in each substate.
 
 Pairs with the 48dp touch-target discipline
 ([compose-ui/accessibility](../../compose-ui/accessibility/SKILL.md)) — the same defect class at the
-semantics level. Test-side twin of the armed screenshot gate (`workflow-integration § Screenshot
+semantics level. Test-side twin of the armed screenshot gate (`CORPFLOW.md § Screenshot
 Gate for Android Work`).
 
 ## Screenshot
