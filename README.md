@@ -139,12 +139,12 @@ directory's `.claude-plugin/marketplace.json`.
 When `.context/state.json` is present, agents operate inside a corpflow worktask.
 The plugin contributes at:
 
-- **DV** (primary) — `corpflow:developer` routes `platform=android` to the
+- **DV** (primary) — the orchestrator's platform router routes `platform=android` to the
   `android-developer` router, which routes to `android-phone-developer`.
 - **DR** (support) — `and-code-fixer` applies fixes; `kotlin-architector` consults on
   patterns.
 - **SR** (context) — `and-security-auditor` supplies permissions/exported/R8/secrets
-  findings to `corpflow:security-reviewer`.
+  findings to the orchestrator's security reviewer.
 - **QA** (support) — `and-test-generator` produces JUnit/MockK/Turbine/Compose tests.
 - **RE** (packaging) — `and-dependency-manager` freezes version-catalog pins.
 

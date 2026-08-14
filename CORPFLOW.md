@@ -22,6 +22,8 @@ Eleven stages, PL→AR→TL→DV→DR→SR→QA→DC→RE→FN→ST. PL0 sizes t
 small tasks, so **never assume a stage ran** — read `state.json` rather than inferring. The emergency
 pipeline is six stages (IR→DV→QA→DC→FN→ST) and skips both approval gates.
 
+### Stages owned by android-developer
+
 android-developer owns these stages when dispatched:
 
 | Stage | android-developer agent | Handoff data |
@@ -135,7 +137,7 @@ ignored.
 
 Copy the block for the active stage.
 
-**DV**
+### DV
 ```yaml
 handoff:
   from: "android-developer:android-phone-developer"
@@ -153,7 +155,7 @@ handoff:
     ui_visual_check: true
 ```
 
-**AR (consultation)**
+### AR (consultation)
 ```yaml
 handoff:
   from: "android-developer:kotlin-architector"
@@ -168,7 +170,9 @@ handoff:
     constraints: []
 ```
 
-**DV-support** — no `state.json` patch, parent DV agent owns the artifact:
+### DV-support
+
+No `state.json` patch, parent DV agent owns the artifact:
 ```yaml
 handoff:
   from: "android-developer:<support-agent>"
@@ -183,7 +187,7 @@ handoff:
     findings: []
 ```
 
-**IR (emergency)**
+### IR (emergency)
 ```yaml
 handoff:
   from: "android-developer:<agent>"
@@ -197,6 +201,36 @@ handoff:
     root_cause: ""
     hotfix_constraints: []
 ```
+
+## Orchestrator agent roles
+
+Some of this plugin's own commands run a multi-stage flow that borrows orchestrator agents — an
+architect for a design pass, a reviewer for a DR gate. Those commands name the **role**, not the id,
+so this table stays the only place an id appears. Resolve a role here before dispatching; if this
+file is absent, the plugin is standalone and those phases are skipped rather than failed.
+
+### Role table
+
+| Role named in a command | Agent id |
+|---|---|
+| the orchestrator's product manager | `corpflow:product-manager` |
+| the orchestrator's architect | `corpflow:software-architector` |
+| the orchestrator's DR reviewer | `corpflow:technical-lead` |
+| the orchestrator's QA engineer | `corpflow:qa-engineer` |
+| the orchestrator's technical writer | `corpflow:technical-writer` |
+| the orchestrator's security reviewer | `corpflow:security-reviewer` |
+| the orchestrator's ethics reviewer | `corpflow:ethics-reviewer` |
+| the orchestrator's project manager | `corpflow:project-manager` |
+| the orchestrator's worktask engineer | `corpflow:workflow-engineer` |
+| the orchestrator's platform router | `corpflow:developer` |
+| the orchestrator's meta-prompt engineer | `corpflow:prompt-engineer` |
+
+### Standards are referenced by id
+
+Shared **standards** are referenced by id directly (`corpflow:code-comment-standard`,
+`corpflow:security-review-process`, `corpflow:claude-constitution`,
+`corpflow:logging-conventions`). They are shared vocabulary rather than orchestration: copying them
+into each plugin would let the wording drift, and a drifting standard is worse than a named one.
 
 ## Keeping the seam single
 
