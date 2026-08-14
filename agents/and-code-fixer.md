@@ -17,14 +17,6 @@ Inherits `_base/platform-agent.md` (Constraints, Build/Test Tool Priority, Code 
 Policy, Workflow Stage Participation). The notes below are remediation-specific; do not
 restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside a company-workflow workflow. It contributes
-at **DR** (apply technical-lead fixes) and on **DV rework** (apply `metadata.gate_blockers[]`
-from a failed gate). Load `skill: workflow-integration`. Record per-finding resolution in
-`.context/errors/and-code-fixer.md`. Keep the diff minimal — change only what the finding
-requires; do not re-implement passing code.
-
 ## Remediation Discipline
 
 - **One finding at a time, minimal diff.** Do not opportunistically refactor. If a fix

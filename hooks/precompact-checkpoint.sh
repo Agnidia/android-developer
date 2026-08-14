@@ -3,9 +3,9 @@
 # Copies .context/state.json to .context/state.checkpoint-<ts>.json before
 # auto-compaction so long android-developer sessions survive context summarization.
 # Pairs with the PostCompact recovery prose in
-# skills/_shared/workflow-integration/references/stage-details.md.
+# CORPFLOW.md.
 #
-# When company-workflow is the orchestrator it owns state.json and runs its own
+# When an orchestrator is present it owns state.json and runs its own
 # precompact hook; this checkpoint is harmless and idempotent (timestamped
 # copy). Exit code is always 0 — never blocks compaction.
 set -eu

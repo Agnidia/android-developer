@@ -11,14 +11,12 @@
   "plugins": [
     {
       "name": "android-developer",
-      "description": "Android development toolkit: Kotlin/Compose/Gradle agents, architecture/compose-ui/data/concurrency/quality/tooling skills synthesized from community + Google android/skills, Gradle/adb commands, and company-workflow 11-stage workflow integration.",
+      "description": "Android development toolkit: Kotlin/Compose/Gradle agents, architecture/compose-ui/data/concurrency/quality/tooling skills synthesized from community + Google android/skills, Gradle/adb commands, and 11-stage pipeline integration.",
       "source": "./",
       "strict": true,
       "category": "development",
-      "keywords": ["android","kotlin","jetpack-compose","gradle","hilt","coroutines","room","retrofit","clean-architecture","mvvm","mvi","ktlint","detekt","workflow-integration"],
       "skills": [
         "./skills",
-        "./skills/_shared/workflow-integration",
         "./skills/architecture",
         "./skills/architecture/clean-architecture",
         "./skills/architecture/modularization",

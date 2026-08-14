@@ -4,11 +4,11 @@
 # effort.level, session_id) and appends one row to .context/logs/audit.jsonl
 # with actor "android-developer:hook:audit-tooluse".
 #
-# ADVISORY ROW: android-developer agents run as subagents under the company-workflow
-# orchestrator. When company-workflow's own hooks are active, its rows are authoritative
+# ADVISORY ROW: android-developer agents run as subagents under an orchestrating plugin.
+# When the orchestrator's own hooks are active, its rows are authoritative
 # and these are advisory — the shared metadata.dedupe_key ("<session_id>:
-# <tool_use_id>") lets company-workflow's audit-dedup.sh reconcile the two. When
-# android-developer runs standalone (no company-workflow), these rows stand alone.
+# <tool_use_id>") lets the orchestrator's audit-dedup hook reconcile the two. When
+# android-developer runs standalone, these rows stand alone.
 #
 # Self-test: pass --self-test to feed a synthetic fixture and assert schema.
 set -eu

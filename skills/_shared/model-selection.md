@@ -6,7 +6,7 @@ effort: low
 
 # Model & Effort Selection (android-developer)
 
-Companion to company-workflow's `skills/shared/model-selection.md`. This file pins the
+Companion to the orchestrator's model-selection reference. This file pins the
 **android-developer** per-agent assignments and the override paths the agents
 expose. Frontmatter in `agents/*.md` is the source of truth — keep this table in
 sync with it.

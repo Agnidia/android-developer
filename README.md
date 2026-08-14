@@ -2,12 +2,11 @@
 
 Android development toolkit for Claude Code — specialized agents, skills, and
 commands for Kotlin, Jetpack Compose, and Gradle, with full integration into the
-company-workflow 11-stage worktask workflow.
+corpflow 11-stage pipeline.
 
 | Field | Value |
 |-------|-------|
 | Plugin version | 1.4.0 |
-| company-workflow compatibility | v4.0.0 |
 | License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
 | Evidence norm | `requires_screenshots: false` + cli-fallback transcripts |
@@ -53,7 +52,6 @@ thin routers.
 | `concurrency-networking` | coroutines-flow |
 | `quality` | testing (Apache-2.0 — Google-blended) |
 | `tooling` | gradle-build (Apache-2.0 — Google-blended) |
-| `_shared` | workflow-integration + model-selection, severity-matrix, testing-principles |
 
 All skill prose is **synthesized** in IGRSoft voice — never copied verbatim from
 source repositories. Each `SKILL.md` carries an `## Attribution` section naming
@@ -136,23 +134,22 @@ Add the plugin via its marketplace entry:
 Or load locally from a checkout by pointing your marketplace config at this
 directory's `.claude-plugin/marketplace.json`.
 
-## company-workflow integration
+## corpflow integration
 
-When `.context/state.json` is present, agents operate inside a company-workflow worktask.
+When `.context/state.json` is present, agents operate inside a corpflow worktask.
 The plugin contributes at:
 
-- **DV** (primary) — `company-workflow:developer` routes `platform=android` to the
+- **DV** (primary) — the orchestrator's platform router routes `platform=android` to the
   `android-developer` router, which routes to `android-phone-developer`.
 - **DR** (support) — `and-code-fixer` applies fixes; `kotlin-architector` consults on
   patterns.
 - **SR** (context) — `and-security-auditor` supplies permissions/exported/R8/secrets
-  findings to `company-workflow:security-reviewer`.
+  findings to the orchestrator's security reviewer.
 - **QA** (support) — `and-test-generator` produces JUnit/MockK/Turbine/Compose tests.
 - **RE** (packaging) — `and-dependency-manager` freezes version-catalog pins.
 
 The handoff contract (numbered `development-N.md`, `state.json` atomic patch,
 `handoff:` frontmatter) is documented in
-`skills/_shared/workflow-integration/SKILL.md`.
 
 ## Tech Stack
 
@@ -163,7 +160,7 @@ Retrofit 2.10.x, Kotlin Coroutines 1.8.x, and Material Design 3.
 
 Plugin-scoped advisory hooks (`hooks/`): `audit-tooluse.sh` (PostToolUse),
 `audit-subagent.sh` (SubagentStop), `precompact-checkpoint.sh` (PreCompact). All
-rows carry `metadata.advisory: true` and company-workflow-compatible dedupe keys; each
+rows carry `metadata.advisory: true` and corpflow-compatible dedupe keys; each
 script has a `--self-test`. See `hooks/README.md`.
 
 ## License

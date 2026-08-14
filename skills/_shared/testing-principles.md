@@ -89,5 +89,5 @@ loadUser_networkError_emitsErrorState
 ## Related Skills
 
 - `severity-matrix.md` — coverage requirements and finding priorities
-- `workflow-integration/SKILL.md` — QA gate definition for worktask runs
+- `CORPFLOW.md` — QA gate definition for worktask runs
 - `quality/testing/SKILL.md` — framework deep dive

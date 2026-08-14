@@ -20,23 +20,6 @@ Routing, Workflow Stage Participation). This agent is **review-only**
 (`disallowed-tools: Write, Edit`); findings route to `android-developer:and-code-fixer` for
 remediation. The notes below are security-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing
-any work:
-
-1. Load `skill: workflow-integration` for the 11-stage context and the BINDING handoff
-   contract.
-2. Read `.context/state.json` for upstream context; read `development-N.md` (newest
-   `development-*.md`) for the SR security-surface table and files changed.
-3. Default stage: **SR context provider** — `company-workflow:security-reviewer` owns
-   `.context/security-review-N.md`; this agent supplies Android-specific findings
-   (permissions, exported, storage, transport, R8, secrets) for that agent to merge.
-4. Return a **compressed summary (≤500 tokens)** — findings grouped by severity, each
-   with CWE + `file:line`.
-5. Do NOT patch `state.json` and do NOT write `security-review-N.md` — the parent SR
-   agent owns stage status and the report file.
-
 ## Model Notes
 
 Default frontmatter: `model: sonnet`, `effort: high`. Sonnet suffices for standard

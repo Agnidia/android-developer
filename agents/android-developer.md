@@ -28,63 +28,6 @@ routing and verification on top.
 | `and-code-fixer` | Batch remediation: ktlint/detekt auto-fix, minimal-diff application from review findings |
 | `and-dependency-manager` | Gradle version catalogs (`libs.versions.toml`), CVE scan, safe one-at-a-time upgrades |
 
-## Workflow Collaboration (company-workflow v4.0.0)
-
-See `skill: workflow-integration` for the complete 11-stage guide and the binding
-handoff contract (also summarized in `_base/platform-agent.md`).
-
-### Quick Reference
-
-| Stage | Role | android-developer Contribution |
-|-------|------|--------------------------------|
-| **AR** | Consult | `kotlin-architector` (Clean Arch, modularization, Hilt graph, MVI vs MVVM) |
-| **DV** | Primary | Implementation via the routed specialist (`android-phone-developer`) |
-| **DR** | Support | Route `and-code-fixer` for fix application, `kotlin-architector` for pattern consult |
-| **SR** | Context | `and-security-auditor` (permissions, exported, R8, secrets, at-rest storage, attestation/auth, network-security-config) |
-| **QA** | Support | `and-test-generator` (JUnit/MockK/Turbine/Compose/Roborazzi) |
-
-### DV Stage Quick Steps
-
-When `.context/state.json` exists, this agent is inside a company-workflow workflow. Follow
-`_base/platform-agent.md § Workflow Stage Participation § DV Stage` for the contract;
-the router-specific steps:
-
-1. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`)
-   and the active stage from `state.json`.
-2. Detect the form factor and module layout per the Quick Route Decision Tree below.
-3. Set `owner: "android-developer:{specialist}"` via TaskUpdate and route.
-4. The routed specialist writes `.context/development-N.md` (`N = run_index`) with
-   `handoff:` frontmatter, the security-surface summary, and a "DR Focus" section,
-   then atomic-patches `state.json`.
-
-**Pass-through metadata.** When routing DV to a specialist, forward the gate/screenshot
-and rework metadata unchanged — the router relays, it does not consume or rewrite:
-
-- `metadata.requires_screenshots` (Android/Compose work defaults **`false`**) — PL0
-  should set this explicitly. The specialist writes the skip-rationale manifest. If the
-  gate is armed (`true`), the specialist captures `./gradlew`/`adb logcat` transcripts
-  as `source: cli-fallback` rows before returning.
-- On a rework re-dispatch (`metadata.retry_count > 0`): `metadata.gate_from_stage` +
-  `metadata.gate_blockers[]`, plus the prepended `REMEDIATION (from <DR|QA> gate…)`
-  block — the specialist fixes those exact findings first, minimal diff, no re-scoping.
-
-### Return Verification (BINDING)
-
-After a routed sub-agent returns, verify before returning to the orchestrator:
-
-1. The artifact starts with `---\nhandoff:\n` YAML conforming to `skill:
-   workflow-integration § Output Frontmatter Schema` (unconditional).
-2. `state.json` has been patched (or the sub-agent logged that the patch failed —
-   acceptable; the SubagentStop hook repairs from frontmatter).
-3. The artifact uses the numbered `<stage>-N.md` name.
-4. For DV with `requires_screenshots != false`, the evidence manifest exists with
-   `source: cli-fallback` rows. For the Android default (`false`), confirm the
-   skip-rationale line is present.
-5. On a rework re-dispatch, confirm each `metadata.gate_blockers[]` item was addressed.
-
-If verification fails, log WARN and attempt repair: parse the sub-agent's return
-summary and emit minimal frontmatter. Never return without `handoff:` frontmatter.
-
 ## Quick Route Decision Tree
 
 | Keyword / Marker | Route Immediately | Rationale |
