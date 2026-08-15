@@ -66,6 +66,34 @@ instead of the whole log. Keep the green path deterministic and shell-only.]
 1. Confirm `path/gradlew` exists. If not, emit the "no Gradle wrapper" error and stop.
 2. Create `.context/logs/`. `TS="$(date +%Y%m%d-%H%M%S)"`, `LOG=".context/logs/build-${TS}.log"`.
 3. Resolve the module prefix (`--module` or empty for the root).
+4. **Resolve the toolchain environment before any Gradle invocation.** Gradle needs both,
+   and neither is guaranteed to be exported in the shell a stage happens to run in — a
+   stage that inherits them silently succeeds while the next stage, invoking the same
+   command, fails with a `sdk.dir` error that reads as a broken project rather than a
+   missing variable. Export what is missing rather than assuming it:
+
+   ```bash
+   # SDK: honour an existing ANDROID_HOME/ANDROID_SDK_ROOT, else fall back to the
+   # standard install location. Skip entirely if local.properties already pins sdk.dir.
+   if [ -z "${ANDROID_HOME:-}" ] && [ -z "${ANDROID_SDK_ROOT:-}" ] \
+      && ! grep -qs '^sdk\.dir=' "$path/local.properties"; then
+     if [ -d "$HOME/Library/Android/sdk" ]; then           # macOS
+       export ANDROID_HOME="$HOME/Library/Android/sdk"
+     elif [ -d "$HOME/Android/Sdk" ]; then                 # Linux
+       export ANDROID_HOME="$HOME/Android/Sdk"
+     fi
+   fi
+   : "${ANDROID_HOME:=${ANDROID_SDK_ROOT:-}}"; export ANDROID_HOME
+
+   # JDK: Android Studio's bundled JBR is frequently the only JDK present.
+   if [ -z "${JAVA_HOME:-}" ] && [ -d "/Applications/Android Studio.app/Contents/jbr/Contents/Home" ]; then
+     export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+   fi
+   ```
+
+   If neither an SDK path nor `sdk.dir` can be resolved, stop with the Android SDK row from
+   Failure Triage — do not start a build that will fail several minutes later on a message
+   that points at the wrong thing.
 
 ### Phase 2: Clean (optional, Bash)
 If `--clean`: `./gradlew clean 2>&1 | tee -a "$LOG"`.

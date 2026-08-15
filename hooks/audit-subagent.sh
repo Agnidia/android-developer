@@ -66,5 +66,31 @@ if [ "$SELF_TEST" -eq 1 ]; then
   exit 0
 fi
 
+# ---------- Advisory de-duplication ----------
+# Every installed dev plugin registers its own copy of this hook, and all of them
+# fire on the same event, so a single tool call landed in audit.jsonl six times
+# (twelve for subagent-stop, which fires twice per stop). In one five-hour run
+# that was 2,265 of 2,837 rows — 80% of the audit trail — and every reader
+# (refine-branch-target.sh, publish-pl-issue.sh, the retrospective) paid to parse
+# all of it.
+#
+# metadata.dedupe_key was already present and already identical across all
+# copies; nothing consulted it. The header above promises "the orchestrator's
+# audit-dedup hook" will reconcile these rows, but no such hook exists. Reconcile
+# here instead: if this key is already on record, this row adds nothing.
+#
+# A tail window, not a full scan: the duplicate copies fire within milliseconds
+# of each other, so the key is always near the end, and a whole-file grep would
+# grow linearly with a log that reaches thousands of rows in a single run.
+#
+# The canonical (orchestrator) row is never suppressed by this — it is written by
+# a different hook that carries no advisory flag and performs no such check.
+DEDUPE_KEY=$(printf '%s' "$ROW" | jq -r '.metadata.dedupe_key // empty' 2>/dev/null || printf '')
+if [ -n "$DEDUPE_KEY" ] && [ -f "$LOG_DIR/audit.jsonl" ] \
+  && tail -n 400 "$LOG_DIR/audit.jsonl" 2>/dev/null \
+     | grep -Fq "\"dedupe_key\":\"$DEDUPE_KEY\""; then
+  exit 0
+fi
+
 printf '%s\n' "$ROW" >> "$LOG_DIR/audit.jsonl"
 exit 0
