@@ -1,7 +1,7 @@
 {
   "name": "android-developer",
   "description": "Android development toolkit with specialized agents for Kotlin, Jetpack Compose, and Gradle.md, state.json, frontmatter schema), requires_screenshots:false / cli-fallback evidence norm, scoped Bash toolchain allowlists (gradle/adb/ktlint/detekt), qualified Task() delegation, and plugin-scoped audit/checkpoint hooks.",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": {
     "name": "IGRSoft",
     "email": "support@igrsoft.com"

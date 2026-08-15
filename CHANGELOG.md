@@ -5,6 +5,38 @@ All notable changes to the android-developer plugin are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] — 2026-08-15
+
+### Fixed
+
+- **Audit rows are no longer duplicated across installed plugins.** Every installed dev
+  plugin registers its own copy of `hooks/audit-tooluse.sh` and `hooks/audit-subagent.sh`,
+  and all of them fire on the same event, so one tool call was recorded six times — twelve
+  for subagent-stop, which fires twice per stop. A measured five-hour run produced 2,837
+  audit rows of which 2,265 (80%) were advisory duplicates, and every reader of
+  `audit.jsonl` paid to parse them.
+
+  `metadata.dedupe_key` was already present and already identical across all copies;
+  nothing consulted it. The header comment in both hooks promised that "the orchestrator's
+  audit-dedup hook" would reconcile these rows, but no such hook exists. Both hooks now
+  reconcile at the point of writing: if the key is already present in the tail of
+  `audit.jsonl`, the advisory row is dropped.
+
+  The canonical orchestrator row is never suppressed — it is written by a different hook
+  that carries no advisory flag and performs no such check. Distinct events are unaffected;
+  only exact `dedupe_key` repeats are dropped.
+
+- **`build-test` now resolves the Android toolchain environment itself.** Gradle needs both
+  `ANDROID_HOME` (or a `sdk.dir` in `local.properties`) and `JAVA_HOME`, and neither is
+  guaranteed to be exported in the shell a given stage runs in. In a measured run one stage
+  inherited them and built successfully; the next stage, invoking the same command, failed
+  with a `sdk.dir` error that reads as a broken project rather than a missing variable.
+  Phase 1 now honours an existing `ANDROID_HOME`/`ANDROID_SDK_ROOT` or a pinned `sdk.dir`,
+  falls back to the standard SDK location per platform, and falls back to Android Studio's
+  bundled JBR for `JAVA_HOME` — which is frequently the only JDK present. If neither an SDK
+  path nor `sdk.dir` resolves, the command now stops up front instead of failing minutes
+  later on a misleading message.
+
 ## [1.4.1] — 2026-08-15
 
 ### Changed
