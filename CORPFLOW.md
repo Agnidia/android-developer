@@ -46,11 +46,53 @@ do **not** patch `state.json`.
 | Build Evidence adapter | `android_adapter (adb exec-out screencap -p)` |
 | Error file | `.context/errors/android-phone-developer.md` (basename of the agent file, not the qualified id) |
 
-Build Evidence is `adb exec-out screencap -p` captures plus Gradle build and test transcripts. There is no Android build MCP — use scoped `Bash(gradle:*|./gradlew|adb:*)`. Security findings cover EncryptedSharedPreferences/Keystore, no-cleartext, exported-component validation, and hardcoded secrets.
+Build Evidence is `adb exec-out screencap -p` captures plus Gradle build and test transcripts. There is no Android build MCP; builds and tests go through `/android-developer:build-test` (see Build and test below). Scoped `Bash(adb:*)` is still yours for evidence capture and device queries. Security findings cover EncryptedSharedPreferences/Keystore, no-cleartext, exported-component validation, and hardcoded secrets.
+
+## Build and test (BINDING)
+
+Build and test **only** through `/android-developer:build-test`. Do not invoke the toolchain
+directly — corpflow's `agents/developer.md` requires the command, and a raw invocation
+bypasses the logging, evidence capture, and stage-authority checks the pipeline depends on.
+
+**If you only need to compile, pass `--no-test`.** Every platform `build-test` command
+accepts it and corpflow's test-execution gate classifies it `build_only` and allows it at
+every stage. This matters because most stages do **not** hold test-execution authority: DV
+may run scoped tests only, QA is the sole full-suite authority, and SR/DR/RE hold none. A
+denied invocation is not a reason to reach for the toolchain.
+
+- `--build-only` is **not** a real flag on any plugin's command. It classifies as a full
+  test run and is denied.
+- If the gate denies you and `--no-test` does not fit, record
+  `requests_test_evidence: <what and why>` in your artifact so QA executes it, or return
+  `verdict: blocked` with `error_escalated_to:`. Both are correct outcomes; a direct
+  toolchain call is not.
+
+## Worktree isolation (DV)
+
+When corpflow dispatches you for DV, you run in an **isolated git worktree**, not the shared
+checkout. `task.metadata.workspace_path` is the tree you were assigned.
+
+1. Confirm the tree you resolved is the tree you were assigned before writing anything —
+   `git rev-parse --show-toplevel` against `metadata.workspace_path`.
+2. **On mismatch, stop and report** `verdict: blocked` with the two paths. Do not "fix" it by
+   entering a different worktree, creating one, or writing anyway. A mismatch means another
+   stream's tree, and a write there lands your diff on their branch.
+3. Do not create or move worktrees. corpflow creates every stage worktree before dispatch.
+4. Re-confirm the pin immediately before each write batch, not only at entry — the check is a
+   point-in-time reading and a stage that passes at entry can be relocated mid-run.
+
+Writes outside `metadata.workspace_path` are never yours, including a sibling stream's source
+tree. If you need a change in another stream's scope, report it; do not make it.
+
+When you capture screenshots, append them to the run's `screenshots.md` manifest and treat that
+file as the record of authority. Do **not** read or write `state.json facts.screenshots` — it is
+capped and merged last-writer-wins, so in a multi-stream run it reflects one stream and silently
+drops the rest. Never invent a sibling key to work around it; append to the manifest.
 
 ## Artifacts
 
-Write to `.context/`. Nothing else in the repository is yours to create.
+Write to `.context/` for artifacts. In a DV stage you also own your platform's source tree —
+the paths corpflow assigned you, inside your worktree — and nothing else in the repository.
 
 | Stage | Artifact |
 |---|---|
@@ -112,6 +154,13 @@ your frontmatter.
 ## Return summary (≤500 tokens)
 
 corpflow merges your return text into the next stage's context, so it is a budget, not a suggestion.
+
+**Returning is what settles your stage.** The orchestrator's completion patch keys on your return;
+reporting progress out of band — a chat message, a teammate note — does not mark you complete, and
+a stage that finishes its work but never returns sits at `in_progress` with its artifact already on
+disk. Always return, even when blocked, even when partial: a short honest summary with
+`verdict: blocked` settles the stage; silence does not.
+
 
 ```markdown
 ## <STAGE> Summary — android-developer:<agent>
