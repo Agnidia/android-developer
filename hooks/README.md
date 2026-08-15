@@ -7,7 +7,7 @@ agents run as subagents under an orchestrating plugin.
 
 | Script | Event | Purpose |
 |--------|-------|---------|
-| `audit-tooluse.sh` | `PostToolUse` (Write\|Edit\|TaskUpdate\|TaskCreate) | Append a `tool_invoked` row to `.context/logs/audit.jsonl`. |
+| `audit-tooluse.sh` | `PostToolUse` (Write\|Edit\|Bash — Bash rows only for ledger patches) | Append a `tool_invoked` row to `.context/logs/audit.jsonl`. |
 | `audit-subagent.sh` | `SubagentStop` | Append a `subagent_stopped` row. |
 | `precompact-checkpoint.sh` | `PreCompact` | Copy `.context/state.json` to a timestamped checkpoint. |
 

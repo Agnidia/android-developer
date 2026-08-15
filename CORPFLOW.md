@@ -101,7 +101,7 @@ stage that must resolve it.
 ## Patching state.json
 
 Run corpflow's `state-patch.sh --stage <CODE> --prev <PREV>` when its path is supplied, via the
-prompt or `task.metadata.state_patch_script`. It merges `stages.<CODE>` and `handoffs[FROM→TO]` from
+prompt or `task.metadata.state_patch_script`. It merges `tasks.<ID>` and `handoffs[FROM→TO]` from
 your frontmatter.
 
 - If the path is **not** supplied, skip silently. Do not hand-roll a `jq` merge.

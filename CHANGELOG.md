@@ -5,6 +5,16 @@ All notable changes to the android-developer plugin are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] — 2026-08-15
+
+### Changed
+
+- corpflow contract: the worktask state ledger moved from `stages.<CODE>` to `tasks.<ID>`
+  (`state.json` `version: 2`), so `CORPFLOW.md` names the new path. corpflow retired Claude Code's
+  Task System after CC 2.1.233 removed those tools on every model it dispatches.
+- `hooks/README.md`: corpflow's audit hook now matches `Write|Edit|Bash`, recording Bash rows only
+  for ledger patches.
+
 ## [Unreleased]
 
 ## [1.4.0] — 2026-07-29
