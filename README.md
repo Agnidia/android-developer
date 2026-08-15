@@ -6,7 +6,7 @@ corpflow 11-stage pipeline.
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.4.2 |
+| Plugin version | 1.4.3 |
 | License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
 | Evidence norm | `requires_screenshots: false` + cli-fallback transcripts |

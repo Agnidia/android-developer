@@ -5,6 +5,41 @@ All notable changes to the android-developer plugin are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.3] — 2026-08-15
+
+### Fixed
+
+- **`CORPFLOW.md` now states the build/test contract, and no longer contradicts it.** The seam
+  file said nothing about how to build or test, so a sibling agent denied by corpflow's
+  test-execution gate had no sanctioned next step. In a measured four-platform run two streams
+  were denied, both invented `--build-only` (not a real flag on any plugin's command, so it
+  classifies as a full test run and is denied again), and both then fell back to invoking the
+  toolchain directly — which `agents/developer.md` forbids. The file now says: build and test
+  only through this plugin's `build-test` command, pass `--no-test` when you only need to
+  compile, and if the gate still denies you, record `requests_test_evidence` or return
+  `verdict: blocked` — never reach for the toolchain.
+
+- **Added a worktree-isolation section.** A sibling dispatched for DV runs in an isolated
+  worktree, and the file previously said only "Write to `.context/`. Nothing else in the
+  repository is yours to create" — which is wrong for DV, and silent on the tree check. Two
+  agents in identical situations resolved it differently: one blocked correctly, one entered a
+  different worktree and relocated its tree. The file now states that a resolved-vs-assigned
+  mismatch means stop and report, that agents neither create nor move worktrees, and that the
+  pin must be re-confirmed before each write batch rather than only at entry.
+
+- **Named the authoritative screenshot manifest.** `state.json facts.screenshots` is capped and
+  merged last-writer-wins, so in a multi-stream run it reflects one stream and drops the rest.
+  A stream discovered this alone and invented its own ledger key to avoid erasing a sibling's
+  rows. The file now directs captures to the run's `screenshots.md` manifest and says not to
+  read or write the ledger key.
+
+- **Stated that returning is what settles a stage.** The completion patch keys on the return
+  summary; reporting out of band does not mark a stage complete. A stage that finished its work
+  and reported by message left its artifact on disk while the ledger still read `in_progress`.
+
+- **Corrected the `## Artifacts` scope line** so it no longer tells a DV agent that nothing
+  outside `.context/` is its to create.
+
 ## [1.4.2] — 2026-08-15
 
 ### Fixed
