@@ -16,11 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   audit rows of which 2,265 (80%) were advisory duplicates, and every reader of
   `audit.jsonl` paid to parse them.
 
-  `metadata.dedupe_key` was already present and already identical across all copies;
-  nothing consulted it. The header comment in both hooks promised that "the orchestrator's
-  audit-dedup hook" would reconcile these rows, but no such hook exists. Both hooks now
-  reconcile at the point of writing: if the key is already present in the tail of
-  `audit.jsonl`, the advisory row is dropped.
+  `metadata.dedupe_key` was already present and already identical across all copies, and
+  nothing consulted it at write time. A reconciler does exist — corpflow's
+  `skills/agent-coordination/scripts/audit-dedup.sh`, which keeps the `hook:*` row and drops
+  agent rows for the same key — but it is a **read-time filter invoked only by
+  `/cost-report`**, not the automatic "audit-dedup hook" these headers name. So the rows still
+  accumulate on disk in full, and every other reader of the trail pays for them.
+
+  Both hooks now reconcile at the point of writing: if the key is already present in the tail
+  of `audit.jsonl`, the advisory row is dropped. This is consistent with `audit-dedup.sh` —
+  the canonical `hook:*` row is never suppressed, so a later read-time dedup still resolves
+  every group the same way.
 
   The canonical orchestrator row is never suppressed — it is written by a different hook
   that carries no advisory flag and performs no such check. Distinct events are unaffected;
