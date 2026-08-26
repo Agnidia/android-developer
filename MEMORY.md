@@ -4,10 +4,10 @@
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.4.3 |
-| corpflow compatibility | v4.0.13 |
+| Plugin version | 1.5.0 |
+| corpflow compatibility | v4.0.26 |
 | Claude Code min required | 2.1.169 |
-| Last updated | 2026-07-29 |
+| Last updated | 2026-08-26 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
 header, this table, CHANGELOG.md) per the corpflow `/cc-update` convention.

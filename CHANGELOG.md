@@ -5,6 +5,51 @@ All notable changes to the android-developer plugin are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] — 2026-08-26
+
+Play Store publishing arrives. corpflow is retiring its Apple-only App Store commands to the plugin
+that ships to that store; Android had no equivalent at all — a case-insensitive search of this
+repository for *Play Console*, *Google Play*, *Play Store*, or *fastlane* returned zero hits before
+this release.
+
+### Added
+
+- **`agents/and-release-engineer.md`** (new). Owns everything between a green build and the app
+  being live on Play: the Console listing, graphic assets, release track, rollout, and the
+  declarations Play blocks review on. `sonnet` / `effort: high` / `maxTurns: 50`. It builds nothing
+  itself — the AAB comes from `/android-developer:build-test` like every other build here.
+  Encodes the three checks that break a release most often (`versionCode` monotonicity, R8 mapping
+  upload, `targetSdk` floor), the four-track model with staged rollout as the production default,
+  and the fact that **halting a rollout stops distribution but does not roll back users who already
+  updated** — the only forward path from a bad release is a higher `versionCode`.
+- **`commands/gen-playstore-listing.md`** — scaffolds `PlayStore/` and generates the listing from
+  the project README, asserting Play's own per-field budgets (app name 30, short description 80,
+  full description 4000, release notes 500) rather than App Store Connect's. Play has **no keywords
+  field**, so search relevance has to live inside the prose; the command says so instead of
+  emitting an empty section for a field that does not exist.
+- **`commands/gen-playstore-screenshots.md`** — validates sources against Play's dimension and count
+  rules and emits an assembly plan. It derives required form factors from the manifest and module
+  list rather than from the flag, because a device type the app declares but ships no screenshots
+  for is not an error at upload — it silently ranks worse on that form factor.
+- **RE row in `CORPFLOW.md`**, marked *consultation only* exactly as AR is: corpflow keeps the stage
+  and every `state.json` write. The same agent is reachable outside the pipeline through corpflow's
+  `/appstore` command, and in that mode still emits handoff frontmatter and still writes no
+  `state.json`. `Targets corpflow` → `4.0.26`.
+
+### Fixed
+
+- **`marketplace.json` `metadata.version` had drifted to `1.4.1` while `plugin.json` read `1.4.3`.**
+  This repository has no manifest-parity test to catch it, so nothing reported the mismatch. Both
+  now read `1.5.0`.
+
+### Notes
+
+- **In-app purchases are deliberately not included.** Porting App Store Connect's IAP flow is not a
+  translation: Play Billing's product setup differs field by field, and the browser automation would
+  have to be reverse-engineered against a live console. Deferred rather than approximated.
+- **`gen-playstore-screenshots` produces a plan and copy, not composited images.** This plugin ships
+  no image compositor; inventing one would produce assets nobody could reproduce.
+
 ## [1.4.3] — 2026-08-15
 
 ### Fixed

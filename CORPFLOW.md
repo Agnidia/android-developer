@@ -33,10 +33,22 @@ android-developer owns these stages when dispatched:
 | DR (Developer Review) | `and-code-fixer` | `metadata.gate_blockers[]` + minimal-diff remediation |
 | SR (Security) | `and-security-auditor` | development context + Android security checklist |
 | QA (Quality) | `and-test-generator` | development context + test requirements |
+| RE (Release) | `and-release-engineer` | Play Console listing, graphic assets, track and rollout — **consultation only**, corpflow retains the stage |
 | DV-support | `and-dependency-manager` | scoped findings returned to the parent DV agent, which owns the artifact |
 
 **DV-support agents do not own a stage.** They return a compressed summary to the parent DV agent and
 do **not** patch `state.json`.
+
+**RE is consultation, exactly like AR.** `and-release-engineer` returns store-submission findings
+and artifacts; corpflow's own release engineer keeps the stage and every `state.json` write. The
+same agent is also reachable **outside** the pipeline: corpflow's `/appstore` command dispatches it
+directly for Play listing and graphic-asset work with no worktask in play. In that mode it still
+emits handoff frontmatter — it is the artifact contract, not a pipeline-only formality — and it
+still does **not** patch `state.json`.
+
+**In-app purchases are out of scope for now.** Play Billing product setup is not ported; the Play
+Console flows differ field by field from App Store Connect's and are original work, not a
+translation. A request for it should say so rather than improvising against a live console.
 
 ## Evidence declaration
 
@@ -97,6 +109,7 @@ the paths corpflow assigned you, inside your worktree — and nothing else in th
 | Stage | Artifact |
 |---|---|
 | AR | `.context/android-architecture.md` (consultation output, ≤500-token return summary) |
+| RE | `.context/android-release-<N>.md` (consultation output; Play Console changes listed explicitly) |
 | DV | `.context/development-<N>.md` |
 | DR | `.context/developer-review-<N>.md` |
 | SR | `.context/security-review-<N>.md` |
@@ -136,6 +149,7 @@ Per-stage required `metadata.*`:
 | DR | `gate_blockers[]`, `severity_counts{}` |
 | SR | `findings[]` with CWE mapping, `severity_counts{}` |
 | QA | `tests_added[]`, `coverage_delta`, `suite_status` |
+| RE | `store_changes[]` (every live Play Console write, or `[]`), `manual_steps[]`, `version_name`, `version_code`, `track` |
 
 A blocked stage still emits frontmatter — `status: "blocked"` with `error_escalated_to:` naming the
 stage that must resolve it.
@@ -297,6 +311,6 @@ only holds if it is defended:
 
 | | |
 |---|---|
-| Targets corpflow | `4.0.13` |
+| Targets corpflow | `4.0.26` |
 | Contract source | `corpflow skills/cross-plugin-handoff/references/plugin-contract.md` |
 | Template | `corpflow skills/cross-plugin-handoff/templates/CORPFLOW.md` |
