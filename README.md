@@ -6,7 +6,7 @@ corpflow 11-stage pipeline.
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.4.3 |
+| Plugin version | 1.5.0 |
 | License | Apache-2.0 |
 | Build tooling | Gradle / adb (Bash-only — no Android build MCP exists) |
 | Evidence norm | `requires_screenshots: false` + cli-fallback transcripts |
@@ -37,6 +37,7 @@ module layout and routes to a specialist. All agents inherit
 | `and-security-auditor` | sonnet / high | Permissions, exported components, DataStore/EncryptedFile, R8/ProGuard (review-only) |
 | `and-code-fixer` | haiku / medium | DR batch remediation; ktlint/detekt auto-fix; minimal-diff |
 | `and-dependency-manager` | haiku / low | Gradle version catalogs, CVE scan, safe one-at-a-time upgrades |
+| `and-release-engineer` | sonnet / high | Play Console listing, graphic assets, tracks, staged rollout, AAB signing |
 
 ## Skills
 
@@ -82,6 +83,8 @@ Names follow the cross-plugin verb-first scheme shared with `apple-developer` an
 | `fix-quick` | haiku | `ktlintCheck`/`detekt`/`lint` report or `ktlintFormat`/`--auto-correct` fix |
 | `fix-refactor` | default | Refactor toward clean-arch / MVI / modularization |
 | `gen-docs` | default | KDoc for Kotlin/Compose declarations; optional Dokka run |
+| `gen-playstore-listing` | default | Scaffold `PlayStore/` and generate the store listing with per-field budgets |
+| `gen-playstore-screenshots` | default | Plan Play graphic assets and per-form-factor screenshot sets |
 | `gen-tests` | default | Detect framework, delegate and-test-generator, verify suite |
 | `review-code` | default | Static review (Compose anti-patterns, coroutine misuse, arch violations) |
 
