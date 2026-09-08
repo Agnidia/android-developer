@@ -41,7 +41,22 @@ if scripts/desc-lint.sh --self-test && scripts/desc-lint.sh; then :; else note_f
 echo "== command-registration =="
 if scripts/check-command-registration.sh; then :; else note_fail command-registration; fi
 
-# (d) section-length lint — WARN-ONLY: pre-existing prose-debt baseline. Never
+# (d) parser fixture — FATAL. The counting helper in commands/build-test.md is a
+#     shipped procedure with no other harness; the check extracts and exercises it,
+#     and its single-block assertion is the by-reference-never-by-copy guard.
+#     Exit 2 means the markdown moved, not that the helper broke — reporting a
+#     fence-shape change as a helper regression sends the reader to the wrong file.
+echo "== parser-fixture-check =="
+if scripts/parser-fixture-check.sh >/dev/null; then
+	echo "parser-fixture-check: ALL PASS"
+elif [ $? -eq 2 ]; then
+	echo "run-checks: FATAL parser-fixture-check could not extract a helper (markdown shape changed)" >&2
+	note_fail parser-fixture-extraction
+else
+	note_fail parser-fixture
+fi
+
+# (e) section-length lint — WARN-ONLY: pre-existing prose-debt baseline. Never
 #     fails the aggregate; surface the count so the burn-down stays visible.
 echo "== section-lint (warn-only) =="
 scripts/section-lint.sh --self-test || echo "run-checks: WARN section-lint self-test failed (parser regression?)"

@@ -5,6 +5,70 @@ All notable changes to the android-developer plugin are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] — 2026-09-07
+
+A green Gradle unit-test task prints no test count, so a suite that ran 71 tests and one that ran
+zero produce identical stdout and identical exit codes. The build+test command's output template
+already promised `{N passed, M failed}` while nothing in its workflow ever obtained either number.
+This release makes the count real and makes zero a failure.
+
+### Added
+
+- **`### Phase 5: Count` in `commands/build-test.md`** — resolves the module's own
+  `build/test-results` directory, sums the `<testsuite>` attributes over every `TEST-*.xml` with a
+  shell helper, and computes `executed = tests - skipped`. It runs unconditionally and *before*
+  failure triage, so a red run is triaged with its counts in hand rather than reporting a
+  `{M} failed` it never had. The old report phase becomes Phase 6.
+- **`## Test Verdicts` in `commands/build-test.md`** — the normative table behind the count. Three
+  oracles answer three separate questions: Gradle's per-task console line says what ran, a
+  freshness marker touched immediately before the invocation says whose result files these are, and
+  the XML says how many. That separation is what distinguishes a legitimately `cached` run, which
+  passes, from a `stale` one whose task ran and wrote nothing, which fails on a prior run's totals.
+  `--rerun-tasks` is named as the operator's manual disambiguation for `stale` and `unknown`; it is
+  not a default and not a new flag, because it invalidates the whole task graph to settle a question
+  the log usually answers for free.
+- **`### No test results produced` error handling** — the literal message, the likely causes, and
+  the reason it does not delegate: the log is green, so `android-phone-developer` would be handed
+  nothing to diagnose.
+- **`scripts/parser-fixture-check.sh`** (new), run by `scripts/run-checks.sh` as a **fatal** check.
+  It extracts both result-reading helpers from the markdown that ships rather than keeping its own
+  copy, so what it asserts is what runs; the extraction requires each helper to appear exactly once
+  across the tree, which is the mechanical guard behind "reference the counting phase, never copy
+  it". **Two consequences for contributors**: a second copy of either helper anywhere in the repo
+  fails the gate, and so does reshaping the fenced block they live in — the latter exits with its
+  own status and its own message, so a markdown move is not reported as a broken helper.
+- **A verdict-table layer in the same check** — every outcome the extractor can produce must have a
+  row in the table. The table is prose, and prose has no way to notice a missing case.
+- **`### Scoped run executed nothing` in `commands/gen-tests.md`** — the same rule keyed to the
+  scoped `--tests <NewClass>` selector rather than a whole-module count. A module whose other tests
+  all pass must still fail when the new class ran nothing.
+
+### Changed
+
+- **0 executed is a FAILURE, not a pass**, wherever a test run was attempted — including a module
+  with no test source set. `--no-test` is the sole exception: it skips counting entirely and its
+  test row reads `⏭ not run (--no-test)`, which is neither a pass nor a failure. No opt-out flag is
+  added; the only use for one would be to suppress the signal this release exists to create.
+- **`CORPFLOW.md` evidence line** now carries the count as a fixed, greppable token:
+  `**Evidence**: <build status>; tests: <N> executed, <M> failed | not run (--no-test); <screenshot status>`.
+  A count no downstream reader can locate reliably reproduces the defect at one remove.
+- **`commands/gen-tests.md`** verifies by reference to `§ Phase 5: Count` rather than by copying the
+  snippet, and its `## Workflow` is split into four steps. Step 1 now defines `$LOG`, which the file
+  used but never set.
+- **`commands/develop-feature.md`** Phase 3 gate requires a non-zero executed count, and its report
+  row reads `{n} added, {e} executed, {m} failed`.
+- **`agents/and-test-generator.md`** reports the executed count instead of a pass/fail verdict.
+
+### Fixed
+
+- **`.claude-plugin/plugin.json` description** — a pasted fragment mid-string left it incoherent,
+  and it asserted a `requires_screenshots` value contradicting `CORPFLOW.md`. Rewritten as one
+  sentence that makes no evidence-norm claim; the seam owns that.
+- **`CORPFLOW.md` size budget** — three contradictory rows disagreed on the line ceiling. Only the
+  ≤295 row survives.
+- **`MEMORY.md`** — corpflow compatibility `v4.0.27`, matching the seam; the command inventory reads
+  17 and lists the two `gen-playstore-*` commands 1.5.0 added.
+
 ## [1.5.0] — 2026-08-26
 
 Play Store publishing arrives. corpflow is retiring its Apple-only App Store commands to the plugin

@@ -144,7 +144,8 @@ the primary user journey, and the error and offline paths named in the architect
 `skill: testing-principles` for the pyramid and `skill: testing` for the framework
 patterns. Place tests in the correct source set (`test/` unit, `androidTest/` instrumented)."
 
-Gate: `/android-developer:build-test {module}` including the new tests — all green.
+Gate: `/android-developer:build-test {module}` including the new tests — all green and a
+non-zero executed count. 0 executed blocks the phase.
 Write `.context/.feature-dev/tests.md`.
 
 ## Phase 4: Security Review
@@ -171,7 +172,7 @@ Any P0 finding **blocks** completion: report it, halt, and ask how to proceed. W
 |-------|-------|--------|-------|
 | 1 Architecture | kotlin-architector | {pattern}, {n} steps | — |
 | 2 Implementation | android-phone-developer | {n} files | ✅ |
-| 3 Tests | and-test-generator | {n} tests, {m} passing | ✅ |
+| 3 Tests | and-test-generator | {n} added, {e} executed, {m} failed | ✅ |
 | 4 Security | and-security-auditor | P0:{n} P1:{n} P2:{n} | — |
 
 ### Files

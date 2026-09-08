@@ -4,10 +4,10 @@
 
 | Field | Value |
 |-------|-------|
-| Plugin version | 1.5.0 |
-| corpflow compatibility | v4.0.26 |
+| Plugin version | 1.5.1 |
+| corpflow compatibility | v4.0.27 |
 | Claude Code min required | 2.1.169 |
-| Last updated | 2026-08-26 |
+| Last updated | 2026-09-07 |
 
 Version strings move together (plugin.json, marketplace.json metadata, README
 header, this table, CHANGELOG.md) per the corpflow `/cc-update` convention.
@@ -16,8 +16,8 @@ header, this table, CHANGELOG.md) per the corpflow `/cc-update` convention.
 
 | Category | Count | Quick Summary |
 |----------|-------|---------------|
-| **Agents** | 7 | android-developer (router), android-phone-developer, kotlin-architector, and-test-generator, and-security-auditor, and-code-fixer, and-dependency-manager |
-| **Commands** | 15 | analyze-accessibility, analyze-tech-debt, arch-review, arch-select, build-test, debug, deps, develop-feature, fix-modernize, fix-performance, fix-quick, fix-refactor, gen-docs, gen-tests, review-code |
+| **Agents** | 8 | android-developer (router), android-phone-developer, kotlin-architector, and-test-generator, and-security-auditor, and-code-fixer, and-dependency-manager, and-release-engineer |
+| **Commands** | 17 | analyze-accessibility, analyze-tech-debt, arch-review, arch-select, build-test, debug, deps, develop-feature, fix-modernize, fix-performance, fix-quick, fix-refactor, gen-docs, gen-playstore-listing, gen-playstore-screenshots, gen-tests, review-code |
 | **Skills** | 23 SKILL.md | 1 top + 1 workflow-integration + 6 domain routers + 15 leaves (architecture/4, compose-ui/5, data/3, concurrency-networking/1, quality/1, tooling/1) |
 | **Skill domains** | 6 | architecture, compose-ui, data, concurrency-networking, quality, tooling |
 | **Hooks** | 3 | audit-tooluse.sh (PostToolUse), audit-subagent.sh (SubagentStop), precompact-checkpoint.sh (PreCompact) |

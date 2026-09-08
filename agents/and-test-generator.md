@@ -63,7 +63,8 @@ Apply `skill: quality` (testing). Defaults:
 2. **Generate** change-scoped tests (unit first, then UI/screenshot where the change is
    visual) following the patterns above.
 3. **Register & run** the new tests via the Gradle wrapper (single scoped command);
-   report pass/fail and coverage where available.
+   report the number of tests actually executed, not a pass/fail verdict. A green run
+   that executed 0 tests is a failure and must be reported as one.
 4. **Report** the test files added and what each covers for `development-N.md §
    tests-added`.
 

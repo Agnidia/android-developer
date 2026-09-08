@@ -68,6 +68,11 @@ Build Evidence is `adb exec-out screencap -p` captures plus Gradle build and tes
   `metadata.always_required_tests`.
 - Denied and `--no-test` does not fit → record `requests_test_evidence: <what and why>` in your
   artifact, or return `verdict: blocked`. Never reach for the toolchain.
+- `/android-developer:build-test` reports a real executed-test count parsed from the Gradle
+  JUnit result XML. **0 executed is a failure, not a pass** — a green exit code is not
+  evidence that tests ran.
+- Forward that count verbatim on the evidence line; never restate it as a bare pass. A
+  compile-only run reports `not run (--no-test)`, which is neither a pass nor a failure.
 
 ## Worktree isolation (DV)
 
@@ -223,7 +228,7 @@ point at the artifact; never truncate mid-structure.
 **Verdict**: <this stage's vocabulary>
 **Artifact**: .context/<file>.md
 **Changed**: <n> files — <the 3–5 that matter>
-**Evidence**: <build/test/screenshot status>
+**Evidence**: <build status>; tests: <N> executed, <M> failed | not run (--no-test); <screenshot status>
 **Blockers**: <none | what blocks and which stage resolves it>
 **For next stage**: <what is not obvious from the artifact>
 **Questions for the user**: <consultation stages only — sweep candidates the owning stage lifts>
@@ -277,8 +282,6 @@ fork a standard's text into this plugin; a copy drifts silently.
 | | |
 |---|---|
 | Targets corpflow | `4.0.27` |
-| Size budget | ≤270 lines (store platform: RE + publishing) |
-| Size budget | ≤290 lines (store platform: RE + publishing) |
 | Size budget | ≤295 lines (store platform: RE + publishing) |
 | Contract source | `corpflow skills/cross-plugin-handoff/references/plugin-contract.md` |
 | Template | `corpflow skills/cross-plugin-handoff/templates/CORPFLOW.md` |
