@@ -48,26 +48,45 @@ green. It does not author tests itself.]
 
 ## Workflow
 
-1. **Detect** the stack: `useJUnitPlatform()` → JUnit5 (`junit-jupiter`) else JUnit4; `mockk`
-   vs `mockito-kotlin`; `app.cash.turbine` for Flow tests; `roborazzi` vs `paparazzi` (if
-   neither, prefer Roborazzi); presence of `compose.ui:ui-test-junit4`. Read the build files
-   and an existing test for the convention.
-   **`--framework` overrides detection**: when supplied it becomes `{runner}` in step 2
-   regardless of what was detected. Report both (`{chosen} (overrode detected {detected})`)
-   and flag a contradiction — the runner's dependency may be missing, and the generated
-   tests will not compile until it is added.
-2. **Delegate:**
-   **Use Task tool with subagent_type="android-developer:and-test-generator"**
-   Prompt: "Generate `{type}` tests for `{target}`. Existing stack: runner={runner},
-   mocking={mock-lib}, screenshot={ss-lib}. Match it — do NOT introduce a second
-   framework. Follow `skill: quality` patterns; place tests in the correct source set
-   (`test/` for unit, `androidTest/` for instrumented)."
-3. **Verify:** run the new tests —
-   `./gradlew {module}:testDebugUnitTest --tests <NewClass> 2>&1 | tee -a "$LOG"` (unit),
-   `connectedDebugAndroidTest` (ui), or for screenshot: first
-   `recordRoborazziDebug` / `recordPaparazziDebug` to generate baseline images, then
-   `verifyRoborazziDebug` / `verifyPaparazziDebug` to confirm they match.
-4. Report the files added and the pass/fail result.
+### 1. Detect the stack
+`useJUnitPlatform()` → JUnit5 (`junit-jupiter`) else JUnit4; `mockk` vs `mockito-kotlin`;
+`app.cash.turbine` for Flow tests; `roborazzi` vs `paparazzi` (if neither, prefer
+Roborazzi); presence of `compose.ui:ui-test-junit4`. Read the build files and an existing
+test for the convention.
+
+**`--framework` overrides detection**: when supplied it becomes `{runner}` in step 2
+regardless of what was detected. Report both (`{chosen} (overrode detected {detected})`)
+and flag a contradiction — the runner's dependency may be missing, and the generated tests
+will not compile until it is added.
+
+Open the log every later step appends to: `mkdir -p .context/logs`, `TS="$(date +%Y%m%d-%H%M%S)"`,
+`LOG=".context/logs/gentests-${TS}.log"`.
+
+### 2. Delegate generation
+**Use Task tool with subagent_type="android-developer:and-test-generator"**
+Prompt: "Generate `{type}` tests for `{target}`. Existing stack: runner={runner},
+mocking={mock-lib}, screenshot={ss-lib}. Match it — do NOT introduce a second
+framework. Follow `skill: quality` patterns; place tests in the correct source set
+(`test/` for unit, `androidTest/` for instrumented)."
+
+### 3. Verify and count
+`touch "$LOG.start"` — the freshness marker the count below reads — then run the new tests:
+`./gradlew {module}:testDebugUnitTest --tests <NewClass> 2>&1 | tee -a "$LOG"` (unit),
+`connectedDebugAndroidTest` (ui), or for screenshot: first `recordRoborazziDebug` /
+`recordPaparazziDebug` to generate baseline images, then `verifyRoborazziDebug` /
+`verifyPaparazziDebug` to confirm they match.
+
+Then apply **`/android-developer:build-test` § Phase 5: Count**. It reads three names this
+command must bind first: `path` (the project root, `.` unless given), `TASK` (the task just
+invoked, e.g. `:feature:login:testDebugUnitTest`), and `<module-dir>` (that module's own
+directory, `:feature:login` → `feature/login`).
+
+**0 executed FAILS this command**: the scoped `--tests <NewClass>` selector matched nothing,
+which is the written-but-never-executed defect itself. A green whole-module suite does not
+redeem it and is not consulted.
+
+### 4. Report
+The files added, the executed count, and the pass/fail result.
 
 ## Output Format
 
@@ -80,13 +99,19 @@ green. It does not author tests itself.]
 |-----------|--------|--------|
 | LoginViewModelTest.kt | load/error states | ✅ |
 
-**Result:** {N} tests added, {M} passing
+**Result:** {A} tests added, {E} executed, {M} failed
 ```
 
 ## Error Handling
 
 ### No test source set
 If the module has no `test/`/`androidTest/` source set, the agent scaffolds one; report it.
+
+### Scoped run executed nothing
+0 executed from the scoped `--tests <NewClass>` run is a FAILURE, never a pass. The class
+name or package is wrong, the file landed in the wrong source set, or the runner's
+dependency is missing so the class never compiled in. Report the selector used and the
+result directory read; do not fall back to a whole-module count.
 
 ### Multiple frameworks detected
 Report the conflict and ask which to match — never generate against both.
