@@ -1,15 +1,15 @@
 <!--
 The single corpflow-facing file in this plugin. Keep it self-contained — splitting it into a
-references/ directory rebuilds the coupling it replaced. Never add a `## Routing` heading: that one
-is reserved for a CORPFLOW.md sitting at a *user project* root.
+references/ directory rebuilds the coupling it replaced. Never add a `## Routing` or `## Models`
+heading — both are reserved for a CORPFLOW.md at a *user project* root or at user scope (`~/.claude/CORPFLOW.md`).
 Contract: corpflow skills/cross-plugin-handoff/references/plugin-contract.md
 -->
 
 # corpflow Integration — android-developer
 
 The only file in android-developer that knows corpflow exists — delete it and the plugin is
-standalone. Nothing in `agents/`, `commands/`, `skills/`, or `hooks/` may reference corpflow;
-dispatch injects `Read CORPFLOW.md and follow it` into every delegation prompt.
+standalone. Nothing in `agents/`, `commands/`, `skills/`, or `hooks/` may reference corpflow.
+Dispatch names android-developer's loaded install root in every prompt: resolve paths under it, never search.
 
 ## Are we in a worktask?
 
@@ -26,27 +26,21 @@ stage ran — read `state.json`.
 
 | Stage | android-developer agent | Handoff data |
 |---|---|---|
-| AR (Architecture) | `kotlin-architector` | planning context + platform constraints — **consultation only**, corpflow retains the stage |
+| AR (Architecture) | `kotlin-architector` | planning context + platform constraints |
 | DV (Development) | `android-developer`, `android-phone-developer` | planning + architecture context |
-| DR (Developer Review) | `and-code-fixer` | `metadata.gate_blockers[]` + minimal-diff remediation — **consultation only**, corpflow retains the stage and writes the artifact |
-| SR (Security) | `and-security-auditor` | development context + Android security checklist — **consultation only**, corpflow retains the stage and writes the artifact |
-| QA (Quality) | `and-test-generator` | development context + test requirements — **consultation only**, corpflow retains the stage and writes the artifact |
-| RE (Release) | `and-release-engineer` | Play Console listing, graphic assets, track and rollout — **consultation only**, corpflow retains the stage |
-| DV-support | `and-dependency-manager` | scoped findings returned to the parent DV agent, which owns the artifact |
+| DR (Developer Review) | `and-code-fixer` | `metadata.gate_blockers[]` + minimal-diff remediation |
+| SR (Security) | `and-security-auditor` | development context + Android security checklist |
+| QA (Quality) | `and-test-generator` | development context + test requirements |
+| RE (Release) | `and-release-engineer` | Play Console submission findings |
+| DV-support | `and-dependency-manager` | scoped findings for parent DV agent |
 
-**DV is the only stage ownership transfers for.** Read `tasks.DV0.agent`: a `android-developer:` id
-means you own `development-N.md`, patch the ledger, and your frontmatter is what the harness
-validates; routed via
-`corpflow:developer` it owns the artifact and you return implementation plus a ≤500-token summary.
-Every other stage is **consultation** — corpflow writes the artifact and every `state.json` entry.
-DV-support owns no stage, writes under `.context/logs/`, never patches.
+AR, DR, SR, QA are **consultation only** — corpflow retains the stage and writes the artifact. DV-support owns no stage.
 
-**RE is consultation too.** The orchestrator's release engineer keeps the stage and every
-`state.json` write; your release engineer returns store-submission findings and artifacts. The same
-agent is reachable outside the pipeline via corpflow's `/appstore`, with no worktask in play — it
-still emits handoff frontmatter there, and still does not patch. Report every live store write —
-`store_changes[]`, `manual_steps[]`, and the platform's version identifiers — in your return summary
-and `--facts`. A store write that reaches no artifact is an unlogged production change.
+#### Who owns the artifact
+
+**DV is the only stage ownership transfers for.** Read your DV row's `agent`: an `android-developer:` id means you own that row's own `metadata.artifact`, patch the ledger by row id, and your frontmatter is validated; routed via `corpflow:developer` it owns the artifact and you return implementation plus ≤500 tokens. Every other stage is consultation — corpflow writes the artifact and every state.json entry.
+
+**RE is consultation.** corpflow retains the stage and writes every `state.json` entry; your release engineer never patches and never passes `--facts`. It reports every live store write — `store_changes[]`, `manual_steps[]`, platform version ids — in its ≤500-token summary; a store write that reaches no artifact is an unlogged production change.
 
 ## Evidence declaration
 
@@ -56,23 +50,15 @@ and `--facts`. A store write that reaches no artifact is an unlogged production 
 | Build Evidence adapter | `android_adapter (adb exec-out screencap -p)` |
 | Error file | `.context/errors/android-phone-developer.md` (basename of the agent file, not the qualified id) |
 
-Build Evidence is `adb exec-out screencap -p` captures plus Gradle build and test transcripts. There is no Android build MCP; builds and tests go through `/android-developer:build-test` (see Build and test below). Scoped `Bash(adb:*)` is still yours for evidence capture and device queries. Security findings cover EncryptedSharedPreferences/Keystore, no-cleartext, exported-component validation, and hardcoded secrets.
+Build Evidence is `adb exec-out screencap -p` captures plus Gradle build and test transcripts. There is no Android build MCP; builds and tests go through `/android-developer:build-test`. Scoped `Bash(adb:*)` is yours for evidence capture and device queries. Security findings cover EncryptedSharedPreferences/Keystore, no-cleartext, exported-component validation, and hardcoded secrets.
 
 ## Build and test
 
 - Build and test **only** through `/android-developer:build-test`; never invoke the toolchain directly.
-- Compile-only: `--no-test`, classified `build_only` and allowed at every stage. `--build-only` is
-  not a flag anywhere; it classifies as a full test run and is denied.
-- DV runs scoped tests, QA is the sole full-suite authority, SR/DR/RE hold none. Your dispatch brief
-  states the resolved test mode and selector; DV's executed set is the tests you touched plus
-  `metadata.always_required_tests`.
-- Denied and `--no-test` does not fit → record `requests_test_evidence: <what and why>` in your
-  artifact, or return `verdict: blocked`. Never reach for the toolchain.
-- `/android-developer:build-test` reports a real executed-test count parsed from the Gradle
-  JUnit result XML. **0 executed is a failure, not a pass** — a green exit code is not
-  evidence that tests ran.
-- Forward that count verbatim on the evidence line; never restate it as a bare pass. A
-  compile-only run reports `not run (--no-test)`, which is neither a pass nor a failure.
+- Compile-only: `--no-test`, classified `build_only` and allowed at every stage. `--build-only` is not a flag anywhere; it classifies as a full test run and is denied.
+- DV runs scoped tests, QA is the sole full-suite authority, SR/DR/RE hold none. Your dispatch brief states the resolved test mode and selector; DV's executed set is the tests you touched plus `metadata.always_required_tests`.
+- Denied and `--no-test` does not fit → record `requests_test_evidence: <what and why>` in your artifact, or return `verdict: blocked`. Never reach for the toolchain.
+- `/android-developer:build-test` reports a real executed-test count parsed from Gradle JUnit result XML. 0 executed is a failure; forward that count verbatim on the evidence line, never as a bare pass. Compile-only reports `not run (--no-test)`, which is neither pass nor failure.
 
 ## Worktree isolation (DV)
 
@@ -84,25 +70,24 @@ You run in an isolated git worktree; `task.metadata.workspace_path` is the tree 
 - Never create or move worktrees. Writes outside your tree are never yours — report, do not make.
 - Record it as `worktree: true` in the DV frontmatter. Absent or false is a hard DR fail
   (`worktree_isolation_violation`).
-- Screenshots append to the run's `screenshots.md` manifest, which is the record of authority.
-  Never read or write `state.json facts.screenshots` — it is capped and merged last-writer-wins, so
+- Screenshots go to your task's own `screenshots-<TASK_ID>.md` manifest, which is the record of
+  authority; pass your ledger task id as `--task-id` to every capture script. Never read or write `state.json facts.screenshots` — it is capped and merged last-writer-wins, so
   in a multi-stream run it keeps one stream and silently drops the rest.
 
 ## Artifacts
 
 Write to `.context/`; in DV you also own the source paths corpflow assigned you inside your
-worktree, and nothing else. `<N>` is `run_index`. Basenames are a convenience for the
-`SubagentStop` hook — the frontmatter is the contract. Errors go to
-`.context/errors/<agent-basename>.md`.
+worktree, and nothing else. `<N>` is `run_index`. Basenames are a convenience for the `SubagentStop`
+hook — the frontmatter is the contract. Errors go to `.context/errors/<agent-basename>.md`.
 
 | Stage | Artifact |
 |---|---|
 | AR | `.context/android-architecture.md` (consultation output, ≤500-token return summary) |
-| RE | `.context/android-release-<N>.md` (consultation output; Play Console changes listed explicitly) |
-| DV | `.context/development-<N>.md` |
+| DV | your row's `metadata.artifact` — `.context/development-<N>-<stream>.md`, or `.context/development-<N>.md` when the run has one DV row |
 | DR | `.context/developer-review-<N>.md` (written by corpflow:technical-lead) |
 | SR | `.context/security-review-<N>.md` (written by corpflow:security-reviewer) |
 | QA | `.context/testing-<N>.md` (written by corpflow:qa-engineer) |
+| RE | `.context/android-release-<N>.md` (consultation output; Play Console changes listed explicitly) |
 | IR | `.context/incident-<N>.md` (written by corpflow:incident-responder) |
 
 ## Handoff frontmatter (BINDING)
@@ -126,16 +111,24 @@ handoff:
   files_touched:
     - <path>
   next_stage_focus: "<imperative: what DR/QA must focus on>"
+```
+
+#### DV schema, continued — sweep, refs and architecture
+
+```yaml
+# …continued: the same handoff: mapping, second half.
   open_questions:              # REQUIRED — [] when nothing to elicit, never omitted
-    - { id: sw-DV0-1, class: decision, ref: "development-N.md#elicitation-sweep" }
+    - { id: sw-DV0-1, class: decision, ref: "<this artifact>#elicitation-sweep", blocks_next_stage: false }
   refs:
     decisions: architecture-N.md#decisions    # ONLY when AR ran; omit otherwise
-    tests: development-N.md#tests-added
+    tests: <this artifact>#tests-added
   architecture:                # ONLY when AR ran; omit the whole object otherwise
     ref: architecture-N.md#decisions
     applied: true              # your truthful statement that AR's decisions were followed
 ---
 ```
+
+#### Pairing rule
 
 `refs.decisions` and the `architecture` object travel together — one without the other makes DR
 report `missing_input`, either without AR trips the inverse guard.
@@ -148,6 +141,8 @@ report `missing_input`, either without AR trips the inverse guard.
 | DR / SR | `key_decisions` = findings; no `files_touched` | pass / fail |
 | QA | `files_touched` = tests added, `key_decisions` = results | go / no-go |
 | IR | `key_decisions` = root cause | ok / escalate |
+
+#### Verdict and artifact rules
 
 `key_decisions` items are stubs: `{ id: ad1, summary: "<≤160 chars>", anchor: "<artifact>#decisions" }`.
 A `verdict` outside `ok|blocked|escalate|pass|fail|go|no-go|approve|reject` reaches the ledger
@@ -171,8 +166,10 @@ yours to resolve, not the user's — cost is not an exemption.
 | Where | Carries |
 |---|---|
 | artifact `## elicitation-sweep` H2 | the FULL item. Canonical. Heading present even when the array is empty. |
-| `handoff.open_questions[]` | the stub `{{ id, class, ref }}` |
+| `handoff.open_questions[]` | the stub `{ id, class, ref }` |
 | `state-patch.sh --facts` | the stub plus `stage`, `blocks_next_stage`, `status` |
+
+#### The item, as written in the artifact
 
 ```markdown
 ## elicitation-sweep
@@ -186,11 +183,14 @@ yours to resolve, not the user's — cost is not an exemption.
   - `<label ≤24>` — <detail ≤120>
 ```
 
+#### Rules
+
 - `id` is `sw-<TASK_ID>-<n>` — the ledger unions on `.id`, so an unscoped `q1` overwrites another
   stage's question. Max 4 per stage; more is handing the user your triage.
 - `escalate` is never auto-answered, `decision` may be; the orchestrator raises your label, never
-  lowers it. `blocks_next_stage: true` costs a round trip at your own boundary, absent/`false`
-  batches at the final gate.
+  lowers it. `blocks_next_stage` is REQUIRED on every stub and on BOTH stub transports —
+  `handoff.open_questions[]` **and** the `state-patch.sh --facts` payload — and the two copies must
+  agree — `true` costs a round trip at your own boundary, `false` batches at the final gate.
 - Re-emitting after a rework or retry carries `status` and `resolution` forward.
 - You never ask — no plugin agent holds an ask tool; the orchestrator renders every item.
 - Not the sweep, each already has a channel: runtime evidence (`requests_test_evidence:`), a skipped
@@ -203,14 +203,16 @@ Run `state-patch.sh --stage <CODE> --prev <PREV>` when its path is supplied (pro
 write `state.json`. Patch fails → proceed and return; the `SubagentStop` hook rebuilds from your
 frontmatter. Exit 3 means your artifact is not on disk — write it and re-run.
 
+### Facts on the same call
+
 Pass `--facts` on the **same** call. Arrays union on identity, so send only your own entries:
 
 ```bash
-state-patch.sh --stage DV --prev <PREV> --facts '{
+state-patch.sh --stage DV --task-id <ID> --artifact <your artifact> --prev <PREV> --facts '{
   "files_modified": ["<path>"], "tests_added": ["<path>"],
-  "decisions": [{"id":"dv-1","summary":"≤160 chars","ref":"development-0.md#decisions"}],
+  "decisions": [{"id":"dv-1","summary":"≤160 chars","ref":"development-<N>[-<stream>].md#decisions"}],
   "open_questions": [{"id":"sw-DV0-1","stage":"DV","class":"decision",
-                      "ref":"development-0.md#elicitation-sweep",
+                      "ref":"development-<N>[-<stream>].md#elicitation-sweep",
                       "blocks_next_stage":false,"status":"open"}]
 }'
 ```
@@ -228,7 +230,7 @@ point at the artifact; never truncate mid-structure.
 **Verdict**: <this stage's vocabulary>
 **Artifact**: .context/<file>.md
 **Changed**: <n> files — <the 3–5 that matter>
-**Evidence**: <build status>; tests: <N> executed, <M> failed | not run (--no-test); <screenshot status>
+**Evidence**: <build status>; tests: <N> executed, <M> failed | not run (--no-test)
 **Blockers**: <none | what blocks and which stage resolves it>
 **For next stage**: <what is not obvious from the artifact>
 **Questions for the user**: <consultation stages only — sweep candidates the owning stage lifts>
@@ -238,11 +240,19 @@ On re-dispatch after a DR or QA rejection, `metadata.gate_blockers[]` carries th
 review artifact's `## blockers`. **Fix those and nothing else**: address every entry or say in the
 artifact why one is not actionable, and dispute via `error_escalated_to:` rather than by ignoring.
 
+### Consultant return — consultant-return.v1
+
+DR and SR consultations end the return with exactly one `json` fence, placed last, holding one
+`consultant-return.v1` object (`schema_version`, `verdict`, `severity_counts`, `findings[]`) with
+lowercase severities. A rejected return is re-dispatched once and never hand-fixed.
+
 ## Orchestrator agent roles
 
 This plugin's own multi-stage commands name a **role**, never an id, so this table is the only place
 an id appears. Resolve the id, then check your available agent list: **present** → dispatch it;
 **absent** → apply the call site's own `Error handling:` line. Never a hard halt.
+
+### Which roles never route through corpflow
 
 **Roles with a local equivalent are not dispatched through corpflow at all.** Architect, QA
 engineer, and security reviewer resolve to routers that come straight back here, so app-layer work
@@ -252,6 +262,8 @@ corpflow's *inbound* routing, resolved at worktask init; these commands run outs
 **Split by layer, not by role.** The local architect selects this platform's patterns; service
 decomposition, storage topology, and API contracts have no local equivalent and go to the
 orchestrator's architect. Routing system-level design at the local architect is misrouted.
+
+### Role to agent id
 
 | Role named in a command | Agent id |
 |---|---|
@@ -281,7 +293,7 @@ fork a standard's text into this plugin; a copy drifts silently.
 
 | | |
 |---|---|
-| Targets corpflow | `4.0.27` |
-| Size budget | ≤295 lines (store platform: RE + publishing) |
+| Targets corpflow | `4.1.1` |
+| Consultant return | `consultant-return.v1` |
+| Size budget | ≤300 lines |
 | Contract source | `corpflow skills/cross-plugin-handoff/references/plugin-contract.md` |
-| Template | `corpflow skills/cross-plugin-handoff/templates/CORPFLOW.md` |
