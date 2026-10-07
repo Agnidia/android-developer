@@ -42,7 +42,8 @@ ROW=$(printf '%s' "$PAYLOAD" | jq -c \
     metadata: {
       advisory: true,
       duration_ms: ((.duration_ms // 0) | tonumber? // 0),
-      effort: (.effort.level // env.CLAUDE_EFFORT // "unknown"),
+      # Payload only: $CLAUDE_EFFORT keeps the requested tier even on haiku, which runs none.
+      effort: (.effort.level // "unknown"),
       parent_agent_id: (.parent_agent_id // "none"),
       dedupe_key: ((.session_id // "nosession") + ":" + (.agent_id // "noagent") + ":stop"),
       dedupe_key_extended: ((.parent_agent_id // "none") + ":" + (.session_id // "nosession") + ":" + (.agent_id // "noagent") + ":stop")
