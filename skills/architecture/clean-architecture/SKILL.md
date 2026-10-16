@@ -3,7 +3,7 @@ name: clean-architecture
 description: Clean Architecture for Android: ui/domain/data layering, dependency-inversion boundaries, and a pure-Kotlin domain layer. Use when structuring a feature, deciding where logic belongs, or reviewing layer purity.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [clean-architecture, layering, domain-layer, boundaries, use-case, android, kmp]
 ---
@@ -59,5 +59,5 @@ data class User(val avatar: Uri)   // couples domain to the framework
 
 ## Attribution
 
-Synthesized by IGRSoft (Apache-2.0) from community Android architecture references
+Synthesized by Agnidia (Apache-2.0) from community Android architecture references
 (`new-silvermoon`, `piyushverma0`). No content copied verbatim.

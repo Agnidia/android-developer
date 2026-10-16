@@ -14,4 +14,4 @@ external entry point). Never trust a host/path to grant access; re-check authori
 the destination.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

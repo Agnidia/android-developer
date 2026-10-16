@@ -14,4 +14,4 @@ Diagnose with Layout Inspector recomposition counts and the Compose compiler sta
 report (`reportsDestination`).
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

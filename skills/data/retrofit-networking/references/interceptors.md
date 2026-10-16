@@ -29,4 +29,4 @@ Keep a backup pin and a rotation plan — an expired/rotated leaf with no backup
 the app. Pinning is defence-in-depth on top of `cleartextTrafficPermitted="false"`.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

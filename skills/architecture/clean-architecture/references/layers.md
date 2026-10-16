@@ -23,4 +23,4 @@ Keep them thin — orchestration, not framework glue. Trivial pass-throughs can 
 repository directly from the ViewModel; add a use-case when there is real logic to host.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

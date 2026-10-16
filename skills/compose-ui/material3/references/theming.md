@@ -37,4 +37,4 @@ override per role; `MotionScheme.expressive()` swaps the default motion tokens. 
 experimental — opt in where required and verify against your pinned BOM.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `ayush016`. No verbatim copying.

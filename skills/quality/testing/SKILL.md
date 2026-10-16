@@ -3,7 +3,7 @@ name: testing
 description: Android tests in practice: JUnit5/JUnit4 unit tests, MockK doubles, Turbine Flow assertions, Compose UI tests with createComposeRule, and Roborazzi-first screenshot tests. Use when writing or reviewing Android tests.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-23'
   keywords: [junit, mockk, turbine, compose-ui-test, roborazzi, paparazzi, android]
 ---
@@ -102,6 +102,6 @@ disable animation for the captured frame.
 
 ## Attribution
 
-Synthesized by IGRSoft from `new-silvermoon`, `piyushverma0`, and Google's official
+Synthesized by Agnidia from `new-silvermoon`, `piyushverma0`, and Google's official
 `android/skills` testing guidance (**Apache License 2.0 — Google android/skills**).
 Licensed Apache-2.0; no content copied verbatim.

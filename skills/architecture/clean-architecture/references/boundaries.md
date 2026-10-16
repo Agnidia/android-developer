@@ -23,4 +23,4 @@ fun UserDto.toDomain() = User(id = UserId(id), name = name)
 This keeps a backend rename or a schema change from rippling into business rules or UI.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

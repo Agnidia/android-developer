@@ -119,7 +119,7 @@ following stay orchestrator-owned and are deliberately **not** implemented here:
   `Bash(adb:*)`, `Bash(ktlint:*)`, `Bash(detekt:*)`, `Bash(git:*)`. No agent carries
   bare `Bash`.
 - **Synthesize-never-copy + per-skill attribution** — all skill prose is rewritten
-  in IGRSoft voice; each `SKILL.md` ends with an `## Attribution` section naming its
+  in Agnidia voice; each `SKILL.md` ends with an `## Attribution` section naming its
   source repos. Google `android/skills`-derived skills (`quality/testing`,
   `tooling/gradle-build`) are `license: Apache-2.0`; community-synthesized skills are
   `license: MIT`.

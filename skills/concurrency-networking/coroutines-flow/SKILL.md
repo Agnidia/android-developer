@@ -3,7 +3,7 @@ name: coroutines-flow
 description: Coroutines and Flow: scope and dispatcher selection, structured concurrency, Flow operators (map/combine/flatMapLatest), and cooperative cancellation. Use when implementing async work or composing reactive streams.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [coroutines, flow, scopes, dispatchers, cancellation, structured-concurrency]
 ---
@@ -73,4 +73,4 @@ inject the dispatcher (as above) so each target supplies its own.
 - [references/cancellation.md](references/cancellation.md)
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

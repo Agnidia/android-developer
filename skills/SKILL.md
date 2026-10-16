@@ -9,7 +9,7 @@ description: >-
   Gradle builds (version catalogs, convention plugins, R8).
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-23'
   keywords: [android, kotlin, jetpack-compose, gradle, architecture, testing]
 ---
@@ -67,12 +67,12 @@ memory.
   cover new logic.
 - **Version-catalog discipline.** All dependency versions live in
   `gradle/libs.versions.toml`; no inline or dynamic versions.
-- **Synthesized & attributed.** Every skill's prose is original IGRSoft synthesis;
+- **Synthesized & attributed.** Every skill's prose is original Agnidia synthesis;
   each `SKILL.md` carries an `## Attribution` section naming its sources.
 
 ## Attribution
 
-Index and navigation original to IGRSoft (Apache-2.0). Domain skills synthesize Android
+Index and navigation original to Agnidia (Apache-2.0). Domain skills synthesize Android
 community references (`new-silvermoon`, `piyushverma0`, `ayush016`) and Google's
 official `android/skills` (Apache License 2.0); see each skill's `## Attribution`
 section for specifics.

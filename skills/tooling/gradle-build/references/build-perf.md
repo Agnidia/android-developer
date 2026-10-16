@@ -17,5 +17,5 @@ ksp.useKSP2=true                      # KSP2, required for Kotlin 2.2+
 - Measure before tuning: `./gradlew assembleDebug --scan` (build scan) and `--profile`.
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
+Synthesized by Agnidia from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
 Apache-2.0. No verbatim copying.

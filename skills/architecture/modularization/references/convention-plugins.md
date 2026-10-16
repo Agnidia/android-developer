@@ -26,5 +26,5 @@ and makes a toolchain bump a one-file change. Read `compileSdk` from a single sh
 so no literal is duplicated across modules.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, Google `android/skills`-style build
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, Google `android/skills`-style build
 conventions (Apache-2.0 patterns, re-described). No verbatim copying.

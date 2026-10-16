@@ -17,4 +17,4 @@ Model loading/error/content in **one** state object (or a `sealed interface UiSt
 not three loose booleans that can contradict each other.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

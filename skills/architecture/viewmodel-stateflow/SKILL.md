@@ -3,7 +3,7 @@ name: viewmodel-stateflow
 description: ViewModel state holders with StateFlow: unidirectional data flow, immutable UiState, event handling, and StateFlow vs LiveData. Use when exposing screen state or deciding how the UI observes the ViewModel.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [viewmodel, stateflow, udf, uistate, livedata, android, compose]
 ---
@@ -70,5 +70,5 @@ var user by remember { mutableStateOf<User?>(null) }  // WRONG: screen state bel
 
 ## Attribution
 
-Synthesized by IGRSoft (Apache-2.0) from community Android architecture references
+Synthesized by Agnidia (Apache-2.0) from community Android architecture references
 (`new-silvermoon`, `piyushverma0`). No content copied verbatim.

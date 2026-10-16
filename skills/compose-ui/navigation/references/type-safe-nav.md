@@ -15,4 +15,4 @@ Args are typed and checked at compile time. Pass IDs, not whole entities. Use
 `popBackStack`/`navigate(route) { popUpTo(...) }` for back-stack control.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

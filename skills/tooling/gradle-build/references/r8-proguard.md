@@ -10,5 +10,5 @@ R8 is the default shrinker/obfuscator/optimizer for release builds, running in *
 - Never `isDebuggable = true` in release; verify with `apkanalyzer`.
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
+Synthesized by Agnidia from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
 Apache-2.0. No verbatim copying.

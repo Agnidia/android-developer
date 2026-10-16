@@ -3,7 +3,7 @@ name: compose-best-practices
 description: Compose recomposition and stability: state hoisting, stable/immutable parameters, remember/derivedStateOf, lazy-list keys, and correct side-effect APIs. Use when a screen janks, recomposes too often, or holds state in the wrong place.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [recomposition, stability, state-hoisting, side-effects, compose, performance]
 ---
@@ -74,4 +74,4 @@ Unstable parameters still force recomposition when values differ. Make types sta
 - [references/side-effects.md](references/side-effects.md)
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`, `ayush016`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`, `ayush016`. No verbatim copying.
