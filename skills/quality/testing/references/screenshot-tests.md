@@ -24,5 +24,5 @@ alternative but is not yet stable and does not interoperate with Robolectric/Hil
 tests — prefer Roborazzi for new work.
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, `piyushverma0`, Google `android/skills`
+Synthesized by Agnidia from `new-silvermoon`, `piyushverma0`, Google `android/skills`
 (Apache License 2.0). Apache-2.0. No verbatim copying.

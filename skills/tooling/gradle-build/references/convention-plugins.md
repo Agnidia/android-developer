@@ -23,5 +23,5 @@ no per-module drift. Convention plugins also centralize the annotation processor
 **KSP** (enable **KSP2** with `ksp.useKSP2=true`, required for Kotlin 2.2+) over KAPT.
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
+Synthesized by Agnidia from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
 Apache-2.0. No verbatim copying.

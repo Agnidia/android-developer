@@ -3,7 +3,7 @@ name: compose-ui
 description: Jetpack Compose UI for Android: recomposition and stability, Material 3 theming, type-safe navigation, and accessibility. Use when building Compose screens, fixing jank/recomposition, theming, or making UI accessible.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-23'
   keywords: [compose, jetpack-compose, material3, navigation, accessibility, recomposition]
 ---
@@ -29,5 +29,5 @@ these rules hold.
 
 ## Attribution
 
-Synthesized by IGRSoft (Apache-2.0) from community Compose references (`new-silvermoon`,
+Synthesized by Agnidia (Apache-2.0) from community Compose references (`new-silvermoon`,
 `piyushverma0`, `ayush016`). No content copied verbatim.

@@ -59,5 +59,5 @@ animate freely; the hit target stays ≥ 48dp throughout the morph. See
 [accessibility/SKILL.md](../../accessibility/SKILL.md).
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from Material 3 Expressive shape guidance and community Compose
+Synthesized by Agnidia (Apache-2.0) from Material 3 Expressive shape guidance and community Compose
 references. No verbatim copying; shape/`Morph` API is illustrative — verify against your pinned BOM.

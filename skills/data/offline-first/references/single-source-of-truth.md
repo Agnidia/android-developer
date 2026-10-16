@@ -12,4 +12,4 @@ screens disagree; reactivity is automatic (the DB re-emits on change). Never let
 read the network directly in parallel with the DB — that reintroduces divergence.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

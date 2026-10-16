@@ -3,7 +3,7 @@ name: navigation
 description: Type-safe Navigation Compose: serializable route types, argument passing, nested graphs, and deep links. Use when wiring screen navigation or handling deep links.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-14'
   keywords: [navigation, navigation-compose, type-safe, deep-links, routes, compose]
 ---
@@ -45,4 +45,4 @@ navController.navigate("profile/$userId")   // WRONG — typos compile, args unt
 - [references/deep-links.md](references/deep-links.md)
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

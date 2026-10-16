@@ -14,4 +14,4 @@ Over-scoping (`@Singleton` on per-screen state) is a memory leak and a stale-sta
 Pick the **narrowest** scope that satisfies the lifetime requirement.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

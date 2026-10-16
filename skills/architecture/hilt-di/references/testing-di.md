@@ -20,4 +20,4 @@ Annotate the test with `@HiltAndroidTest` and use `HiltAndroidRule`. Keep Hilt o
 unit tests — its value there is zero and it slows them down.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

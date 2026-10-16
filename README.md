@@ -54,7 +54,7 @@ thin routers.
 | `quality` | testing (Apache-2.0 — Google-blended) |
 | `tooling` | gradle-build (Apache-2.0 — Google-blended) |
 
-All skill prose is **synthesized** in IGRSoft voice — never copied verbatim from
+All skill prose is **synthesized** in Agnidia voice — never copied verbatim from
 source repositories. Each `SKILL.md` carries an `## Attribution` section naming
 its sources. Google-derived content (`quality/testing`, `tooling/gradle-build`)
 is stamped `license: Apache-2.0`, as is all community-synthesized content.
@@ -130,7 +130,7 @@ The old names no longer resolve — update any saved invocation.
 Add the plugin via its marketplace entry:
 
 ```bash
-/plugin marketplace add IGRSoft/android-developer
+/plugin marketplace add Agnidia/android-developer
 /plugin install android-developer
 ```
 

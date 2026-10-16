@@ -13,5 +13,5 @@ Single scoped commands (no `cd`/`&&` chains):
 | gradlew | `./gradlew :app:assembleDebug` | Build a variant |
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
+Synthesized by Agnidia from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
 Apache-2.0. No verbatim copying.

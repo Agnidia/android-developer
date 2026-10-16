@@ -18,4 +18,4 @@ fun userWithPosts(id: String): Flow<UserWithPosts>
 ```
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

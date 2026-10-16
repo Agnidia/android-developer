@@ -17,4 +17,4 @@ not from unstable params alone. Stability still matters for correctness and for 
   `-P plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=...`.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

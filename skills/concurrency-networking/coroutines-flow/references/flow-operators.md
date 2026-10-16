@@ -14,4 +14,4 @@ for exposing repository data as `StateFlow` from a ViewModel — it stops upstre
 after the last collector leaves.
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `new-silvermoon`, `piyushverma0`. No verbatim copying.

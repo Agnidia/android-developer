@@ -36,5 +36,5 @@ implementation(libs.compose.ui)
   so staleness is visible (`# latest stable as of 2026-06`).
 
 ## Attribution
-Synthesized by IGRSoft from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
+Synthesized by Agnidia from `new-silvermoon`, Google `android/skills` (Apache License 2.0).
 Apache-2.0. No verbatim copying.

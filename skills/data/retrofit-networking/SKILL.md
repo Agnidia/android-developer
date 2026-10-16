@@ -3,7 +3,7 @@ name: retrofit-networking
 description: Retrofit + OkHttp networking: suspend API services, interceptors, and typed error handling. Use when calling a REST API, adding auth/logging interceptors, or modeling network errors.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [retrofit, okhttp, ktor, networking, interceptor, error-handling, kmp, android]
 ---
@@ -78,4 +78,4 @@ itself a KMP library (Gradle auto-selects `okhttp-jvm`/`okhttp-android`).
 - [references/interceptors.md](references/interceptors.md)
 
 ## Attribution
-Synthesized by IGRSoft (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.
+Synthesized by Agnidia (Apache-2.0) from `piyushverma0`, `new-silvermoon`. No verbatim copying.

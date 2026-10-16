@@ -3,7 +3,7 @@ name: material3-expressive
 description: Material 3 Expressive design-craft for Android 16 in Compose — spring motion, shape variety/morphing, typographic emphasis, the 48-role color system, component replacements, hero-moment composition, and the "AI slop" anti-patterns. Use when designing or reviewing the *feel* of an Expressive UI (not just theming setup).
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-23'
   keywords: [material3-expressive, motion-scheme, springs, shapes, morph, typography, emphasis, hero-moments, anti-patterns, android16]
 ---
@@ -162,6 +162,6 @@ the [accessibility](../accessibility/SKILL.md) skill and the
 
 ## Attribution
 
-Synthesized by IGRSoft (Apache-2.0) from Material 3 Expressive design guidance and community Compose
+Synthesized by Agnidia (Apache-2.0) from Material 3 Expressive design guidance and community Compose
 references (`new-silvermoon`, `ayush016`). No content copied verbatim; alpha-track API claims are
 hedged — verify each against your pinned BOM.

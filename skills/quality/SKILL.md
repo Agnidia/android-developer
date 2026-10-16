@@ -3,7 +3,7 @@ name: quality
 description: Android testing quality: JUnit/MockK unit tests, Turbine Flow tests, Compose UI tests, and screenshot tests. Use when adding tests, filling coverage gaps, or defining the QA gate.
 license: Apache-2.0
 metadata:
-  author: IGRSoft
+  author: Agnidia
   last-updated: '2026-06-15'
   keywords: [testing, junit, mockk, turbine, compose-ui-test, screenshot, android]
 ---
@@ -24,6 +24,6 @@ Tests are deterministic — injected dispatchers, in-memory DBs, no real clocks 
 
 ## Attribution
 
-Synthesized by IGRSoft from community testing references (`new-silvermoon`, `piyushverma0`)
+Synthesized by Agnidia from community testing references (`new-silvermoon`, `piyushverma0`)
 blended with patterns from Google's official `android/skills` (**Apache License 2.0 —
 Google android/skills**). Licensed Apache-2.0; no content copied verbatim.
